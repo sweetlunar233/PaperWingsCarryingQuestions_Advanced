@@ -30,7 +30,7 @@ serveAddress="http:127.0.0.1:8080"
 
 #普通问卷的展示界面：
 def display_answer_normal(request,username,questionnaireId,submissionId):
-    user=User.objects.get(username=username)
+    user=User.objects.filter(username=username).first()
     if user is None:
         return HttpResponse(content='User not found', status=404) 
         
@@ -119,13 +119,12 @@ def display_answer_normal(request,username,questionnaireId,submissionId):
 
 #考试问卷的展示界面：
 def display_answer_test(request,username,questionnaireId,submissionId):
-    print("start display_answer_test")
     # print(submissionId)
     user=User.objects.get(username=username)
     if user is None:
         return HttpResponse(content='User not found', status=404) 
         
-    survey=Survey.objects.get(SurveyID=questionnaireId)
+    survey=Survey.objects.filter(SurveyID=questionnaireId).first()
     if survey is None:
         return HttpResponse(content='Questionnaire not found', status=404)   
     
@@ -221,7 +220,7 @@ class GetStoreFillView(APIView):
         if user is None:
             return HttpResponse(content='User not found', status=404) 
         
-        survey=Survey.objects.get(SurveyID=surveyID)
+        survey=Survey.objects.filter(SurveyID=surveyID).first()
         if survey is None:
             return HttpResponse(content='Questionnaire not found', status=404) 
           
@@ -245,7 +244,6 @@ class GetStoreFillView(APIView):
 
         #submissionID=-2时,只传回问卷题干(同问卷编辑的GET接口)
         elif submissionID=="-2":
-            print("--here---")
             all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(Survey=survey).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
                                                     ChoiceQuestion.objects.filter(Survey=survey).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
                                                     RatingQuestion.objects.filter(Survey=survey).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionNumber','QuestionID').all())
@@ -283,15 +281,14 @@ class GetStoreFillView(APIView):
             return JsonResponse(data)
         
         submission=Submission.objects.filter(SubmissionID=submissionID).first()
-        print(submission.Interval)
         # print(submission)
         if not submission:
             return HttpResponse(content='Submission not found', status=404) 
     
-        Title=survey.Title
-        Description=survey.Description
-        category=survey.Category
-        TimeLimit=survey.TimeLimit
+        # Title=survey.Title
+        # Description=survey.Description
+        # category=survey.Category
+        # TimeLimit=survey.TimeLimit
         #people=survey.QuotaLimit
         
         '''1.以下部分与问卷编辑界面的get函数类似，拿到题干'''
@@ -312,8 +309,6 @@ class GetStoreFillView(APIView):
         for question in all_questions_list:
             if question["Category"]==1 or question["Category"]==2:    #选择题
                 #print(question['MaxSelectable'])
-                print(question)
-                print(question['OptionCnt'])
 
                 #该单选题的用户选项:当前问卷当前submission(如果用户未选，则找不到对应的答案记录)
                 if question["Category"]==1:
@@ -338,7 +333,6 @@ class GetStoreFillView(APIView):
 
                 optionList=[]
                 #将所有选项顺序排列
-                print("***")
                 options_query=ChoiceOption.objects.filter(Question=question["QuestionID"]).order_by('OptionNumber')
                 for option in options_query:
                     optionList.append({'content':option.Text,'optionNumber':option.OptionNumber,'isCorrect':option.IsCorrect,
@@ -401,14 +395,8 @@ def get_submission(request):
             submissionList=body['question']     #填写记录
             duration=body['duration']  
             score=body['score'] 
-
             # 新加的
             publishDate=body['date']  #日期
-
-            # print("lorian")
-            # print(submissionID)
-
-            # print(submissionList)
 
             survey=Survey.objects.get(SurveyID=surveyID)
             if survey is None:
@@ -423,7 +411,6 @@ def get_submission(request):
                 submission=Submission.objects.create(Survey=survey,Respondent=user,
                                              SubmissionTime=timezone.now(),Status=status,
                                              Interval=duration,Score=score)
-                print(submission.SubmissionTime)
             
             #已存在，删除填写记录的所有内容
             else:
@@ -509,7 +496,6 @@ def get_submission(request):
 
                     #若已提交，报名问卷的必填选择题中，选择的对应选项人数-1
                     if status=='Submitted' and survey.Category==2 and question.IsRequired==True:
-                        print(option.MaxSelectablePeople)
 
                         if option.MaxSelectablePeople<=0:
                             data={'message':False,'content':'报名人数已满'}
@@ -641,7 +627,6 @@ def save_qs_design(request):
             # 新加的
             publishDate=body['date'] #日期
 
-            print(questionList)
             user=User.objects.get(username=username)
             if user is None:        
                 return HttpResponse(content='User not found', status=400) 
@@ -653,7 +638,6 @@ def save_qs_design(request):
                                              Is_open=True,Is_deleted=False,Category=catecory,
                                              TotalScore=0,TimeLimit=timelimit,IsOrder=isOrder
                                             )
-                print("TieZhu")
                 #survey.QuotaLimit=people
             #已有该问卷的编辑记录
             else:
@@ -929,7 +913,6 @@ def check_qs(request,username,questionnaireId,type):
     
     #报名问卷：超过人数，不可以再报名
     elif qs.Category==2:
-        print("TieZhu")
         #检查是否超人数(检查每个必填选择题的所有选项，是否都超人数)
         submission_query=Submission.objects.filter(Respondent=user,Survey=qs)
 
@@ -941,7 +924,6 @@ def check_qs(request,username,questionnaireId,type):
                 choiceOption_query=ChoiceOption.objects.filter(Question=choiceQuestion)
                 #每个选项的剩余人数
                 for choiceOption in choiceOption_query:
-                    print(choiceOption.MaxSelectablePeople)
                     if choiceOption.MaxSelectablePeople>0:
                         isFull=False
                 
@@ -1215,8 +1197,8 @@ import openpyxl
 def cross_analysis(request, QuestionID1, QuestionID2):
     if request.method == 'GET':
         
-        question1 = ChoiceQuestion.objects.get(QuestionID=QuestionID1)
-        question2 = ChoiceQuestion.objects.get(QuestionID=QuestionID2)
+        question1 = ChoiceQuestion.objects.filter(QuestionID=QuestionID1).first()
+        question2 = ChoiceQuestion.objects.filter(QuestionID=QuestionID2).first()
 
         if QuestionID1 is None or QuestionID2 is None:
             return JsonResponse({'error': 'Missing QuestionID(s)'}, status=404)
@@ -1225,11 +1207,9 @@ def cross_analysis(request, QuestionID1, QuestionID2):
             return JsonResponse({'error': 'Two questions are not from the same questionnaire.'}, status=404)
         
         if question1.Category!=1 and question1.Category!=2:
-            print("3")
             return JsonResponse({'error':'Question1 is not a choice question.'},status=404)
         
         if question2.Category!=1 and question2.Category!=2:
-            print("4")
             return JsonResponse({'error':'Question2 is not a choice question.'},status=404)
         
 
@@ -1251,14 +1231,11 @@ def cross_analysis(request, QuestionID1, QuestionID2):
         for option1 in all_options_list_1:
             for option2 in all_options_list_2:
                 crossText.append('-'.join([option1['Text'],option2['Text']]))
-                print("莫问题")
                 # crossCount.append('-'.join([str(ChoiceAnswer.objects.filter(Question=question1,ChoiceOptions=option1['OptionID']).count()),
                 #                             str(ChoiceAnswer.objects.filter(Question=question2,ChoiceOptions=option2['OptionID']).count())]))
                 submission_option1 = ChoiceAnswer.objects.filter(Question=question1,ChoiceOptions=option1['OptionID']).values_list('Submission', flat=True).distinct()
                 cnt = ChoiceAnswer.objects.filter(Submission__in=submission_option1,Question=question2,ChoiceOptions=option2['OptionID']).count()
                 crossCount.append(cnt)
-        print(crossCount)
-        print(crossText)
         data={'crossCount':crossCount,'crossText':crossText}
         
         return JsonResponse(data)
@@ -1271,11 +1248,9 @@ from urllib.parse import quote
 def download_submissions(request, surveyID):
     if request.method == 'GET':
         try:
-            print("-here")
             survey = Survey.objects.get(SurveyID=surveyID)
             if survey is None:
                 return HttpResponse(content='Questionniare not found.', status=404)  
-            print(survey)
 
             wb = Workbook()
             wb.encoding='utf-8'
@@ -1328,7 +1303,6 @@ def download_submissions(request, surveyID):
                 for question in all_questions_list:
                     ques_index+=1
 
-                    print(question['Category'])
                     if question['Category']==1 or question['Category']==2:
                         #该题的所有选项
                         all_options_answer_list=list(ChoiceAnswer.objects.filter(Question=question['QuestionID'],Submission=submission['SubmissionID'])
@@ -1340,11 +1314,9 @@ def download_submissions(request, surveyID):
                         else: 
                             optionNumberList=[]
                             for answer in all_options_answer_list:
-                                print('***')
                                 option=ChoiceOption.objects.filter(OptionID=answer['ChoiceOptions']).first()
                                 optionNumberList.append(str(option.OptionNumber))
                             optionNumberList.sort()     #选项顺序升序排列
-                            print(optionNumberList)
 
                             ws.cell(sub_index,ques_index).value=','.join(optionNumberList)
                     
@@ -1365,7 +1337,6 @@ def download_submissions(request, surveyID):
                 if survey.Category==3:      #考试问卷：增加该填写记录的总得分
                     ws.cell(sub_index,ques_index).value=submission['Score']
 
-            print('finished')
             # 准备写入到IO中
             output = BytesIO()
             #ws.save()
@@ -1377,15 +1348,12 @@ def download_submissions(request, surveyID):
             response = HttpResponse(output.getvalue(), content_type='application/vnd.ms-excel')
             formatted_now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
             file_name = '-'.join([survey.Title, '填写记录统计']) + '_' + formatted_now + '.xlsx' 
-            print(file_name)
 
             file_name = quote(file_name)	 # 使用urlquote()方法解决中文无法使用的问题
             response['Content-Disposition'] = 'attachment; filename=%s' % file_name
-            print(response)
             return response
 
         except Exception as e:
-            print(e)
             return JsonResponse({'message': '导出表格失败!'})
 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
@@ -1399,12 +1367,8 @@ def survey_statistics(request, surveyID):
         survey = Survey.objects.filter(SurveyID=surveyID)
         if not survey.exists():
             return JsonResponse({'error': 'Survey not found'}, status=404)
-
-
-        print("start survey_statistics")
         
         survey = Survey.objects.filter(SurveyID=surveyID).first()
-        print(survey.Title)
         # print("lorian")
         
         
@@ -1419,7 +1383,6 @@ def survey_statistics(request, surveyID):
         #print(all_questions_list.length())
         questionList=[]
         #print(all_questions)
-        print("lorian1")
         for question in all_questions_list:
             if question["Category"]==1 or question["Category"]==2:    #选择题
                 # print("选择题")
@@ -1440,7 +1403,6 @@ def survey_statistics(request, surveyID):
 
                 questionList.append({'Content':question["Text"],'Text':optionText,'Count':optionCount,'type':question['Category'],"questionId":question['QuestionID']})
 
-                print("lorian2")
                 
                     
             elif question["Category"]==3:       #填空题
@@ -1448,7 +1410,6 @@ def survey_statistics(request, surveyID):
                 answerCount=[]  #数组：填该内容的人数
 
 
-                print("www")
                 #text_list=list(BlankAnswer.objects.filter(Question=question['QuestionID']).values('Content'))
 
                 text_counts = BlankAnswer.objects.filter(Question=question['QuestionID']).values('Content').annotate(count=Count('Content'))
@@ -1458,7 +1419,6 @@ def survey_statistics(request, surveyID):
 
                 questionList.append({'Content':question["Text"],'Text':answerText,'Count':answerCount,'type':question['Category'],"questionId":question['QuestionID']})
 
-                print("lorian3")
             
             else:       #评分题
                 answerText=[]   #数组：评分的分数
@@ -1471,9 +1431,6 @@ def survey_statistics(request, surveyID):
 
                 questionList.append({'Content':question["Text"],'Text':answerText,'Count':answerCount,'type':question['Category'],"questionId":question['QuestionID']})
 
-                print("lorian4")
-                
-        print(questionList)
 
         #传回题干和填写记录的统计数据
         data={'title':survey.Title,'category':survey.Category,'TimeLimit':survey.TimeLimit,
