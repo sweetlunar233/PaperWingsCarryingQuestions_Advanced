@@ -44,16 +44,16 @@ jobs:
         cd backend
         python manage.py test  # 运行测试
 
-    # Docker化：构建并推送 Docker 镜像
-    - name: Build Docker images
-      run: |
-        docker build -t username/vueapp:${{ github.sha }} ./frontend  # 构建前端镜像
-        docker build -t username/djangoapp:${{ github.sha }} ./backend  # 构建后端镜像
-        echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin  # Docker 登录
-        docker push username/vueapp:${{ github.sha }}  # 推送前端镜像
-        docker push username/djangoapp:${{ github.sha }}  # 推送后端镜像
+    # # Docker化：构建并推送 Docker 镜像
+    # - name: Build Docker images
+    #   run: |
+    #     docker build -t username/vueapp:${{ github.sha }} ./frontend  # 构建前端镜像
+    #     docker build -t username/djangoapp:${{ github.sha }} ./backend  # 构建后端镜像
+    #     echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin  # Docker 登录
+    #     docker push username/vueapp:${{ github.sha }}  # 推送前端镜像
+    #     docker push username/djangoapp:${{ github.sha }}  # 推送后端镜像
 
-    # 部署到 Kubernetes
-    - name: Deploy to Kubernetes
-      run: |
-        kubectl apply -f k8s/  # 应用
+    # # 部署到 Kubernetes
+    # - name: Deploy to Kubernetes
+    #   run: |
+    #     kubectl apply -f k8s/  # 应用
