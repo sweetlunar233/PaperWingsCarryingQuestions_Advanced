@@ -29,8 +29,17 @@ import itertools
 from itertools import chain  
 from operator import attrgetter 
 
+from rest_framework.views import APIView
+from rest_framework.response import Response
+from rest_framework import status
+from .models import User
+from .serializers import UserSerializer
+
+
+
 serveAddress="http:127.0.0.1:8080"
-  
+
+
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -248,3 +257,12 @@ def activate_user(request,token):
     user.is_active=True
     user.save()
     return HttpResponse(status=200,content=True)
+
+class UserDetailView(APIView):
+    def get(self, request, username):
+        try:
+            user = User.objects.get(username=username)
+            serializer = UserSerializer(user)
+            return Response(serializer.data, status=status.HTTP_200_OK)
+        except User.DoesNotExist:
+            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)

@@ -27,3 +27,10 @@ class Submission(models.Model):
     Score = models.IntegerField(null=True, blank=True)
     #Duration = models.IntegerField(null=True, blank=True)
     Interval=models.IntegerField(null=True, blank=True)
+
+class RewardOffering(models.Model):
+    RewardID = models.AutoField(primary_key=True)
+    Survey = models.ForeignKey(Survey, on_delete=models.CASCADE, related_name='rewards')
+    Description = models.TextField()
+    Zhibi = models.IntegerField()
+    AvailableQuota = models.IntegerField()

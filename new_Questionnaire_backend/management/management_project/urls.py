@@ -1,6 +1,7 @@
 from django.urls import path, include
 from management_project import views
 from .views import health_check
+from .views import get_survey
 
   
 urlpatterns = [  
@@ -20,4 +21,6 @@ urlpatterns = [
     path('userManage/unreleased',views.delete_unreleased_qs,name='delete-unreleased-qs-url'),
     path('userManage/released',views.update_or_delete_released_qs,name='delete-released-qs-url'),
     path('userManage/filled',views.delete_filled_qs,name='delete-filled-qs'),
+
+    path('survey/<int:survey_id>/', get_survey, name='get_survey'),
 ]
