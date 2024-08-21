@@ -22,13 +22,6 @@ jobs:
       with:
         node-version: '20'  # 指定 Node.js 版本
 
-    # 前端构建：安装依赖并构建 Vue 3 项目
-    - name: Install and build Vue 3 project
-      run: |
-        cd Questionnaire  # 进入前端项目目录
-        npm install  # 安装依赖
-        npm run build  # 构建项目
-
     # 后端设置：Python 环境
     - name: Set up Python 3.11
       uses: actions/setup-python@v2
@@ -49,7 +42,7 @@ jobs:
       run: |
         choco install nginx -y  # 使用 Chocolatey 安装 Nginx
         # 复制和配置 Nginx 配置文件
-        copy .\.github\nginx\nginx.conf C:\tools\nginx-*\conf\nginx.conf  # 注意路径和版本
+        copy .\.github\nginx\nginx.conf C:\tools\nginx-1.27.0\conf\nginx.conf  # 注意路径和版本
         # 启动 Nginx
         Start-Service nginx
 
