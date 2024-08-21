@@ -7,6 +7,7 @@ import json
 from rest_framework.test import APIClient
 from io import BytesIO
 import openpyxl
+import datetime
 
 class send_registration_email_test(TestCase):
     def setUp(self):
@@ -376,9 +377,15 @@ class save_qs_design_test(TestCase):
             ]},
             {"type": 3, "question": "Blank question", "isNecessary": True, "score": 5, "correctAnswer": 1}
         ]
+        
+        # 设置时区感知的日期
+        date_str = '2021-01-01'
+        date_obj = datetime.datetime.strptime(date_str, '%Y-%m-%d').date()
+        aware_datetime = timezone.make_aware(datetime.datetime.combine(date_obj, datetime.time(0, 0)))
+
         self.survey_data = {
             "surveyID": -1, "title": "New Survey", "category": 0, "isOrder": True, "timeLimit": 30, "userName": "testuser",
-            "description": "Test survey", "Is_released": False, "questionList": self.questionList, "date": "2021-01-01"
+            "description": "Test survey", "Is_released": False, "questionList": self.questionList, "date": aware_datetime.isoformat()
         }
 
     def test_create_new_survey(self):
