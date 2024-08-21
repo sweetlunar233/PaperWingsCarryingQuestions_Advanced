@@ -145,7 +145,7 @@ STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
-
+#drf-spectacular
 REST_FRAMEWORK = {
     # YOUR SETTINGS
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
@@ -157,3 +157,15 @@ SPECTACULAR_SETTINGS = {
     'SERVE_INCLUDE_SCHEMA': False,
     # OTHER SETTINGS
 }
+
+#更改站点行为,站点将在每个请求上更新数据库/发送cookie
+SESSION_SAVE_EVERY_REQUEST = True
+
+#(重置密码的)电子邮件发送至命令行控制台
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST='smtp.qq.com'               #smtp服务地址
+EMAIL_PORT=25                               #端口（默认）
+EMAIL_HOST_USER = '1658441344@qq.com'    #发送邮件的邮箱,配置开通SMTP
+EMAIL_HOST_PASSWORD = 'ojgkodinkrosdehg'    #在邮箱中设置的客户端授权密码
+EMAIL_FROM = 'COWORK<1658441344@qq.com>' #收件人看到的发件人
+EMAIL_USE_TLS=True
