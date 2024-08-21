@@ -38,15 +38,15 @@ jobs:
         python manage.py test  # 运行测试
 
     # Nginx 安装和启动
-    - name: Install and configure Nginx
-      run: |
-        choco install nginx -y  # 使用 Chocolatey 安装 Nginx
-        # 复制和配置 Nginx 配置文件
-        copy .\.github\nginx\nginx.conf C:\tools\nginx-1.27.0\conf\nginx.conf  # 注意路径和版本
-        # 启动 Nginx
-        Start-Service nginx
+    # - name: Install and configure Nginx
+    #   run: |
+    #     choco install nginx -y  # 使用 Chocolatey 安装 Nginx
+    #     # 复制和配置 Nginx 配置文件
+    #     copy .\.github\nginx\nginx.conf C:\tools\nginx-1.27.0\conf\nginx.conf  # 注意路径和版本
+    #     # 启动 Nginx
+    #     Start-Service nginx
 
-        
+
     # # Docker化：构建并推送 Docker 镜像
     # - name: Build Docker images
     #   run: |
