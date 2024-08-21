@@ -10,7 +10,7 @@ on:  # 定义触发事件
 
 jobs:
   build-and-deploy:
-    runs-on: windows  # 定义运行环境
+    runs-on: ubuntu-latest  # 定义运行环境
 
     steps:
     - name: Checkout code  # 签出代码
@@ -20,7 +20,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14'  # 指定 Node.js 版本
+        node-version: '20'  # 指定 Node.js 版本
 
     # 前端构建：安装依赖并构建 Vue 3 项目
     - name: Install and build Vue 3 project

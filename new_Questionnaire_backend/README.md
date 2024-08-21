@@ -43,3 +43,43 @@ kill进程：
 ```
 kill [PID]
 ```
+
+## 安装Nginx
+
+1. 从 [Nginx官网](http://nginx.org/en/download.html) 下载适用于Windows的稳定版。
+2. 解压下载的文件到 `C:\nginx` 或 `D:\nginx`
+
+## Nginx 配置
+
+1. 打开 nginx.conf:
+通常位于 C:\nginx\conf\nginx.conf（Windows），使用文本编辑器打开这个文件
+2. 在 http 块中添加一行 include 指令，引用你项目中的配置文件：
+```
+http {
+    include       mime.types;
+    default_type  application/octet-stream;
+
+    # 引用项目内的Nginx配置文件
+    include C:/path/to/your/project/nginx.conf;
+
+    # 其他配置...
+}
+```
+3. 打开命令提示符，导航到 `C:\nginx` 或 `D:\nginx` 目录，运行 `start nginx` 启动Nginx。
+4. 管理Nginx:
+   - 停止Nginx：要停止Nginx，可以在命令提示符中输入以下命令：
+    ```
+    nginx -s stop
+    ```
+    - 重新加载配置：如果你修改了Nginx的配置文件并希望应用更改，而无需完全停止Nginx，可以使用以下命令重新加载配置：
+    ```
+    nginx -s reload
+    ```
+5. 使用下面的代码，启动Django实例：
+    ```
+    python manage.py runserver 8000
+    python manage.py runserver 8001
+    python manage.py runserver 8002
+    ```
+    如果暂时不需要负载均衡，可以只启动任一一个
+6. 访问 `http://localhost:8000/` 或 `http://localhost:8001/` 或 `http://localhost:8002/` 验证Nginx是否启动成功（请根据启动的端口号，选择网址）
