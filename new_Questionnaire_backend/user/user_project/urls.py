@@ -1,6 +1,7 @@
 from django.urls import path, include
 from user_project import views
 from .views import health_check
+from .views import UserDetailView
   
 urlpatterns = [  
     # ... 微服务的健康检查 ...  
@@ -11,4 +12,5 @@ urlpatterns = [
     path('userManage/personal/<str:username>',views.get_user_info,name='get-user-info-url'),
     path('personal/message',views.modify_user_info,name='modify-user-info-url'),
     path('personal/shop',views.modify_photo_in_shop,name='modify-photo-in-shop-url'),
+    path('api/user/<str:username>/', UserDetailView.as_view(), name='user-detail'),
 ]
