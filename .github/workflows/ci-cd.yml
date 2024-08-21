@@ -10,7 +10,7 @@ on:  # 定义触发事件
 
 jobs:
   build-and-deploy:
-    runs-on: ubuntu-latest  # 定义运行环境
+    runs-on: windows-latest  # 定义运行环境
 
     steps:
     - name: Checkout code  # 签出代码
@@ -30,10 +30,10 @@ jobs:
         npm run build  # 构建项目
 
     # 后端设置：Python 环境
-    - name: Set up Python 3.8
+    - name: Set up Python 3.11
       uses: actions/setup-python@v2
       with:
-        python-version: '3.8'  # 指定 Python 版本
+        python-version: '3.11'  # 指定 Python 版本
 
     # 后端构建：安装依赖并运行 Django 测试
     - name: Install dependencies and run Django tests
@@ -43,6 +43,15 @@ jobs:
         pip install -r requirements.txt  # 安装依赖
         cd backend
         python manage.py test  # 运行测试
+
+    # Nginx 安装和启动
+    - name: Install and configure Nginx
+      run: |
+        choco install nginx -y  # 使用 Chocolatey 安装 Nginx
+        # 复制和配置 Nginx 配置文件
+        copy .\.github\nginx\nginx.conf C:\tools\nginx-*\conf\nginx.conf  # 注意路径和版本
+        # 启动 Nginx
+        Start-Service nginx
 
     # # Docker化：构建并推送 Docker 镜像
     # - name: Build Docker images
