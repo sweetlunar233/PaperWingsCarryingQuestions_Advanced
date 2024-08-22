@@ -26,7 +26,7 @@ export function modifyUserInfoInMessage(username, email, password, photonumber, 
     data.photonumber = photonumber;
     data.status = status;
     data.flag = flag;
-    return post("/personal/message/", data);
+    return post(userServeAddress+"/personal/message/", data);
 }
 
 // export function updateUserphotoInMassage(username, photonumber, status){
@@ -43,7 +43,7 @@ export function updateUserphotoInShop(username, photonumber, status, money){
     data.photonumber = photonumber;
     data.status = status;
     data.money = money;
-    return post("/personal/shop/", data);
+    return post(userServeAddress+"/personal/shop/", data);
 }
 
 // export function updateUserInfo(username, email){
