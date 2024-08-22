@@ -40,6 +40,8 @@ userServeAddress='http://172.0.0.1:8000'
 managementServeAddress='http://172.0.0.1:8001'
 editionServeAddress='http://172.0.0.1:8002'
 
+serveAddress='http://172.0.0.1:8000'
+
 @require_http_methods(["GET"])  
 def health_check(request):  
     # 这里可以添加一些实际的健康检查逻辑  
@@ -83,8 +85,10 @@ def modify_photo_in_shop(request):
 
 #获取个人信息
 def get_user_info(request,username):
+    print('###')
     if(request.method=='GET'):
         try:
+            print('***')
             user=User.objects.get(username=username)
             if user is None:
                 return JsonResponse({'error': 'No user found'}, status=400) 

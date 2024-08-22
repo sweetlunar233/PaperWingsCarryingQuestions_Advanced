@@ -7,6 +7,7 @@ import { post,get } from "./api"
 // }
 
 export function postUserMessage(username,password, email){
+    console.log("i m in in")
     let data = {};
     data.username = username;
     data.password = password;

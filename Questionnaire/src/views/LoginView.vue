@@ -108,9 +108,10 @@
             ElMessage.error('密码必须为5到25位非空字符');
             return;
         }
-
+        console.log("i m in")
         var promise = postUserMessage(loginData.value.username, loginData.value.password, false);
         promise.then((result)=>{
+            console.log("i m out")
             if (result.message == "1") {
                 ElMessage.error("用户名不存在,请先注册");
                 

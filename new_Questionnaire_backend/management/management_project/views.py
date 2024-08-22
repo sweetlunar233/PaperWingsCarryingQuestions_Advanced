@@ -59,7 +59,7 @@ def delete_filled_qs(request):
             id = submission.SubmissionID
             url = f'{editionServeAddress}/delete-submission/{id}/'
             try:
-                response = requests.post(url)
+                response = requests.get(url)
                 response.raise_for_status()
                 print(f"Successfully deleted edition service: {response.json()}")
             except requests.exceptions.RequestException as e:

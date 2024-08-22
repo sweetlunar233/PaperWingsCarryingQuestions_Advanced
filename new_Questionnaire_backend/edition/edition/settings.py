@@ -49,7 +49,7 @@ MIDDLEWARE = [
     "django.contrib.sessions.middleware.SessionMiddleware",
     'corsheaders.middleware.CorsMiddleware',  # 添加这一行
     "django.middleware.common.CommonMiddleware",
-    "django.middleware.csrf.CsrfViewMiddleware",
+    #"django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
@@ -57,7 +57,17 @@ MIDDLEWARE = [
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000',  # 允许Vue应用的域名访问
+    'http://localhost:8080',  # 允许Vue应用的域名访问
+]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'OPTIONS',
+]
+
+CORS_ALLOW_HEADERS = [
+    '*',
 ]
 
 # Consul配置信息
@@ -87,7 +97,7 @@ WSGI_APPLICATION = "edition.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-'''
+
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
@@ -98,7 +108,7 @@ DATABASES = {
         'NAME': 'edition_db'  # 数据库名
     }
 }
-'''
+
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

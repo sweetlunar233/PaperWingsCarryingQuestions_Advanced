@@ -949,7 +949,7 @@ from urllib.parse import quote
 def download_submissions(request, surveyID):
     if request.method == 'GET':
         try:
-            survey_api_url = f'http://127.0.0.1:8001/survey/{surveyID}/'
+            survey_api_url = f'{managementServeAddress}/survey/{surveyID}/'
             try:
                 survey_response = requests.get(survey_api_url)
                 survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -999,7 +999,7 @@ def download_submissions(request, surveyID):
                 sub_index+=1
                 # 调用 user 项目的 API 获取用户信息
                 id = submission.RespondentID
-                user_api_url = f'http://127.0.0.1:8000/user/{id}/'
+                user_api_url = f'{userServeAddress}/user/{id}/'
                 try:
                     user_response = requests.get(user_api_url)
                     user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -1081,7 +1081,7 @@ from django.db.models import Count, Sum, Q
 def survey_statistics(request, surveyID):
     if (request.method=='GET'):
         #问卷
-        survey_api_url = f'http://127.0.0.1:8001/survey/{surveyID}/'
+        survey_api_url = f'{managementServeAddress}/survey/{surveyID}/'
         try:
             survey_response = requests.get(survey_api_url)
             survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -1201,4 +1201,14 @@ def check_survey_status(request):
 
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-    
+
+@api_view(['GET'])
+def DeleteSubmission(request, SubmissionID):
+    try:
+        submission = Submission.objects.get(SubmissionID=SubmissionID)
+        submission.delete()
+        submission.save()
+    except Submission.DoesNotExist:
+        return Response({'error': 'Survey not found'}, status=status.HTTP_404_NOT_FOUND)
+
+    return JsonResponse({'message': "success"})
