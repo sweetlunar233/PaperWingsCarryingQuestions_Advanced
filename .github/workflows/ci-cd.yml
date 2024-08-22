@@ -56,6 +56,10 @@ jobs:
     #     docker push username/vueapp:${{ github.sha }}  # 推送前端镜像
     #     docker push username/djangoapp:${{ github.sha }}  # 推送后端镜像
 
+    - name: Create .kube directory
+      run: |
+        mkdir -p $HOME/.kube
+
     - name: Set up Kubeconfig
       run: |
         echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
