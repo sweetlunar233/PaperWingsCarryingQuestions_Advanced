@@ -16,18 +16,6 @@ jobs:
     - name: Checkout code  # 签出代码
       uses: actions/checkout@v2  # 使用的 Action
 
-    # # 前端设置：Node.js 环境
-    # - name: Set up Node.js
-    #   uses: actions/setup-node@v2
-    #   with:
-    #     node-version: '20'  # 指定 Node.js 版本
-
-    # # 后端设置：Python 环境
-    # - name: Set up Python 3.11
-    #   uses: actions/setup-python@v2
-    #   with:
-    #     python-version: '3.11'  # 指定 Python 版本
-
     # # 后端构建：安装依赖并运行 Django 测试
     # - name: Install dependencies and run Django tests
     #   run: |
@@ -54,9 +42,6 @@ jobs:
     #   run: |
     #     docker build -t username/vueapp:${{ github.sha }} ./frontend  # 构建前端镜像
     #     docker build -t username/djangoapp:${{ github.sha }} ./backend  # 构建后端镜像
-    #     echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin  # Docker 登录
-    #     docker push username/vueapp:${{ github.sha }}  # 推送前端镜像
-    #     docker push username/djangoapp:${{ github.sha }}  # 推送后端镜像
 
     # 用于搭建 k8s 集群
     - name: Install Kind
@@ -64,20 +49,6 @@ jobs:
         curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
         chmod +x ./kind
         sudo mv ./kind /usr/local/bin/kind
-    
-    # 使用 Kind 创建一个 Kubernetes 集群
-    - name: Create Kubernetes cluster
-      run: |
-        kind create cluster
-    
-    # 使用 kubectl cluster-info 命令获取集群信息，验证控制平面是否正常运行
-    - name: Verify Kubernetes cluster info
-      run: |
-        kubectl cluster-info
-
-    - name: List Kubernetes Nodes
-      run: |
-        kubectl get nodes
 
     # # 部署到 Kubernetes
     # - name: Deploy to Kubernetes
