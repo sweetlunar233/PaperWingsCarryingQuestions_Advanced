@@ -427,6 +427,7 @@ def save_submission(request):
                                              )
 
             submission.save()
+
             data={'message':'True'}
             return JsonResponse(data)
         except json.JSONDecodeError:  

@@ -650,6 +650,16 @@ def get_submission(request):
 
             user_data.zhibi+=50
             user_data.save()
+
+            # 向user传输更新后的zhibi信息
+            user_save_url=f'{userServeAddress}/user_save'
+            data={'UserID':user_data.UserID,'zhibi':user_data.zhibi}
+            
+            try:
+                response=request.post(user_save_url,data)
+                response.raise_for_status()
+            except requests.exceptions.RequestException as e:
+                print(f'Error deleting edition service:{e}')
             ######################huyanzhe
                 
         except json.JSONDecodeError:  
