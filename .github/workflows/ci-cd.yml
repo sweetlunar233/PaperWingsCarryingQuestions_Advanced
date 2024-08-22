@@ -69,6 +69,10 @@ jobs:
       with:
         version: 'latest'
 
+    - name: List Kubernetes Nodes
+      run: |
+        kubectl get nodes
+
     # # 部署到 Kubernetes
     # - name: Deploy to Kubernetes
     #   run: |
