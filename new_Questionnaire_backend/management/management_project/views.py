@@ -415,3 +415,42 @@ def get_survey(request, survey_id):
 
     serializer = SurveySerializer(survey)
     return Response(serializer.data)
+
+@api_view(['POST'])
+def UpdateSurvey(request):
+    if(request.method=='POST'):
+        try:
+            body=json.loads(request.body)
+            SurveyID=body['SurveyID']
+            OwnerID=body['OwnerID']
+            Title=body['Title']
+            Description=body['Description']
+            Is_released=body['Is_released']
+            Is_open=body['Is_open']
+            Is_deleted=body['Is_deleted']
+            Category=body['Category']
+            TotalScore=body['TotalScore']
+            TimeLimit=body['TimeLimit']
+            IsOrder=body['IsOrder']
+            PublishDate=body['PublishDate']
+
+            if(SurveyID==-1):
+                survey=Survey.objects.create(OwnerID=OwnerID,Title=Title,
+                                             Description=Description,Is_released=Is_released,
+                                             Is_open=Is_open,Is_deleted=Is_deleted,Category=Category,
+                                             TotalScore=TotalScore,TimeLimit=TimeLimit,IsOrder=IsOrder
+                                            )
+                return JsonResponse({'SurveyID':survey.SurveyID})
+            else:
+                survey=Survey.objects.get(SurveyID=SurveyID)
+                survey.Title=Title
+                survey.Is_released=Is_released
+                survey.Description=Description
+                survey.Category=Category
+                survey.TimeLimit=TimeLimit
+                survey.IsOrder=IsOrder
+                survey.PublishDate=PublishDate
+                survey.save()
+                return JsonResponse({'SurveyID':survey.SurveyID})
+        except Submission.DoesNotExist:
+            return Response({'error': 'Submission not found'}, status=status.HTTP_404_NOT_FOUND)

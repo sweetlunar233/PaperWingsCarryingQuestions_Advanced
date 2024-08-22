@@ -530,6 +530,7 @@ def get_submission(request):
                 submission.Interval=duration
                 submission.SubmissionTime=timezone.now()    #更新为当前时间
                 submission.save()
+                ######################huyanzhe
                 
                 
                 
@@ -759,39 +760,66 @@ def save_qs_design(request):
             
             #当前不存在该问卷，创建：
             if surveyID==-1:
-                survey=Survey.objects.create(OwnerID=user_data.UserID,Title=title,
-                                             Description=description,Is_released=Is_released,
-                                             Is_open=True,Is_deleted=False,Category=catecory,
-                                             TotalScore=0,TimeLimit=timelimit,IsOrder=isOrder
-                                            )
+                # survey=Survey.objects.create(OwnerID=user_data.UserID,Title=title,
+                #                              Description=description,Is_released=Is_released,
+                #                              Is_open=True,Is_deleted=False,Category=catecory,
+                #                              TotalScore=0,TimeLimit=timelimit,IsOrder=isOrder
+                #                             )
                 print("TieZhu")
                 #survey.QuotaLimit=people
                 ###############huyanzhe
+                url = f'{managementServeAddress}/update-survey'
+                data = {
+                    'SurveyID': surveyID,
+                    'OwnerID': user_data.UserID,
+                    'Title': title,
+                    'Description': description,
+                    'Is_released': Is_released,
+                    'Is_open': True,
+                    'Is_deleted': False,
+                    'Category': catecory,
+                    'TotalScore': 0,
+                    'TimeLimit': timelimit,
+                    'IsOrder': isOrder,
+                    'PublishDate': None
+                }
+                try:
+                    response = requests.post(url, data)
+                    response.raise_for_status()
+                    response_data = response.json()
+                    id = response_data['SurveyID']
+                    print(f"Successfully deleted edition service: {response.json()}")
+                except requests.exceptions.RequestException as e:
+                    print(f"Error deleting edition service: {e}")
             #已有该问卷的编辑记录
             else:
-                survey_api_url = f'http://127.0.0.1:8001/survey/{surveyID}/'
-                try:
-                    survey_response = requests.get(survey_api_url)
-                    survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
-                    survey_data = survey_response.json()
-                except requests.RequestException as e:
-                    return JsonResponse({'error': str(e)}, status=500)
-                # survey=Survey.objects.get(SurveyID=surveyID)
-                if survey_data is None:
-                    return HttpResponse(content='Questionnaire not found', status=400) 
-                
-                survey_data.Title=title
-                survey_data.Is_released=Is_released
-                survey_data.Description=description
-                survey_data.Category=catecory
-                survey_data.TimeLimit=timelimit
-                survey_data.IsOrder=isOrder
-                #survey.QuotaLimit=people    #该问卷的报名人数
-                survey_data.save()
                 #####################huyanzhe
+                url = f'{managementServeAddress}/update-survey'
+                data = {
+                    'SurveyID': surveyID,
+                    'OwnerID': None,
+                    'Title': title,
+                    'Description': description,
+                    'Is_released': Is_released,
+                    'Is_open': None,
+                    'Is_deleted': None,
+                    'Category': catecory,
+                    'TotalScore': None,
+                    'TimeLimit': timelimit,
+                    'IsOrder': isOrder,
+                    'PublishDate': publishDate
+                }
+                try:
+                    response = requests.post(url, data)
+                    response.raise_for_status()
+                    response_data = response.json()
+                    id = response_data['SurveyID']
+                    print(f"Successfully deleted edition service: {response.json()}")
+                except requests.exceptions.RequestException as e:
+                    print(f"Error deleting edition service: {e}")
 
                 #该问卷的所有选择题
-                choiceQuestion_query=ChoiceQuestion.objects.filter(SurveyID=survey_data.SurveyID)
+                choiceQuestion_query=ChoiceQuestion.objects.filter(SurveyID=id)
                 for choiceQuestion in choiceQuestion_query:
                     #删除该选择题的所有选项
                     choiceOption_query=ChoiceOption.objects.filter(Question=choiceQuestion)
@@ -800,19 +828,14 @@ def save_qs_design(request):
                     choiceQuestion.delete()
 
                 #删除该问卷的所有填空题
-                blankQuestion_query=BlankQuestion.objects.filter(SurveyID=survey_data.SurveyID)
+                blankQuestion_query=BlankQuestion.objects.filter(SurveyID=id)
                 for blankQuestion in blankQuestion_query:
                     blankQuestion.delete()
                 
                 #删除该问卷的所有评分题
-                ratingQuestion_query=RatingQuestion.objects.filter(SurveyID=survey_data.SurveyID)
+                ratingQuestion_query=RatingQuestion.objects.filter(SurveyID=id)
                 for ratingQuestion in ratingQuestion_query:
                     ratingQuestion.delete()
-
-            # 新加的
-            survey_data.PublishDate=publishDate
-            survey_data.save()
-            #######################huyanzhe
 
             index=1
             for question in questionList:
@@ -820,7 +843,7 @@ def save_qs_design(request):
 
                     optionList=question['optionList']
                     
-                    question=ChoiceQuestion.objects.create(SurveyID=survey_data.SurveyID,Text=question["question"],IsRequired=question["isNecessary"],
+                    question=ChoiceQuestion.objects.create(SurveyID=id,Text=question["question"],IsRequired=question["isNecessary"],
                                                                 QuestionNumber=index,Score=question["score"],Category=question["type"],
                                                                 OptionCnt=question["optionCnt"],MaxSelectable=question['max'])
                     question.save()
@@ -836,13 +859,13 @@ def save_qs_design(request):
                 
                 elif question["type"]==3:                          #填空
                     # print(question)
-                    question=BlankQuestion.objects.create(SurveyID=survey_data.SurveyID,Text=question["question"],IsRequired=question["isNecessary"],
+                    question=BlankQuestion.objects.create(SurveyID=id,Text=question["question"],IsRequired=question["isNecessary"],
                                                         Score=question["score"],QuestionNumber=index,Category=question["type"],
                                                             CorrectAnswer=question["correctAnswer"])
                     question.save()  
                 
                 else:                                           #评分题
-                    question=RatingQuestion.objects.create(SurveyID=survey_data.SurveyID,Text=question["question"],IsRequired=question["isNecessary"],
+                    question=RatingQuestion.objects.create(SurveyID=id,Text=question["question"],IsRequired=question["isNecessary"],
                                                               Score=question["score"],QuestionNumber=index,Category=question["type"])
                     question.save()
                 index=index+1

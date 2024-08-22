@@ -2,6 +2,7 @@ from django.urls import path, include
 from management_project import views
 from .views import health_check
 from .views import get_survey
+from .views import UpdateSurvey
 
   
 urlpatterns = [  
@@ -24,4 +25,5 @@ urlpatterns = [
 
     # 微服务通信：获取surveyID
     path('survey/<int:survey_id>', get_survey, name='get_survey'),
+    path('update-survey', UpdateSurvey, name='update_survey'),
 ]
