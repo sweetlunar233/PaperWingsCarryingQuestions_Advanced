@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: other-backend
+  namespace: zhiyi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: other-backend
+  template:
+    metadata:
+      labels:
+        app: other-backend
+    spec:
+      containers:
+      - name: other-backend
+        image: #TODO后端-其他镜像
+        ports:
+        - containerPort: 8080

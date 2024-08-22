@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: survey-management-backend
+  namespace: zhiyi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: survey-management-backend
+  template:
+    metadata:
+      labels:
+        app: survey-management-backend
+    spec:
+      containers:
+      - name: survey-management-backend
+        image: #TODO后端-问卷管理镜像
+        ports:
+        - containerPort: 8080
