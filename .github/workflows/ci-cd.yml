@@ -10,43 +10,43 @@ on:  # 定义触发事件
 
 jobs:
   build-and-deploy:
-    runs-on: windows-latest  # 定义运行环境
+    runs-on: ubuntu-latest  # 定义运行环境
 
     steps:
     - name: Checkout code  # 签出代码
       uses: actions/checkout@v2  # 使用的 Action
 
-    # 前端设置：Node.js 环境
-    - name: Set up Node.js
-      uses: actions/setup-node@v2
-      with:
-        node-version: '20'  # 指定 Node.js 版本
+    # # 前端设置：Node.js 环境
+    # - name: Set up Node.js
+    #   uses: actions/setup-node@v2
+    #   with:
+    #     node-version: '20'  # 指定 Node.js 版本
 
-    # 后端设置：Python 环境
-    - name: Set up Python 3.11
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.11'  # 指定 Python 版本
+    # # 后端设置：Python 环境
+    # - name: Set up Python 3.11
+    #   uses: actions/setup-python@v2
+    #   with:
+    #     python-version: '3.11'  # 指定 Python 版本
 
-    # 后端构建：安装依赖并运行 Django 测试
-    - name: Install dependencies and run Django tests
-      run: |
-        cd Questionnaire_backend  # 进入后端项目目录
-        python -m pip install --upgrade pip  # 升级 pip
-        pip install -r requirements.txt  # 安装依赖
-        cd backend
-        python manage.py test  # 运行测试
+    # # 后端构建：安装依赖并运行 Django 测试
+    # - name: Install dependencies and run Django tests
+    #   run: |
+    #     cd Questionnaire_backend  # 进入后端项目目录
+    #     python -m pip install --upgrade pip  # 升级 pip
+    #     pip install -r requirements.txt  # 安装依赖
+    #     cd backend
+    #     python manage.py test  # 运行测试
 
     # Nginx 安装和启动
-    - name: Install and configure Nginx
-      run: |
-        choco install nginx -y  # 使用 Chocolatey 安装 Nginx
-        # 复制和配置 Nginx 配置文件
-        copy .\.github\nginx\nginx.conf C:\tools\nginx-1.27.0\conf\nginx.conf  # 注意路径和版本
-        # 启动 Nginx
-        Start-Service nginx
+    # - name: Install and configure Nginx
+    #   run: |
+    #     choco install nginx -y  # 使用 Chocolatey 安装 Nginx
+    #     # 复制和配置 Nginx 配置文件
+    #     copy .\.github\nginx\nginx.conf C:\tools\nginx-1.27.0\conf\nginx.conf  # 注意路径和版本
+    #     # 启动 Nginx
+    #     Start-Service nginx
 
-        
+
     # # Docker化：构建并推送 Docker 镜像
     # - name: Build Docker images
     #   run: |
@@ -55,6 +55,23 @@ jobs:
     #     echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin  # Docker 登录
     #     docker push username/vueapp:${{ github.sha }}  # 推送前端镜像
     #     docker push username/djangoapp:${{ github.sha }}  # 推送后端镜像
+
+    - name: Create .kube directory
+      run: |
+        mkdir -p $HOME/.kube
+
+    - name: Set up Kubeconfig
+      run: |
+        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
+
+    - name: Set up kubectl
+      uses: azure/setup-kubectl@v3
+      with:
+        version: 'latest'
+
+    - name: List Kubernetes Nodes
+      run: |
+        kubectl get nodes
 
     # # 部署到 Kubernetes
     # - name: Deploy to Kubernetes
