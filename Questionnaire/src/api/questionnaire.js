@@ -7,35 +7,35 @@ let editionServeAddress='http://127.0.0.1:8002'
 export function GetUnreleasedQs(username){
     let data = {};
     data.username = username;
-    return get("/management/userManage/unreleased/"+username+"/");
+    return get("/Manage/unreleased/"+username+"/");
 }
 
 export function GetReleasedQs(username){
     let data = {};
     data.username = username;
-    return get("/management/userManage/released/"+username+"/");
+    return get("/Manage/released/"+username+"/");
 }
 
 export function GetFilledQs(username){
     let data = {};
     data.username = username;
-    return get(`/userManage/filled/`+username+"/");
+    return get(`${managementServeAddress}/Manage/filled/`+username+"/");
 }
 
 export function GetAllReleasedQs(){
-    return get("/management/userManage/square/");
+    return get("/Manage/square/");
 }
 
 export function DeleteUnreleasedQs(id){
     let data = {};
     data.id = id;
-    return post("/management/userManage/unreleased/", id);
+    return post("/Manage/unreleased/", id);
 }
 
 export function DeleteFilledQs(id){
     let data = {};
     data.id = id;
-    return post("/management/userManage/filled/", id);
+    return post("/Manage/filled/", id);
 }
 
 //update:0
@@ -44,13 +44,13 @@ export function UpdateOrDelete(id, flag){
     let data = {};
     data.id = id;
     data.flag = flag;
-    return post("/userManage/released/",data);
+    return post("/Manage/released/",data);
 }
 
 export function check(username, questionnaireId, type){
-    return get("/userManage/square/"+username+"/"+questionnaireId+"/"+type);
+    return get("/Manage/square/"+username+"/"+questionnaireId+"/"+type);
 }
 
 export function checkFilled(questionnaireId){
-    return get("/userManage/filled/"+questionnaireId);
+    return get("/Manage/filled/"+questionnaireId);
 }
