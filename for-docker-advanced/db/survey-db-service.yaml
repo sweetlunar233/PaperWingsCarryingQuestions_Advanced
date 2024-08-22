@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: survey-db-service
+  namespace: zhiyi
+spec:
+  type: ClusterIP
+  selector:
+    app: survey-db
+  ports:
+  - protocol: TCP
+    port: 3306
+    targetPort: 3306
