@@ -57,7 +57,7 @@ def delete_filled_qs(request):
             submission.delete()
             ###############huyanzhe
             id = submission.SubmissionID
-            url = f'http://localhost:8002/delete-submission/{id}/'
+            url = f'{editionServeAddress}/delete-submission/{id}/'
             try:
                 response = requests.post(url)
                 response.raise_for_status()
@@ -104,7 +104,7 @@ def update_or_delete_released_qs(request):
                             ##############################################################################
                             url = f'{editionServeAddress}/update-submission-status/{submission.SubmissionID}'
                             try:
-                                response = requests.post(url)
+                                response = requests.get(url)
                                 response.raise_for_status()
                                 print(f"Successfully updated edition service: {response.json()}")
                             except requests.exceptions.RequestException as e:
@@ -415,3 +415,22 @@ def get_survey(request, survey_id):
 
     serializer = SurveySerializer(survey)
     return Response(serializer.data)
+
+
+def save_submission(request):
+    if(request.method=='POST'):
+        try:
+            body=json.loads(request.body)
+            submission=Submission.objects.create(SurveyID=body['SurveyID'],RespondentID=body['RespondentID'],   
+                                             SubmissionTime=body['SubmissionTime'],Status=body['Status'],
+                                             Interval=body['Interval'],Score=body['Score']
+                                             )
+
+            submission.save()
+            data={'message':'True'}
+            return JsonResponse(data)
+        except json.JSONDecodeError:  
+            return JsonResponse({'error': 'Invalid JSON body'}, status=400)
+        except Exception as e:  
+            return JsonResponse({'error': str(e)}, status=500) 
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
