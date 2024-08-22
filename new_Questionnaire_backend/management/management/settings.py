@@ -80,7 +80,7 @@ WSGI_APPLICATION = "management.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
-
+'''
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
@@ -91,7 +91,7 @@ DATABASES = {
         'NAME': 'management_db'  # 数据库名
     }
 }
-
+'''
 
 # Password validation
 # https://docs.djangoproject.com/en/5.1/ref/settings/#auth-password-validators

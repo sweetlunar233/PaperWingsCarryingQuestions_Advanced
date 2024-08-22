@@ -29,6 +29,6 @@ urlpatterns = [
     path('dataPre/<int:surveyID>',views.survey_statistics,name='survey-statistics-url'),
     path('dataPre/download/<int:surveyID>',views.download_submissions,name='download_submissions-url'),
 
-    path('check-survey-status/', check_survey_status, name='check_survey_status'),
-    path('update-submission-status/<int:submission_id>/<str:new_status>', UpdateSubmissionStatus, name='update-submission-status'),
+    path('check-survey-status', check_survey_status, name='check_survey_status'),
+    path('update-submission-status/<int:submission_id>', UpdateSubmissionStatus, name='update-submission-status'),
 ]
