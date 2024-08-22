@@ -33,6 +33,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from .models import User
+from rest_framework.decorators import api_view
 from .serializers import UserSerializer
 
 
@@ -258,11 +259,34 @@ def activate_user(request,token):
     user.save()
     return HttpResponse(status=200,content=True)
 
-class UserDetailView(APIView):
-    def get(self, request, username):
-        try:
-            user = User.objects.get(username=username)
-            serializer = UserSerializer(user)
-            return Response(serializer.data, status=status.HTTP_200_OK)
-        except User.DoesNotExist:
-            return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+# class UserDetailView(APIView):
+#     def get(self, request, *args, **kwargs):
+#         try:
+#             print('aaa')
+#             username=kwargs.get('username')
+#             user = User.objects.get(username=username)
+            
+#             serializer = UserSerializer(user)
+#             return Response(serializer.data, status=status.HTTP_200_OK)
+#         except User.DoesNotExist:
+#             return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+@api_view(['GET'])
+def UserDetailView(request, username):
+    try:
+        print('aaa')
+        user = User.objects.get(username=username)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['GET'])
+def UserDetailViewID(request, UserID):
+    try:
+        print('aaa')
+        user = User.objects.get(UserID=UserID)
+        serializer = UserSerializer(user)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+    except User.DoesNotExist:
+        return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)

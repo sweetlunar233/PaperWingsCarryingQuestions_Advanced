@@ -20,7 +20,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularJSONAPIView, Sp
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path('health/',include("user_project.urls")),
+    path('',include("user_project.urls")),
 ]
 
 urlpatterns+=[
