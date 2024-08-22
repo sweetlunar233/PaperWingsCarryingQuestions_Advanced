@@ -22,5 +22,6 @@ urlpatterns = [
     path('userManage/released',views.update_or_delete_released_qs,name='delete-released-qs-url'),
     path('userManage/filled',views.delete_filled_qs,name='delete-filled-qs'),
 
-    path('survey/<int:survey_id>/', get_survey, name='get_survey'),
+    # 微服务通信：获取surveyID
+    path('survey/<int:survey_id>', get_survey, name='get_survey'),
 ]

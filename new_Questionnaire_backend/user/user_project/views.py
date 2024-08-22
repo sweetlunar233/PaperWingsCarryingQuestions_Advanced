@@ -36,7 +36,9 @@ from .models import User
 from rest_framework.decorators import api_view
 from .serializers import UserSerializer
 
-serveAddress="http:127.0.0.1:8000"
+userServeAddress='http://172.0.0.1:8000'
+managementServeAddress='http://172.0.0.1:8001'
+editionServeAddress='http://172.0.0.1:8002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
