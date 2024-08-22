@@ -63,7 +63,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8004',  # 允许Vue应用的域名访问
+    'http://127.0.0.1:8000',  # 允许Vue应用的域名访问
 ]
 
 ROOT_URLCONF = "user.urls"
@@ -90,7 +90,7 @@ WSGI_APPLICATION = "user.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
-
+'''
 DATABASES = {
     "default": {
         'ENGINE': 'django.db.backends.mysql',
@@ -101,7 +101,7 @@ DATABASES = {
         'NAME': 'user_db'  # 数据库名
     }
 }
-
+'''
 
 
 # Password validation

@@ -847,30 +847,6 @@ def save_qs_design(request):
         except Exception as e:  
             return JsonResponse({'error': str(e)}, status=500) 
     return JsonResponse({'error': 'Invalid request method'}, status=405)
-
-@api_view(['POST'])
-def check_survey_status(request):
-    survey_id = request.data.get('survey_id')
-    if not survey_id:
-        return Response({'error': 'survey_id is required'}, status=status.HTTP_400_BAD_REQUEST)
-
-    try:
-        choice_questions = ChoiceQuestion.objects.filter(Survey_id=survey_id, Category__in=[1,2], IsRequired=True)
-        is_full = True
-
-        for choice_question in choice_questions:
-            choice_options = ChoiceOption.objects.filter(Question=choice_question)
-            for choice_option in choice_options:
-                if choice_option.MaxSelectablePeople > 0:
-                    is_full = False
-                    break
-            if not is_full:
-                break
-
-        return Response({'is_full': is_full})
-
-    except Exception as e:
-        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 #交叉分析
 def cross_analysis(request, QuestionID1, QuestionID2):
@@ -1143,13 +1119,13 @@ def survey_statistics(request, surveyID):
 
     
 @api_view(['POST'])
-def UpdateSubmissionStatus(request, submission_id, new_status):
-    if not submission_id or not new_status:
+def UpdateSubmissionStatus(request, submission_id):
+    if not submission_id:
         return Response({'error': 'SubmissionID and Status are required'}, status=status.HTTP_400_BAD_REQUEST)
     
     try:
         submission = Submission.objects.get(SubmissionID=submission_id)
-        submission.Status = new_status
+        submission.Status = 'Deleted'
         submission.save()
         return Response({'status': 'Submission updated'}, status=status.HTTP_200_OK)
     except Submission.DoesNotExist:
@@ -1167,3 +1143,27 @@ def DeleteSubmission(request, submission_id):
         return Response({'status': 'Submission deleted'}, status=status.HTTP_200_OK)
     except Submission.DoesNotExist:
         return Response({'error': 'Submission not found'}, status=status.HTTP_404_NOT_FOUND)
+
+@api_view(['POST'])
+def check_survey_status(request):
+    survey_id = request.data.get('survey_id')
+    if not survey_id:
+        return Response({'error': 'survey_id is required'}, status=status.HTTP_400_BAD_REQUEST)
+
+    try:
+        choice_questions = ChoiceQuestion.objects.filter(Survey_id=survey_id, Category__in=[1,2], IsRequired=True)
+        is_full = True
+
+        for choice_question in choice_questions:
+            choice_options = ChoiceOption.objects.filter(Question=choice_question)
+            for choice_option in choice_options:
+                if choice_option.MaxSelectablePeople > 0:
+                    is_full = False
+                    break
+            if not is_full:
+                break
+
+        return Response({'is_full': is_full})
+
+    except Exception as e:
+        return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

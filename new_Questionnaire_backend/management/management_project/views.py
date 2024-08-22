@@ -33,6 +33,10 @@ from .serializers import SurveySerializer
 
 from django.views.decorators.http import require_http_methods
 
+userServeAddress='http://172.0.0.1:8000'
+managementServeAddress='http://172.0.0.1:8001'
+editionServeAddress='http://172.0.0.1:8002'
+
 @require_http_methods(["GET"])  
 def health_check(request):  
     # 这里可以添加一些实际的健康检查逻辑  
@@ -96,11 +100,9 @@ def update_or_delete_released_qs(request):
                             submission.Status='Deleted'
                             submission.save()
                             ##############################################################################
-                            # 需要发送通信使edition删除qsID相同的问卷的所有信息huyanzhe
+                            # 需要发送通信,使edition改变该填写记录的状态（改为Deleted）
                             ##############################################################################
-                            id = submission.SubmissionID
-                            status = submission.Status
-                            url = f'http://localhost:8002/update-submission-status/{id}/{status}/'
+                            url = f'{editionServeAddress}/update-submission-status/{submission.SubmissionID}'
                             try:
                                 response = requests.post(url)
                                 response.raise_for_status()
@@ -168,7 +170,7 @@ def delete_unreleased_qs(request):
 def get_drafted_qs(request, username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+        user_api_url = f'{userServeAddress}/user/{username}'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -208,7 +210,7 @@ def get_drafted_qs(request, username):
 def get_released_qs(request,username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+        user_api_url = f'{userServeAddress}/user/{username}'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -232,7 +234,7 @@ def get_released_qs(request,username):
 def get_filled_qs(request,username):
     if(request.method=='GET'):
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+        user_api_url = f'{userServeAddress}/user/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -277,7 +279,7 @@ def check_qs_open_stautus(request,questionnaireId):
 #问卷广场：检查投票/考试问卷
 def check_qs(request,username,questionnaireId,type):
     # 调用 user 项目的 API 获取用户信息
-    user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+    user_api_url = f'{userServeAddress}/user/{username}/'
     try:
         user_response = requests.get(user_api_url)
         user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -327,10 +329,10 @@ def check_qs(request,username,questionnaireId,type):
         #检查是否超人数(检查每个必填选择题的所有选项，是否都超人数)
         submission_query=Submission.objects.filter(RespondentID=user_id,Survey=qs)
 
-        url = 'http://localhost:8002/check-survey-status/'
+        edition_api_url = f'{editionServeAddress}/check-survey-status'
         payload = {'survey_id': qs.SurveyID}
         try:
-            response = requests.post(url, json=payload)
+            response = requests.post(edition_api_url, json=payload)
             response.raise_for_status()
             result = response.json()
             if result.get('is_full')==True:
