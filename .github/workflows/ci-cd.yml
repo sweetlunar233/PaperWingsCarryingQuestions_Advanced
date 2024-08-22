@@ -46,6 +46,8 @@ jobs:
     #     # 启动 Nginx
     #     Start-Service nginx
 
+    - name: Set up Docker
+      uses: docker/setup-buildx-action@v2
 
     # # Docker化：构建并推送 Docker 镜像
     # - name: Build Docker images
@@ -56,18 +58,22 @@ jobs:
     #     docker push username/vueapp:${{ github.sha }}  # 推送前端镜像
     #     docker push username/djangoapp:${{ github.sha }}  # 推送后端镜像
 
-    - name: Create .kube directory
+    # 用于搭建 k8s 集群
+    - name: Install Kind
       run: |
-        mkdir -p $HOME/.kube
-
-    - name: Set up Kubeconfig
+        curl -Lo ./kind https://kind.sigs.k8s.io/dl/v0.17.0/kind-linux-amd64
+        chmod +x ./kind
+        sudo mv ./kind /usr/local/bin/kind
+    
+    # 使用 Kind 创建一个 Kubernetes 集群
+    - name: Create Kubernetes cluster
       run: |
-        echo "${{ secrets.KUBECONFIG }}" > $HOME/.kube/config
-
-    - name: Set up kubectl
-      uses: azure/setup-kubectl@v3
-      with:
-        version: 'latest'
+        kind create cluster
+    
+    # 使用 kubectl cluster-info 命令获取集群信息，验证控制平面是否正常运行
+    - name: Verify Kubernetes cluster info
+      run: |
+        kubectl cluster-info
 
     # # 部署到 Kubernetes
     # - name: Deploy to Kubernetes
