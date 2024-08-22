@@ -5,6 +5,7 @@ from .views import GetStoreFillView
 from .views import GetQuestionnaireView 
 from .views import check_survey_status
 from .views import UpdateSubmissionStatus
+from .views import DeleteSubmission
   
 urlpatterns = [  
     # ... 其他URL配置 ...  
@@ -31,4 +32,5 @@ urlpatterns = [
 
     path('check-survey-status/', check_survey_status, name='check_survey_status'),
     path('update-submission-status/<int:submission_id>/<str:new_status>', UpdateSubmissionStatus, name='update-submission-status'),
+    path('delete-submission/', DeleteSubmission, name='delete-submission'),
 ]

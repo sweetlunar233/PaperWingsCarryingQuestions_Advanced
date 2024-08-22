@@ -52,6 +52,14 @@ def delete_filled_qs(request):
                 return JsonResponse({'error': 'No ID provided'}, status=400) 
             submission.delete()
             ###############huyanzhe
+            id = submission.SubmissionID
+            url = f'http://localhost:8002/delete-submission/{id}/'
+            try:
+                response = requests.post(url)
+                response.raise_for_status()
+                print(f"Successfully deleted edition service: {response.json()}")
+            except requests.exceptions.RequestException as e:
+                print(f"Error deleting edition service: {e}")
 
         except json.JSONDecodeError:  
             return JsonResponse({'error': 'Invalid JSON body'}, status=400)
@@ -88,9 +96,11 @@ def update_or_delete_released_qs(request):
                             submission.Status='Deleted'
                             submission.save()
                             ##############################################################################
-                            # 需要发送通信使edition删除qsID相同的问卷的所有信息
+                            # 需要发送通信使edition删除qsID相同的问卷的所有信息huyanzhe
                             ##############################################################################
-                            url = f'http://localhost:8002/update-submission-status/{submission.SubmissionID}/{submission.Status}/'
+                            id = submission.SubmissionID
+                            status = submission.Status
+                            url = f'http://localhost:8002/update-submission-status/{id}/{status}/'
                             try:
                                 response = requests.post(url)
                                 response.raise_for_status()
@@ -136,9 +146,6 @@ def delete_unreleased_qs(request):
             if qs is None:  
                 return JsonResponse({'error': 'No questionnaire found with the given ID'}, status=404)
             qs.delete()
-
-
-            # 需要发送通信使edition删除qsID相同的问卷的所有信息
 
 
             data={'message':'True'}
@@ -320,7 +327,7 @@ def check_qs(request,username,questionnaireId,type):
         #检查是否超人数(检查每个必填选择题的所有选项，是否都超人数)
         submission_query=Submission.objects.filter(RespondentID=user_id,Survey=qs)
 
-        url = 'http://<edition-project-domain>/check-survey-status/'
+        url = 'http://localhost:8002/check-survey-status/'
         payload = {'survey_id': qs.SurveyID}
         try:
             response = requests.post(url, json=payload)

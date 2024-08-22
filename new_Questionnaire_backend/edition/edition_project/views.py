@@ -315,6 +315,7 @@ class GetStoreFillView(APIView):
                 submissionID=submission.SubmissionID
                 # newsubmissionID = submission.SubmissionID
                 # return HttpResponse(content='Submission not existed', status=404) 
+                #################huyanzhe
 
         #submissionID=-2时,只传回问卷题干(同问卷编辑的GET接口)
         elif submissionID=="-2":
@@ -544,11 +545,6 @@ def get_submission(request):
                 if RatingAnswer_query.exists():
                     for ratingAnswer in RatingAnswer_query:
                         ratingAnswer.delete()
-
-            # 新加的
-            survey_data.PublishDate=publishDate
-            survey_data.save()
-            ################huyanzhe
 
             for submissionItem in submissionList:
                 # print("TieZhu")
@@ -1156,5 +1152,18 @@ def UpdateSubmissionStatus(request, submission_id, new_status):
         submission.Status = new_status
         submission.save()
         return Response({'status': 'Submission updated'}, status=status.HTTP_200_OK)
+    except Submission.DoesNotExist:
+        return Response({'error': 'Submission not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+@api_view(['POST'])
+def DeleteSubmission(request, submission_id):
+    if not submission_id:
+        return Response({'error': 'SubmissionID and Status are required'}, status=status.HTTP_400_BAD_REQUEST)
+    
+    try:
+        submission = Submission.objects.get(SubmissionID=submission_id)
+        submission.delete()
+        submission.save()
+        return Response({'status': 'Submission deleted'}, status=status.HTTP_200_OK)
     except Submission.DoesNotExist:
         return Response({'error': 'Submission not found'}, status=status.HTTP_404_NOT_FOUND)
