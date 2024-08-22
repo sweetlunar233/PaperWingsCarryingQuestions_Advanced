@@ -653,7 +653,7 @@ def get_submission(request):
             user_data.save()
 
             # 向user传输更新后的zhibi信息
-            user_save_url=f'{userServeAddress}/user_save'
+            user_save_url=f'{userServeAddress}/user_save/'
             data={'UserID':user_data.UserID,'zhibi':user_data.zhibi}
             
             try:

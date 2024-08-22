@@ -9,21 +9,21 @@ export function GetQuestionnaire(surveyID,isDesign){    //isDesign=True,表示�
     const queryParams = new URLSearchParams({    
         design: isDesign ? 'true' : 'false',   
     });  
-    const url = `/questionnaireDesign/${surveyID}/?${queryParams.toString()}/`;
+    const url = `${editionServeAddress}/questionnaireDesign/${surveyID}/?${queryParams.toString()}/`;
     return get(url);
 }
 //拿到交叉分析数据
 export function GetCrossData(QuestionID1,QuestionID2){
-    const url = `/dataPre/${QuestionID1}/${QuestionID2}/`;
+    const url = `${editionServeAddress}/dataPre/${QuestionID1}/${QuestionID2}/`;
     return get(url);
 }
 //拿到其他数据
 export function GetOtherData(surveyID){
-    return get("/dataPre/"+surveyID);
+    return get(editionServeAddress+"/dataPre/"+surveyID);
 }
 //拿到暂存的填写记录
 export function GetStoreFill(userName,surveyID,submissionID){
-    const url = `/questionnaireFill/${userName}/${surveyID}/${submissionID}/`;
+    const url = `${editionServeAddress}/questionnaireFill/${userName}/${surveyID}/${submissionID}/`;
     return get(url);
 }
 //传回填写信息
@@ -52,7 +52,7 @@ export function PostFill(surveyID,status,question,duration,submissionId,username
     data.username = username;
     data.score = score;
     data.date = formattedDate;
-    return post('/questionnaireFill/',data);
+    return post(editionServeAddress+'/questionnaireFill/',data);
 }
 //传回问卷信息
 export function PostQuestion(surveyID,title,category,isOrder,timeLimit,questionList,description,userName,Is_released){
@@ -82,5 +82,5 @@ export function PostQuestion(surveyID,title,category,isOrder,timeLimit,questionL
     data.description=description;   //问卷描述
     data.Is_released = Is_released;
     data.date = formattedDate;
-    return post('/questionnaireDesign/',data);
+    return post(editionServeAddress+'/questionnaireDesign/',data);
 }

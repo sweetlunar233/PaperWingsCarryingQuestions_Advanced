@@ -170,15 +170,18 @@ def delete_unreleased_qs(request):
 def get_drafted_qs(request, username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'{userServeAddress}/user/{username}'
+        user_api_url = f'{userServeAddress}/user/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
             user_data = user_response.json()
             user_id = user_data.get('UserID')
 
+            print(user_id)
+
             # 使用从 user 项目获取的用户 ID 查找问卷
             qs_query = Survey.objects.filter(OwnerID=user_id, Is_released=False)
+            print(qs_query)
             data_list = [
                 {
                     'Title': survey.Title,
@@ -188,6 +191,7 @@ def get_drafted_qs(request, username):
                 } for survey in qs_query
             ]
             data = {'data': data_list}
+            print(data_list)
             return JsonResponse(data)
         except requests.RequestException as e:
             return JsonResponse({'error': str(e)}, status=500)

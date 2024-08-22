@@ -8,5 +8,5 @@ export function getQuestionnaireFill(
     username,
     questionnaireId
 ){
-    return get("/questionnaireFill/" + username + "/" + questionnaireId + "/");
+    return get(editionServeAddress+"/questionnaireFill/" + username + "/" + questionnaireId + "/");
 }

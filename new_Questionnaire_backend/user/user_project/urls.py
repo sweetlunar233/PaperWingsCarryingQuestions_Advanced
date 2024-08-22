@@ -16,4 +16,5 @@ urlpatterns = [
     
     path('user/<str:username>/', UserDetailView, name='user-detail'),
     path('user/<int:UserID>/', UserDetailViewID, name='user-detail-id'),
+    path('user/user_save/',views.save_user,'save-user-url'),
 ]

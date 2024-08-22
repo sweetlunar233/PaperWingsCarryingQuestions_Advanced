@@ -5,9 +5,9 @@ let managementServeAddress='http://127.0.0.1:8001'
 let editionServeAddress='http://127.0.0.1:8002'
 
 export function GetFillInTestAnswer(username, questionnaireId, submissionId) {
-    return get("/testAnswer/"+username+"/"+questionnaireId+"/"+submissionId+"/");
+    return get(editionServeAddress+"/testAnswer/"+username+"/"+questionnaireId+"/"+submissionId+"/");
 }
 
 export function GetFillInNormalAnswer(username, questionnaireId, submissionId) {
-    return get("/normalAnswer/"+username+"/"+questionnaireId+"/"+submissionId+"/");
+    return get(editionServeAddress+"/normalAnswer/"+username+"/"+questionnaireId+"/"+submissionId+"/");
 }
