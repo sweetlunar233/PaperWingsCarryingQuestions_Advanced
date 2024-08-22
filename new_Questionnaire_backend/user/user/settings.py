@@ -61,10 +61,13 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-
+# CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',  # 允许Vue应用的域名访问
+    'http://localhost:8000',  # 允许Vue应用的域名访问
+    'http://localhost:8001',
+    'http://localhost:8002',
+    'http://localhost:8080',
 ]
 
 CORS_ALLOW_METHODS = [
