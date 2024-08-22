@@ -51,6 +51,7 @@ def delete_filled_qs(request):
             if submission is None:
                 return JsonResponse({'error': 'No ID provided'}, status=400) 
             submission.delete()
+            ###############huyanzhe
 
         except json.JSONDecodeError:  
             return JsonResponse({'error': 'Invalid JSON body'}, status=400)
@@ -86,6 +87,16 @@ def update_or_delete_released_qs(request):
                         if submission.Status=='Unsubmitted':
                             submission.Status='Deleted'
                             submission.save()
+                            ##############################################################################
+                            # 需要发送通信使edition删除qsID相同的问卷的所有信息
+                            ##############################################################################
+                            url = f'http://localhost:8002/update-submission-status/{submission.SubmissionID}/{submission.Status}/'
+                            try:
+                                response = requests.post(url)
+                                response.raise_for_status()
+                                print(f"Successfully updated edition service: {response.json()}")
+                            except requests.exceptions.RequestException as e:
+                                print(f"Error updating edition service: {e}")
                 
             
             #更新发布状态
@@ -150,7 +161,7 @@ def delete_unreleased_qs(request):
 def get_drafted_qs(request, username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'http://127.0.0.1:8000/api/user/{username}/'
+        user_api_url = f'http://127.0.0.1:8000/user/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -190,7 +201,7 @@ def get_drafted_qs(request, username):
 def get_released_qs(request,username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'http://127.0.0.1:8000/api/user/{username}/'
+        user_api_url = f'http://127.0.0.1:8000/user/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -214,7 +225,7 @@ def get_released_qs(request,username):
 def get_filled_qs(request,username):
     if(request.method=='GET'):
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'http://127.0.0.1:8000/api/user/{username}/'
+        user_api_url = f'http://127.0.0.1:8000/user/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -259,7 +270,7 @@ def check_qs_open_stautus(request,questionnaireId):
 #问卷广场：检查投票/考试问卷
 def check_qs(request,username,questionnaireId,type):
     # 调用 user 项目的 API 获取用户信息
-    user_api_url = f'http://127.0.0.1:8000/api/user/{username}/'
+    user_api_url = f'http://127.0.0.1:8000/user/{username}/'
     try:
         user_response = requests.get(user_api_url)
         user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError

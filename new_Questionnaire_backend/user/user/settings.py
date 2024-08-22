@@ -63,7 +63,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:8000',  # 允许Vue应用的域名访问
+    'http://127.0.0.1:8004',  # 允许Vue应用的域名访问
 ]
 
 ROOT_URLCONF = "user.urls"
