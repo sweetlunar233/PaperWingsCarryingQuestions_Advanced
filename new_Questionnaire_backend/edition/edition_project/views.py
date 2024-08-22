@@ -39,6 +39,9 @@ from rest_framework import status
 import requests
 from io import BytesIO
   
+userServeAddress='http://172.0.0.1:8000'
+managementServeAddress='http://172.0.0.1:8001'
+editionServeAddress='http://172.0.0.1:8002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -51,7 +54,7 @@ def health_check(request):
 #普通问卷的展示界面：
 def display_answer_normal(request,username,questionnaireId,submissionId):
     # 调用 user 项目的 API 获取用户信息
-    user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+    user_api_url = f'{userServeAddress}/user/{username}/'
     try:
         user_response = requests.get(user_api_url)
         user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -62,7 +65,8 @@ def display_answer_normal(request,username,questionnaireId,submissionId):
     if user_data is None:
         return HttpResponse(content='User not found', status=404) 
     
-    survey_api_url = f'http://127.0.0.1:8001/survey/{questionnaireId}/'
+    # 调用management项目的API获取问卷信息
+    survey_api_url = f'{managementServeAddress}/survey/{questionnaireId}/'
     try:
         survey_response = requests.get(survey_api_url)
         survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -160,7 +164,7 @@ def display_answer_test(request,username,questionnaireId,submissionId):
 
 
     # 调用 user 项目的 API 获取用户信息
-    user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+    user_api_url = f'{userServeAddress}/user/{username}/'
     try:
         user_response = requests.get(user_api_url)
         user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -173,7 +177,7 @@ def display_answer_test(request,username,questionnaireId,submissionId):
     if user_data is None:
         return HttpResponse(content='User not found', status=404) 
     
-    survey_api_url = f'http://127.0.0.1:8001/survey/{questionnaireId}/'
+    survey_api_url = f'{managementServeAddress}/survey/{questionnaireId}/'
     try:
         survey_response = requests.get(survey_api_url)
         survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -274,7 +278,7 @@ class GetStoreFillView(APIView):
         submissionID=kwargs.get('submissionID')  
 
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'http://127.0.0.1:8000/user/{userName}/'
+        user_api_url = f'{userServeAddress}/user/{userName}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -286,7 +290,7 @@ class GetStoreFillView(APIView):
         if user_data is None:
             return HttpResponse(content='User not found', status=404) 
         
-        survey_api_url = f'http://127.0.0.1:8001/survey/{surveyID}/'
+        survey_api_url = f'{managementServeAddress}/survey/{surveyID}/'
         try:
             survey_response = requests.get(survey_api_url)
             survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -483,7 +487,7 @@ def get_submission(request):
 
             # print(submissionList)
 
-            survey_api_url = f'http://127.0.0.1:8001/survey/{surveyID}/'
+            survey_api_url = f'{managementServeAddress}/survey/{surveyID}/'
             try:
                 survey_response = requests.get(survey_api_url)
                 survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -496,7 +500,7 @@ def get_submission(request):
                 return HttpResponse(content='Questionnaire not found',status=404)
             
             # 调用 user 项目的 API 获取用户信息
-            user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+            user_api_url = f'{userServeAddress}/user/{username}/'
             try:
                 user_response = requests.get(user_api_url)
                 user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -525,7 +529,8 @@ def get_submission(request):
                 submission.Interval=duration
                 submission.SubmissionTime=timezone.now()    #更新为当前时间
                 submission.save()
-                #################huyanzhe
+                
+                
                 
                 #所有选择题的填写记录
                 ChoiceAnswer_query=ChoiceAnswer.objects.filter(Submission=submission)
@@ -545,10 +550,6 @@ def get_submission(request):
                     for ratingAnswer in RatingAnswer_query:
                         ratingAnswer.delete()
 
-            # 新加的
-            survey_data.PublishDate=publishDate
-            survey_data.save()
-            ################huyanzhe
 
             for submissionItem in submissionList:
                 # print("TieZhu")
