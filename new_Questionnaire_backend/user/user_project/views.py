@@ -288,3 +288,24 @@ def UserDetailViewID(request, UserID):
         return Response(serializer.data, status=status.HTTP_200_OK)
     except User.DoesNotExist:
         return Response({'error': 'User not found'}, status=status.HTTP_404_NOT_FOUND)
+    
+
+def save_user(request):
+    if(request.method=='POST'):
+        try:
+            body=json.loads(request.body)
+            user=User.objects.get(UserID=body['UserID'])
+            if user is None:
+                return HttpResponse(content='User not found',status=404)
+            
+            user.zhibi=body['zhibi']
+            user.save()
+
+            data={'message':'True'}
+            return JsonResponse(data)
+        except json.JSONDecodeError:  
+            return JsonResponse({'error': 'Invalid JSON body'}, status=400)
+        except Exception as e:  
+            return JsonResponse({'error': str(e)}, status=500) 
+    return JsonResponse({'error': 'Invalid request method'}, status=405)
+    

@@ -465,6 +465,7 @@ class GetStoreFillView(APIView):
         
         return JsonResponse(data)
         
+from .serializers import SubmissionSerializer
 
 #问卷填写界面：从前端接收用户的填写记录(POST)
 def get_submission(request):
@@ -482,11 +483,6 @@ def get_submission(request):
 
             # 新加的
             publishDate=body['date']  #日期
-
-            # print("lorian")
-            # print(submissionID)
-
-            # print(submissionList)
 
             survey_api_url = f'{managementServeAddress}/survey/{surveyID}/'
             try:
@@ -512,11 +508,13 @@ def get_submission(request):
             # user=User.objects.get(username=username)
             if user_data is None:
                 return HttpResponse(content='User not found',status=404)
+        
 
             #当前不存在该填写记录，创建：  //实际上用不到，在getStoreFill的时候就给不存在的submission创建新的Id了
+            currentTime=timezone.now()
             if submissionID==-1:
                 submission=Submission.objects.create(SurveyID=survey_data.SurveyID,RespondentID=user_data.UserID,
-                                             SubmissionTime=timezone.now(),Status=status,
+                                             SubmissionTime=currentTime,Status=status,
                                              Interval=duration,Score=score)
                 print(submission.SubmissionTime)
             
@@ -528,11 +526,9 @@ def get_submission(request):
                 submission.Score=score
                 submission.Status=status
                 submission.Interval=duration
-                submission.SubmissionTime=timezone.now()    #更新为当前时间
+                submission.SubmissionTime=currentTime    #更新为当前时间
                 submission.save()
                 ######################huyanzhe
-                
-                
                 
                 #所有选择题的填写记录
                 ChoiceAnswer_query=ChoiceAnswer.objects.filter(Submission=submission)
@@ -551,6 +547,18 @@ def get_submission(request):
                 if RatingAnswer_query.exists():
                     for ratingAnswer in RatingAnswer_query:
                         ratingAnswer.delete()
+
+            # 向management传输submission信息
+            submission_save_url=f'{managementServeAddress}/submission_save'
+            data={'SurveyID':survey_data.SurveyID,'RespondentID':user_data.UserID,'SubmissionTime':currentTime,
+                  'Status':status,'Score':score,'Interval':duration}
+            
+            try:
+                response=request.post(submission_save_url,data)
+                response.raise_for_status()
+            except requests.exceptions.RequestException as e:
+                print(f'Error deleting edition service:{e}')
+
 
             for submissionItem in submissionList:
                 # print("TieZhu")
@@ -643,6 +651,16 @@ def get_submission(request):
 
             user_data.zhibi+=50
             user_data.save()
+
+            # 向user传输更新后的zhibi信息
+            user_save_url=f'{userServeAddress}/user_save'
+            data={'UserID':user_data.UserID,'zhibi':user_data.zhibi}
+            
+            try:
+                response=request.post(user_save_url,data)
+                response.raise_for_status()
+            except requests.exceptions.RequestException as e:
+                print(f'Error deleting edition service:{e}')
             ######################huyanzhe
                 
         except json.JSONDecodeError:  
@@ -661,7 +679,7 @@ class GetQuestionnaireView(APIView):
         design = request.GET.get('design', 'false')  # 默认为'false'  
         design = design.lower() == 'true'  # 将字符串转换为布尔值  
 
-        survey_api_url = f'http://127.0.0.1:8001/survey/{survey_id}/'
+        survey_api_url = f'{managementServeAddress}/survey/{survey_id}/'
         try:
             survey_response = requests.get(survey_api_url)
             survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -747,7 +765,7 @@ def save_qs_design(request):
             print(questionList)
 
             # 调用 user 项目的 API 获取用户信息
-            user_api_url = f'http://127.0.0.1:8000/user/{username}/'
+            user_api_url = f'{userServeAddress}/user/{username}/'
             try:
                 user_response = requests.get(user_api_url)
                 user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -1159,18 +1177,6 @@ def UpdateSubmissionStatus(request, submission_id):
     except Submission.DoesNotExist:
         return Response({'error': 'Submission not found'}, status=status.HTTP_404_NOT_FOUND)
     
-@api_view(['POST'])
-def DeleteSubmission(request, submission_id):
-    if not submission_id:
-        return Response({'error': 'SubmissionID and Status are required'}, status=status.HTTP_400_BAD_REQUEST)
-    
-    try:
-        submission = Submission.objects.get(SubmissionID=submission_id)
-        submission.delete()
-        submission.save()
-        return Response({'status': 'Submission deleted'}, status=status.HTTP_200_OK)
-    except Submission.DoesNotExist:
-        return Response({'error': 'Submission not found'}, status=status.HTTP_404_NOT_FOUND)
 
 @api_view(['POST'])
 def check_survey_status(request):
@@ -1195,3 +1201,4 @@ def check_survey_status(request):
 
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+    
