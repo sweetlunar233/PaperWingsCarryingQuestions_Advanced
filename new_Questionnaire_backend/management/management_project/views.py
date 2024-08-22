@@ -33,9 +33,9 @@ from .serializers import SurveySerializer
 
 from django.views.decorators.http import require_http_methods
 
-userServeAddress='http://172.0.0.1:8000'
-managementServeAddress='http://172.0.0.1:8001'
-editionServeAddress='http://172.0.0.1:8002'
+userServeAddress='http://127.0.0.1:8000'
+managementServeAddress='http://127.0.0.1:8001'
+editionServeAddress='http://127.0.0.1:8002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -57,7 +57,7 @@ def delete_filled_qs(request):
             submission.delete()
             ###############huyanzhe
             id = submission.SubmissionID
-            url = f'{editionServeAddress}/delete-submission/{id}/'
+            url = f'{editionServeAddress}/edition/delete-submission/{id}/'
             try:
                 response = requests.get(url)
                 response.raise_for_status()
@@ -102,7 +102,7 @@ def update_or_delete_released_qs(request):
                             ##############################################################################
                             # 需要发送通信,使edition改变该填写记录的状态（改为Deleted）huyanzhe
                             ##############################################################################
-                            url = f'{editionServeAddress}/update-submission-status/{submission.SubmissionID}'
+                            url = f'{editionServeAddress}/edition/update-submission-status/{submission.SubmissionID}'
                             try:
                                 response = requests.get(url)
                                 response.raise_for_status()
@@ -329,7 +329,7 @@ def check_qs(request,username,questionnaireId,type):
         #检查是否超人数(检查每个必填选择题的所有选项，是否都超人数)
         submission_query=Submission.objects.filter(RespondentID=user_id,Survey=qs)
 
-        edition_api_url = f'{editionServeAddress}/check-survey-status'
+        edition_api_url = f'{editionServeAddress}/edition/check-survey-status'
         payload = {'survey_id': qs.SurveyID}
         try:
             response = requests.post(edition_api_url, json=payload)

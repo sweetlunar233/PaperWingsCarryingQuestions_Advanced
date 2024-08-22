@@ -5,9 +5,9 @@ import { post,get } from "./api"
 //     data.username = username;
 //     return get("/login",data);
 // }
-let userServeAddress='http://172.0.0.1:8000'
-let managementServeAddress='http://172.0.0.1:8001'
-let editionServeAddress='http://172.0.0.1:8002'
+let userServeAddress='http://127.0.0.1:8000'
+let managementServeAddress='http://127.0.0.1:8001'
+let editionServeAddress='http://127.0.0.1:8002'
 
 export function postUserMessage(username,password, email){
     console.log("i m in in")
@@ -15,7 +15,7 @@ export function postUserMessage(username,password, email){
     data.username = username;
     data.password = password;
     data.email = email;
-    return post("/user/login/",data);
+    return post(`/personal/login/`,data);
 }
 
 export function modifyUserInfoInMessage(username, email, password, photonumber, status, flag){
@@ -26,7 +26,7 @@ export function modifyUserInfoInMessage(username, email, password, photonumber, 
     data.photonumber = photonumber;
     data.status = status;
     data.flag = flag;
-    return post("/user/personal/message/", data);
+    return post("/personal/message/", data);
 }
 
 // export function updateUserphotoInMassage(username, photonumber, status){
@@ -43,7 +43,7 @@ export function updateUserphotoInShop(username, photonumber, status, money){
     data.photonumber = photonumber;
     data.status = status;
     data.money = money;
-    return post("/user/personal/shop/", data);
+    return post("/personal/shop/", data);
 }
 
 // export function updateUserInfo(username, email){

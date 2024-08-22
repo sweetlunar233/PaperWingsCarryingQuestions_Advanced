@@ -1,8 +1,8 @@
 import { post,get } from "./api"
 
-let userServeAddress='http://172.0.0.1:8000'
-let managementServeAddress='http://172.0.0.1:8001'
-let editionServeAddress='http://172.0.0.1:8002'
+let userServeAddress='http://127.0.0.1:8000'
+let managementServeAddress='http://127.0.0.1:8001'
+let editionServeAddress='http://127.0.0.1:8002'
 
 export function GetUnreleasedQs(username){
     let data = {};
@@ -19,7 +19,7 @@ export function GetReleasedQs(username){
 export function GetFilledQs(username){
     let data = {};
     data.username = username;
-    return get("/management/userManage/filled/"+username+"/");
+    return get(`/userManage/filled/`+username+"/");
 }
 
 export function GetAllReleasedQs(){
@@ -44,13 +44,13 @@ export function UpdateOrDelete(id, flag){
     let data = {};
     data.id = id;
     data.flag = flag;
-    return post("/management/userManage/released/",data);
+    return post("/userManage/released/",data);
 }
 
 export function check(username, questionnaireId, type){
-    return get("/management/userManage/square/"+username+"/"+questionnaireId+"/"+type);
+    return get("/userManage/square/"+username+"/"+questionnaireId+"/"+type);
 }
 
 export function checkFilled(questionnaireId){
-    return get("/management/userManage/filled/"+questionnaireId);
+    return get("/userManage/filled/"+questionnaireId);
 }
