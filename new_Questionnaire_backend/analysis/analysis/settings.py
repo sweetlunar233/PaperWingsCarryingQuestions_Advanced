@@ -61,7 +61,7 @@ CORS_ALLOWED_ORIGINS = [
 ]
 
 # Consul配置信息
-CONSUL_HOST = 'localhost'
+CONSUL_HOST = '127.0.0.1'
 CONSUL_PORT = 8500
 
 ROOT_URLCONF = "analysis.urls"
