@@ -1,0 +1,11 @@
+#部署
+kubectl apply -f frontend-hpa.yaml -n survey-app
+kubectl apply -f user-management-backend-hpa.yaml -n survey-app
+kubectl apply -f survey-management-backend-hpa.yaml -n survey-app
+kubectl apply -f other-backend-hpa.yaml -n survey-app
+
+#验证HPA状态
+kubectl get hpa -n survey-app
+
+#监控pod数量
+kubectl get pods -n survey-app
