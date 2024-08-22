@@ -100,7 +100,7 @@ def update_or_delete_released_qs(request):
                             submission.Status='Deleted'
                             submission.save()
                             ##############################################################################
-                            # 需要发送通信,使edition改变该填写记录的状态（改为Deleted）
+                            # 需要发送通信,使edition改变该填写记录的状态（改为Deleted）huyanzhe
                             ##############################################################################
                             url = f'{editionServeAddress}/update-submission-status/{submission.SubmissionID}'
                             try:
