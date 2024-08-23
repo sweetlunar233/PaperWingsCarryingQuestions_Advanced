@@ -1,8 +1,8 @@
 import { post,get } from "./api"
 
-let userServeAddress='http://172.0.0.1:8000'
-let managementServeAddress='http://172.0.0.1:8001'
-let editionServeAddress='http://172.0.0.1:8002'
+let userServeAddress='http://127.0.0.1:8000'
+let managementServeAddress='http://127.0.0.1:8001'
+let editionServeAddress='http://127.0.0.1:8002'
 
 export function ConserveOrReleaseQuestionnaire(
     username,
@@ -22,12 +22,12 @@ export function ConserveOrReleaseQuestionnaire(
     data.isDisorder = isDisorder;
     data.title = title;
     data.flag = flag;
-    return post("/questionnaireDesign/"+username, data);
+    return post(editionServeAddress+"/questionnaireDesign/"+username, data);
 }
 
 export function GetQuestionnaireDesign(username, questionnaireId, type){ //获取问卷设计
     let data = {};
     data.questionnaireId = questionnaireId;
     data.type = type;
-    return get("/questionnaireDesign/"+username+"/"+questionnaireId+"/"+type);
+    return get(editionServeAddress+"/questionnaireDesign/"+username+"/"+questionnaireId+"/"+type);
 }

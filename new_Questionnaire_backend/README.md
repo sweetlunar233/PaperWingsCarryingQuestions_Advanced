@@ -82,4 +82,4 @@ http {
     python manage.py runserver 8002
     ```
     如果暂时不需要负载均衡，可以只启动任一一个
-6. 访问 `http://localhost:8000/` 或 `http://localhost:8001/` 或 `http://localhost:8002/` 验证Nginx是否启动成功（请根据启动的端口号，选择网址）
+6. 访问 `http://127.0.0.1:8000/` 或 `http://127.0.0.1:8001/` 或 `http://127.0.0.1:8002/` 验证Nginx是否启动成功（请根据启动的端口号，选择网址）

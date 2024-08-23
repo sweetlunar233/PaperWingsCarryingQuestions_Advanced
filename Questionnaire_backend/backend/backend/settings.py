@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     "user",      #注册app
     'corsheaders',  #跨域add
     'rest_framework', 
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -55,7 +56,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',  # 允许Vue应用的域名访问
+    'http://127.0.0.1:8080',  # 允许Vue应用的域名访问
 ]
 
 CORS_ALLOW_METHODS = [
@@ -157,3 +158,30 @@ EMAIL_HOST_USER = '1658441344@qq.com'    #发送邮件的邮箱,配置开通SMTP
 EMAIL_HOST_PASSWORD = 'ojgkodinkrosdehg'    #在邮箱中设置的客户端授权密码
 EMAIL_FROM = 'COWORK<1658441344@qq.com>' #收件人看到的发件人
 EMAIL_USE_TLS=True
+
+
+REST_FRAMEWORK = {
+ 
+ 
+    # 指定使用的认证类
+    # a.在全局指定默认的认证类（指定认证方式）
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # 1）指定使用JWT TOKEN认证类
+        
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        # b.Session会话认证
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication'
+    ],
+
+    # 指定使用的权限类
+    # a.在全局指定默认的权限类（当认证通过之后，可以获取何种权限）
+    'DEFAULT_PERMISSION_CLASSES': [
+        # AllowAny不管是否有认证成功，都能获取所有权限
+        # IsAdminUser管理员（管理员需要登录）具备所有权限
+        # IsAuthenticated只要登录，就具备所有权限
+        # IsAuthenticatedOrReadOnly，如果登录了就具备所有权限，不登录只具备读取数据的权限
+        'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+    ],
+ 
+}
