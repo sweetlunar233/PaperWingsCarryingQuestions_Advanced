@@ -22,11 +22,45 @@ from django.db import transaction
 
 from rest_framework.views import APIView
 import itertools
+import jwt 
 
 from itertools import chain  
 from operator import attrgetter 
 
+from rest_framework.permissions import IsAuthenticated 
+from rest_framework.decorators import api_view, permission_classes 
+
 serveAddress="http:127.0.0.1:8080"
+'''
+def jwt_validate(request):
+     # 假设JWT令牌通过Authorization头以'Bearer <token>'的形式发送  
+    auth_header = request.META.get('HTTP_AUTHORIZATION', None) 
+
+    if auth_header:  
+        parts = auth_header.split()  
+        if parts[0].lower() == 'bearer':  
+            # 提取令牌  
+            token = parts[1]  
+            try:  
+                # 解码和验证令牌  
+                # 注意：你需要将你的SECRET_KEY或适当的密钥用于验证  
+                payload = jwt.decode(token, django_settings.SECRET_KEY, algorithms=['HS256'])  
+                # 此时，payload是一个包含用户信息的字典  
+                # 你可以根据payload中的信息来执行进一步的操作  
+                # 例如，你可以从payload中提取用户ID，并在你的数据库中查找相应的用户  
+                  
+                # 假设你已经验证了用户并准备返回响应  
+                return JsonResponse({'message': '验证成功', 'user_id': payload.get('user_id')})  
+            except jwt.ExpiredSignatureError:  
+                # 令牌已过期  
+                return JsonResponse({'error': 'Token已过期'}, status=401)  
+            except jwt.InvalidTokenError:  
+                # 无效的令牌  
+                return JsonResponse({'error': '无效的Token'}, status=401)  
+      
+    # 没有提供有效的Authorization头  
+    return JsonResponse({'error': '未提供有效的认证信息'}, status=401)
+'''
 
 #普通问卷的展示界面：
 def display_answer_normal(request,username,questionnaireId,submissionId):
@@ -811,6 +845,7 @@ def delete_unreleased_qs(request):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 #当前用户已创建未发布的问卷
+@permission_classes([IsAuthenticated])
 def get_drafted_qs(request,username):
     if(request.method=='GET'):
         user=User.objects.get(username=username)
@@ -821,6 +856,7 @@ def get_drafted_qs(request,username):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 #当前用户发布的问卷
+@permission_classes([IsAuthenticated])
 def get_released_qs(request,username):
     if(request.method=='GET'):
         user=User.objects.get(username=username)
@@ -836,6 +872,7 @@ def get_released_qs(request,username):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 #当前用户的填写记录(包括被创建者删除的问卷的填写记录)
+@permission_classes([IsAuthenticated])
 def get_filled_qs(request,username):
     if(request.method=='GET'):
         user=User.objects.get(username=username)
@@ -1098,6 +1135,9 @@ def get_token(request):
     '''此处将这个url发送到客户邮箱，我们这里就不进行邮件发送的操作了'''
     return HttpResponse(status=200,content=True)
 
+from django.contrib.auth import authenticate
+from rest_framework_simplejwt.tokens import RefreshToken 
+
 def send_registration_email(request):
     if(request.method=='POST'):
         body=json.loads(request.body)
@@ -1122,6 +1162,13 @@ def send_registration_email(request):
                 return JsonResponse(data)
                 #return HttpResponse(status=200,content="2")
             else:
+                user = authenticate(request, username=username, password=password)
+
+                # 登录成功，生成 JWT 令牌  
+                refresh = RefreshToken.for_user(user)  
+                access = refresh.access_token 
+
+
                 photos_data = json.loads(user.own_photos)  
                 data={
                     'message':"0",
@@ -1130,6 +1177,8 @@ def send_registration_email(request):
                     'email':user.email,
                     'ownphotos':photos_data,
                     'zhibi':user.zhibi,
+
+                    'access_token': access, 
                 }
             return JsonResponse(data)
 
