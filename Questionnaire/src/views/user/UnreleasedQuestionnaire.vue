@@ -123,11 +123,13 @@ import {GetUnreleasedQs, DeleteUnreleasedQs} from '../../api/questionnaire.js'
 const flag = ref(true);
 
 const initDraft = (username) =>{
+    console.log("ininin")
     questionnaires.value = [];  
     var promise = GetUnreleasedQs(username);
     promise.then((result)=>{
         var count = 0;
         var i = 1;
+        console.log(result.data)
         result.data.forEach(element => {
             if(categoryId.value != "请选择" && element.Category != categoryId.value){
                 console.log("oh no!")
