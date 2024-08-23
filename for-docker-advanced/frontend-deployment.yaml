@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: frontend
+        istio: enabled
     spec:
       containers:
       - name: frontend

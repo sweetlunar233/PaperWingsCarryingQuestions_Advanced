@@ -8,6 +8,6 @@ spec:
   selector:
     app: survey-management-backend
   ports:
-  - protocol: TCP
+  - name: http
     port: 8080
     targetPort: 8080
