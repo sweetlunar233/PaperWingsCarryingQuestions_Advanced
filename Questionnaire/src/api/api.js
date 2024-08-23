@@ -8,6 +8,8 @@ export function post(url,data){
         axios
             .post(url,data)
             .then((response) => {
+                // 存储令牌到localStorage或sessionStorage  
+                localStorage.setItem('access_token', response.data.access_token); 
                 resolve(response.data);
             })
             .catch((error) => {
@@ -20,6 +22,9 @@ export function get(url,param){
     return new Promise((resolve,reject) => {
         axios
             .get(url,{
+                headers: {  
+                    'Authorization': `Bearer ${localStorage.getItem('access_token')}`  
+                },
                 params:param
             })
             .then((response) => {

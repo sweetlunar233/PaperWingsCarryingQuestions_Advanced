@@ -9,6 +9,13 @@ let userServeAddress='http://127.0.0.1:7000'
 let managementServeAddress='http://127.0.0.1:7001'
 let editionServeAddress='http://127.0.0.1:7002'
 
+export function getApiToken(username,password){
+    let data = {};
+    data.username = username;
+    data.password = password;
+    return post(`${userServeAddress}/api/token/`,data);
+}
+
 export function postUserMessage(username,password, email){
     console.log("i m in in")
     let data = {};
