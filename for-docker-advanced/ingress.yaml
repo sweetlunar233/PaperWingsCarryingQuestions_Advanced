@@ -1,0 +1,21 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: myfront_advanced_ingress
+  namespace: zhiyi
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+    - host: 82.156.97.95
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: myfront_advanced
+                port:
+                  name: http
+
+#验证ingress配置：`kubectl get ingresses -n zhiyi`
