@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my_user_back
+  namespace: zhiyi
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my_user_back
+  template:
+    metadata:
+      labels:
+        app: my_user_back
+    spec:
+      containers:
+      - name: my_user_back
+        image: my_user_back
+        ports:
+        - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10

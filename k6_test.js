@@ -17,7 +17,7 @@ export let options = {
 
 
 export default function () {
-    let res = http.get('http://localhost:8081/questionnaireDesign/1/'); // 替换为你的API地址
+    let res = http.get('http://127.0.0.1:8000/questionnaireDesign/1/'); // 替换为你的API地址
     check(res, {
         'status is 200': (r) => r.status === 200,
     });
