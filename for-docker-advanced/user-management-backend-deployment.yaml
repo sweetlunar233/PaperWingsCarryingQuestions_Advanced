@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: user-management-backend
+        istio: enabled
     spec:
       containers:
       - name: user-management-backend

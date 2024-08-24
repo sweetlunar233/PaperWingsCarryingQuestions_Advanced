@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: other-backend
+        istio: enabled
     spec:
       containers:
       - name: other-backend

@@ -12,6 +12,7 @@ spec:
     metadata:
       labels:
         app: survey-management-backend
+        istio: enabled
     spec:
       containers:
       - name: survey-management-backend
