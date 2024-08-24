@@ -172,14 +172,17 @@ def get_token(request):
     return HttpResponse(status=200,content=True)
 
 def send_registration_email(request):
+    print("lorian")
     if(request.method=='POST'):
+        print("lorian")
         body=json.loads(request.body)
         username=body['username']
         password=body['password']
         email=body['email']
 
-        # print(username)
-        # print(email)
+        print(username)
+        print(password)
+        print(email)
 
         if(email==False):
             # print("!")

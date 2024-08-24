@@ -1,24 +1,6 @@
 version: '3.8'
 
 services:
-
-  db:
-    build:
-      context: ./Questionnaire_backend/appDB  # 指向数据库 Dockerfile 的上下文
-    image: mydb
-    container_name: mydb
-    environment:
-      MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: db
-    ports:
-      - "3308:3306"
-    volumes:
-      - db_data:/var/lib/mysql
-    networks:
-      - mynetwork
-
-
-
   edition_db:
     build:
       context: ./new_Questionnaire_backend/appDB/edition_db  # 指向数据库 Dockerfile 的上下文
@@ -26,7 +8,7 @@ services:
     container_name: my_edition_db
     environment:
       MYSQL_ROOT_PASSWORD: 123456
-      MYSQL_DATABASE: db
+      MYSQL_DATABASE: edition_db
     ports:
       - "3301:3306"
     volumes:
@@ -40,12 +22,14 @@ services:
     image: my_management_db
     container_name: my_management_db
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: management_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+    ports:
+      - "3302:3306"
     volumes:
       - db_management_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
   user_db:
     build:
@@ -53,44 +37,82 @@ services:
     image: my_user_db
     container_name: my_user_db
     environment:
-      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: user_db
-      MYSQL_USER: user
-      MYSQL_PASSWORD: password
+    ports:
+      - "3303:3306"
     volumes:
       - db_user_data:/var/lib/mysql
+    networks:
+      - mynetwork
 
   edition:
     build:
-      context: ./edition
-    ports:
-      - "5001:5000"
+      context: ./new_Questionnaire_backend
+      dockerfile: Dockerfile_edition
+    image: my_edition_back
+    container_name: my_edition_back
     environment:
-      - DATABASE_URL=mysql://user:password@db_edition:3306/edition_db
+      - DJANGO_DB_HOST=edition_db
+      - DJANGO_DB_PORT=3306
+      - DJANGO_DB_USER=root
+      - DJANGO_DB_PASSWORD=123456
     depends_on:
-      - db_edition
+      - edition_db
+    ports:
+      - "7002:8000"
+    networks:
+      - mynetwork
 
   management:
     build:
-      context: ./management
-    ports:
-      - "5002:5000"
+      context: ./new_Questionnaire_backend
+      dockerfile: Dockerfile_management
+    image: my_management_back
+    container_name: my_management_back
     environment:
-      - DATABASE_URL=mysql://user:password@db_management:3306/management_db
+      - DJANGO_DB_HOST=management_db
+      - DJANGO_DB_PORT=3306
+      - DJANGO_DB_USER=root
+      - DJANGO_DB_PASSWORD=123456
     depends_on:
-      - db_management
+      - management_db
+    ports:
+      - "7001:8000"
+    networks:
+      - mynetwork
 
   user:
     build:
-      context: ./user
-    ports:
-      - "5003:5000"
+      context: ./new_Questionnaire_backend
+      dockerfile: Dockerfile_user
+    image: my_user_back
+    container_name: my_user_back
     environment:
-      - DATABASE_URL=mysql://user:password@db_user:3306/user_db
+      - DJANGO_DB_HOST=user_db
+      - DJANGO_DB_PORT=3306
+      - DJANGO_DB_USER=root
+      - DJANGO_DB_PASSWORD=123456
     depends_on:
-      - db_user
+      - user_db
+    ports:
+      - "7000:8000"
+    networks:
+      - mynetwork
 
-  
+  front:
+    build:
+      context: ./Questionnaire  # 指向前端文件夹的上下文
+    image: myfront_advanced
+    container_name: myfront_advanced
+    ports:
+      - "1234:80"  # 示例端口，视前端应用而定
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
 
 volumes:
   db_edition_data:

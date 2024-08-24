@@ -102,10 +102,21 @@ DATABASES = {
     #     'NAME': 'user_db'  # 数据库名
     # }
 
+    # #容器跑
+    # "default": {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'HOST': 'user_db',  # 数据库主机
+    #     'PORT': 3306,  # 数据库端口
+    #     'USER': 'root',  # 数据库用户名
+    #     'PASSWORD': '123456',  # 数据库用户密码
+    #     'NAME': 'user_db'  # 数据库名
+    # }
+
+    #本地跑
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'user_db',  # 数据库主机
-        'PORT': 3306,  # 数据库端口
+        'HOST': '127.0.0.1',  # 数据库主机
+        'PORT': 3303,  # 数据库端口
         'USER': 'root',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
         'NAME': 'user_db'  # 数据库名
