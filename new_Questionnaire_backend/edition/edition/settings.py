@@ -60,10 +60,10 @@ MIDDLEWARE = [
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000',  # 允许Vue应用的域名访问
-    'http://localhost:8001',
-    'http://localhost:8002',
-    'http://localhost:8080',
+    # 'http://127.0.0.1:8000',  # 允许Vue应用的域名访问
+    # 'http://127.0.0.1:8001',
+    # 'http://127.0.0.1:8002',
+    'http://127.0.0.1:8080',
 ]
 
 CORS_ALLOW_METHODS = [
@@ -77,7 +77,7 @@ CORS_ALLOW_HEADERS = [
 ]
 
 # Consul配置信息
-CONSUL_HOST = 'localhost'
+CONSUL_HOST = '127.0.0.1'
 CONSUL_PORT = 8500
 
 ROOT_URLCONF = "edition.urls"

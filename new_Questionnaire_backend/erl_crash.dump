@@ -107617,7 +107617,7 @@ H104F67BD8|A4:true
 104FFDA00:Mn2:H1050003F0,H105000400
 104FFDA18:lAF:enabled_plugins|A9:undefined
 104FFDA28:lA1C:forced_feature_flags_on_init|A9:undefined
-104FFDA38:lA8:nodename|A10:rabbit@localhost
+104FFDA38:lA8:nodename|A10:rabbit@127.0.0.1
 104FFDA48:Mn2:H1050005B0,H1050005C0
 104FFDA60:lAD:nodename_type|AA:shortnames
 104FFDA70:lAC:plugins_path|H104FFDA80
@@ -108793,7 +108793,7 @@ pes
 between
 format_version_part
 erlang_version_too_old
-'rabbit@localhost'
+'rabbit@127.0.0.1'
 '-atomize_keys/1-lc$^0/1-0-'
 '-to_list_of_binaries/1-lc$^0/1-0-'
 to_unicode_charlist
@@ -109287,7 +109287,7 @@ rabbitmq_base
 config_base_dir
 parts
 split_nodename
-localhost
+127.0.0.1
 nodename_type
 tcp_listeners
 amqp_ipaddr
@@ -114312,7 +114312,7 @@ encode_to_string
 command_line
 longnames
 name_arg
-prefer_localhost
+prefer_127.0.0.1
 maybe_listen
 boot_complete
 handle_port_binary

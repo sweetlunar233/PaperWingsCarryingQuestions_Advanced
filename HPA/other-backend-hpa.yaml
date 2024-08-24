@@ -2,7 +2,7 @@ apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
   name: other-backend-hpa
-  namespace: survey-app
+  namespace: zhiyi
 spec:
   scaleTargetRef:
     apiVersion: apps/v1

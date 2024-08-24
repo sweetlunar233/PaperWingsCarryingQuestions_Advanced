@@ -1,41 +1,41 @@
 import { post,get } from "./api"
 
-let userServeAddress='http://172.0.0.1:8000'
-let managementServeAddress='http://172.0.0.1:8001'
-let editionServeAddress='http://172.0.0.1:8002'
+let userServeAddress='http://127.0.0.1:7000'
+let managementServeAddress='http://127.0.0.1:7001'
+let editionServeAddress='http://127.0.0.1:7002'
 
 export function GetUnreleasedQs(username){
     let data = {};
     data.username = username;
-    return get("/management/userManage/unreleased/"+username+"/");
+    return get(managementServeAddress+"/Manage/unreleased/"+username+"/");
 }
 
 export function GetReleasedQs(username){
     let data = {};
     data.username = username;
-    return get("/management/userManage/released/"+username+"/");
+    return get(managementServeAddress+"/Manage/released/"+username+"/");
 }
 
 export function GetFilledQs(username){
     let data = {};
     data.username = username;
-    return get("/management/userManage/filled/"+username+"/");
+    return get(`${managementServeAddress}/Manage/filled/`+username+"/");
 }
 
 export function GetAllReleasedQs(){
-    return get("/management/userManage/square/");
+    return get(managementServeAddress+"/Manage/square/");
 }
 
 export function DeleteUnreleasedQs(id){
     let data = {};
     data.id = id;
-    return post("/management/userManage/unreleased/", id);
+    return post(managementServeAddress+"/Manage/unreleased/", id);
 }
 
 export function DeleteFilledQs(id){
     let data = {};
     data.id = id;
-    return post("/management/userManage/filled/", id);
+    return post(managementServeAddress+"/Manage/filled/", id);
 }
 
 //update:0
@@ -44,13 +44,13 @@ export function UpdateOrDelete(id, flag){
     let data = {};
     data.id = id;
     data.flag = flag;
-    return post("/management/userManage/released/",data);
+    return post(managementServeAddress+"/Manage/released/",data);
 }
 
 export function check(username, questionnaireId, type){
-    return get("/management/userManage/square/"+username+"/"+questionnaireId+"/"+type);
+    return get(managementServeAddress+"/Manage/square/"+username+"/"+questionnaireId+"/"+type);
 }
 
 export function checkFilled(questionnaireId){
-    return get("/management/userManage/filled/"+questionnaireId);
+    return get(managementServeAddress+"/Manage/filled/"+questionnaireId);
 }

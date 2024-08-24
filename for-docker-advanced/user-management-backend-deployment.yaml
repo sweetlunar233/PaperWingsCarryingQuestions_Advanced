@@ -12,9 +12,22 @@ spec:
     metadata:
       labels:
         app: user-management-backend
+        istio: enabled
     spec:
       containers:
       - name: user-management-backend
         image: #TODO后端-用户管理镜像
         ports:
         - containerPort: 8080
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 10

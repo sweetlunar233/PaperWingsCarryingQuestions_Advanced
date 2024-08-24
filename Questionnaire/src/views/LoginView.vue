@@ -42,7 +42,7 @@
         // store.state.nowuser.own_photos = result.ownphotos;
     }
 
-    import { postUserMessage } from "@/api/user";
+    import { postUserMessage, getApiToken } from "@/api/user";
     import { ElMessage } from "element-plus";
 
 
@@ -139,6 +139,13 @@
         .catch ( (error) => {
             console.log("catch");
         })
+        // var promise = getApiToken(loginData.value.username, loginData.value.password);
+        // promise.then((result)=>{
+        //     $cookies.set("token", result.token);
+        // })
+        // .catch ( (error) => {
+        //     console.log("catch");
+        // })
 
         
     }
