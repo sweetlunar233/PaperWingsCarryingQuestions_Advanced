@@ -1,0 +1,98 @@
+version: '3.8'
+
+services:
+
+  db:
+    build:
+      context: ./Questionnaire_backend/appDB  # 指向数据库 Dockerfile 的上下文
+    image: mydb
+    container_name: mydb
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: db
+    ports:
+      - "3308:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+
+
+  edition_db:
+    build:
+      context: ./new_Questionnaire_backend/appDB/edition_db  # 指向数据库 Dockerfile 的上下文
+    image: my_edition_db
+    container_name: my_edition_db
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_DATABASE: db
+    ports:
+      - "3301:3306"
+    volumes:
+      - db_edition_data:/var/lib/mysql
+    networks:
+      - mynetwork
+
+  management_db:
+    build:
+      context: ./new_Questionnaire_backend/appDB/management_db  # 指向数据库 Dockerfile 的上下文
+    image: my_management_db
+    container_name: my_management_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: management_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_management_data:/var/lib/mysql
+
+  user_db:
+    build:
+      context: ./new_Questionnaire_backend/appDB/user_db  # 指向数据库 Dockerfile 的上下文
+    image: my_user_db
+    container_name: my_user_db
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: user_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    volumes:
+      - db_user_data:/var/lib/mysql
+
+  edition:
+    build:
+      context: ./edition
+    ports:
+      - "5001:5000"
+    environment:
+      - DATABASE_URL=mysql://user:password@db_edition:3306/edition_db
+    depends_on:
+      - db_edition
+
+  management:
+    build:
+      context: ./management
+    ports:
+      - "5002:5000"
+    environment:
+      - DATABASE_URL=mysql://user:password@db_management:3306/management_db
+    depends_on:
+      - db_management
+
+  user:
+    build:
+      context: ./user
+    ports:
+      - "5003:5000"
+    environment:
+      - DATABASE_URL=mysql://user:password@db_user:3306/user_db
+    depends_on:
+      - db_user
+
+  
+
+volumes:
+  db_edition_data:
+  db_management_data:
+  db_user_data:
