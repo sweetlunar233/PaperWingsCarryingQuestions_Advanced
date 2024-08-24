@@ -12,7 +12,6 @@ spec:
     metadata:
       labels:
         app: my_edition_back
-        istio: enabled
     spec:
       containers:
       - name: my_edition_back
