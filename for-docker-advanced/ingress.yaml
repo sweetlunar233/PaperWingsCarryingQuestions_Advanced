@@ -1,21 +1,21 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: frontend-ingress
-  namespace: survey-app
+  name: myfront_advanced_ingress
+  namespace: zhiyi
   annotations:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-    - host: #TODO 服务器IP
+    - host: 82.156.97.95
       http:
         paths:
           - pathType: Prefix
             path: "/"
             backend:
               service:
-                name: frontend
+                name: myfront_advanced
                 port:
                   name: http
 
-#验证ingress配置：`kubectl get ingresses -n survey-app`
+#验证ingress配置：`kubectl get ingresses -n zhiyi`

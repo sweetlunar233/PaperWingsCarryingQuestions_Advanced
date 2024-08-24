@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: my_edition_back_service
+  namespace: zhiyi
+spec:
+  type: ClusterIP
+  selector:
+    app: my_edition_back
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 8080

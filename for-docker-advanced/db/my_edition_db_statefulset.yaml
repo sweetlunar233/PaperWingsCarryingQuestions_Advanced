@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: my_user_db
+  name: my_edition_db
   namespace: zhiyi
 spec:
-  serviceName: "my_user_db_service"
+  serviceName: "my_edition_db_service"
   replicas: 1
   selector:
     matchLabels:
-      app: my_user_db
+      app: my_edition_db
   template:
     metadata:
       labels:
-        app: my_user_db
+        app: my_edition_db
     spec:
       containers:
-      - name: my_user_db
+      - name: my_edition_db
         image: mysql:5.7
         env:
         - name: MYSQL_ROOT_PASSWORD
@@ -24,7 +24,7 @@ spec:
         - containerPort: 3306
         volumeMounts:
         - name: data
-          mountPath: /var/lib/mysql
+          mountPath: /var/lib/mysql #容器内挂载位置
   volumeClaimTemplates:
   - metadata:
       name: data
