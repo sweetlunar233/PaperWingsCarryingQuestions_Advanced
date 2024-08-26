@@ -33,9 +33,9 @@ from .serializers import SurveySerializer
 
 from django.views.decorators.http import require_http_methods
 
-userServeAddress='http://127.0.0.1:7000'
-managementServeAddress='http://127.0.0.1:7001'
-editionServeAddress='http://127.0.0.1:7002'
+userServeAddress='http://81.70.184.96:7000'
+managementServeAddress='http://81.70.184.96:7001'
+editionServeAddress='http://81.70.184.96:7002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
