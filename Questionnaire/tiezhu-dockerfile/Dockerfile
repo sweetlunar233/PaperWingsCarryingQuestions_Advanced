@@ -5,7 +5,7 @@ FROM nginx:latest
 COPY . /usr/share/nginx/html
 
 # 复制自定义的 NGINX 配置文件
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY ./nginx.conf /etc/nginx/conf.d/default.conf
 
 # 暴露容器的80端口
 EXPOSE 80
