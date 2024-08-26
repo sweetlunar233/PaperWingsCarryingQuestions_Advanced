@@ -88,8 +88,21 @@ jobs:
             sudo docker-compose build
 
             docker tag questionnaire-app tiezhugiegie/questionnaire-app
+            docker tag my_edition_db tiezhugiegie/my_edition_db
+            docker tag my_management_db tiezhugiegie/my_management_db
+            docker tag my_user_db tiezhugiegie/my_user_db
+            docker tag my_edition_back tiezhugiegie/my_edition_back
+            docker tag my_management_back tiezhugiegie/my_management_back
+            docker tag my_user_back tiezhugiegie/my_user_back
 
             docker push tiezhugiegie/questionnaire-app
+            docker push tiezhugiegie/my_edition_db
+            docker push tiezhugiegie/my_management_db
+            docker push tiezhugiegie/my_user_db
+            docker push tiezhugiegie/my_edition_back
+            docker push tiezhugiegie/my_management_back
+            docker push tiezhugiegie/my_user_back
+
 
             sudo kubectl apply -f ~/test/deployment.yml
 
