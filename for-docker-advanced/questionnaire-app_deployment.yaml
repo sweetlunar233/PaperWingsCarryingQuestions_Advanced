@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: questionnaire-app
   namespace: zhiyi
-spec: 
+spec:
   replicas: 1
   selector:
     matchLabels:
@@ -16,6 +16,7 @@ spec:
       containers:
       - name: questionnaire-app
         image: questionnaire-app
+        imagePullPolicy: Never
         ports:
         - containerPort: 80
         livenessProbe:
