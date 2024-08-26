@@ -16,7 +16,7 @@ jobs:
       - name: Setup SSH
         uses: appleboy/ssh-action@master
         with:
-          host: 82.156.97.95
+          host: 127.0.0.1
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -24,7 +24,7 @@ jobs:
       - name: Install Updates and Basic Tools
         uses: appleboy/ssh-action@master
         with:
-          host: 82.156.97.95
+          host: 127.0.0.1
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -38,7 +38,7 @@ jobs:
       - name: Install Docker
         uses: appleboy/ssh-action@master
         with:
-          host: 82.156.97.95
+          host: 127.0.0.1
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -53,7 +53,7 @@ jobs:
       - name: Install Docker Compose
         uses: appleboy/ssh-action@master
         with:
-          host: 82.156.97.95
+          host: 127.0.0.1
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -67,7 +67,7 @@ jobs:
       # - name: Prepare Application Environment
       #   uses: appleboy/ssh-action@master
       #   with:
-      #     host: 82.156.97.95
+      #     host: 127.0.0.1
       #     username: ubuntu
       #     password: BUaa2221
       #     key: ${{ secrets.SSH_KEY }}
@@ -84,7 +84,7 @@ jobs:
       #       sudo npm install
       #       sudo npm run build
       #       cd ..
-      #       sudo docker-compose up --build
+      #       sudo docker-compose build
       #       docker exec -it my_backend python manage.py test
 
           # # 部署到 Kubernetes

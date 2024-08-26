@@ -36,11 +36,11 @@ from .models import User
 from rest_framework.decorators import api_view
 from .serializers import UserSerializer
 
-userServeAddress='http://82.156.97.95:7000'
-managementServeAddress='http://82.156.97.95:7001'
-editionServeAddress='http://82.156.97.95:7002'
+userServeAddress='http://127.0.0.1:7000'
+managementServeAddress='http://127.0.0.1:7001'
+editionServeAddress='http://127.0.0.1:7002'
 
-serveAddress='http://82.156.97.95:7000'
+serveAddress='http://81.70.184.96:7000'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -167,7 +167,7 @@ class Token:
 token_confirm = Token(django_settings.SECRET_KEY)
 def get_token(request):
 
-    url = serveAddress+'user/' + token_confirm.generate_validate_token(username='username')
+    url = serveAddress+'user/' + token_confirm.generate_validate_token(username='username')+'/'
     '''此处将这个url发送到客户邮箱，我们这里就不进行邮件发送的操作了'''
     return HttpResponse(status=200,content=True)
 

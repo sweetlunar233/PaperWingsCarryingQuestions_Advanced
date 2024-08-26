@@ -1,8 +1,8 @@
 import { post,get } from "./api"
 
-let userServeAddress='http://82.156.97.95:7000'
-let managementServeAddress='http://82.156.97.95:7001'
-let editionServeAddress='http://82.156.97.95:7002'
+let userServeAddress='http://81.70.184.96:7000'
+let managementServeAddress='http://81.70.184.96:7001'
+let editionServeAddress='http://81.70.184.96:7002'
 
 //拿到问卷信息
 export function GetQuestionnaire(surveyID,isDesign){    //isDesign=True,表示顺序展示

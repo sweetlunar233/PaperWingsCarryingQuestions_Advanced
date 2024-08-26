@@ -60,7 +60,10 @@ MIDDLEWARE = [
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://82.156.97.95:80',  # 允许Vue应用的域名访问
+    'http://81.70.184.96:31234',  # 允许Vue应用的域名访问
+    'http://127.0.0.1:7000',
+    'http://127.0.0.1:7001',
+    'http://127.0.0.1:7002',
 ]
 
 CORS_ALLOW_METHODS = [
@@ -98,14 +101,14 @@ WSGI_APPLICATION = "management.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
-    #     'PORT': 23531,  # 数据库端口
-    #     'USER': 'buaa21374125',  # 数据库用户名
-    #     'PASSWORD': 'BUaa21374125',  # 数据库用户密码
-    #     'NAME': 'management_db'  # 数据库名
-    # }
+    "default": {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
+        'PORT': 23531,  # 数据库端口
+        'USER': 'buaa21374125',  # 数据库用户名
+        'PASSWORD': 'BUaa21374125',  # 数据库用户密码
+        'NAME': 'management_db'  # 数据库名
+    }
 
     # #容器跑
     # "default": {
@@ -117,15 +120,15 @@ DATABASES = {
     #     'NAME': 'management_db'  # 数据库名
     # }
 
-    #本地跑
-    "default": {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': '127.0.0.1',  # 数据库主机
-        'PORT': 3302,  # 数据库端口
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'management_db'  # 数据库名
-    }
+    # #本地跑
+    # "default": {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'HOST': '127.0.0.1',  # 数据库主机
+    #     'PORT': 3302,  # 数据库端口
+    #     'USER': 'root',  # 数据库用户名
+    #     'PASSWORD': '123456',  # 数据库用户密码
+    #     'NAME': 'management_db'  # 数据库名
+    # }
 }
 
 

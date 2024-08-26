@@ -39,9 +39,9 @@ from rest_framework import status
 import requests
 from io import BytesIO
   
-userServeAddress='http://82.156.97.95:7000'
-managementServeAddress='http://82.156.97.95:7001'
-editionServeAddress='http://82.156.97.95:7002'
+userServeAddress='http://127.0.0.1:7000'
+managementServeAddress='http://127.0.0.1:7001'
+editionServeAddress='http://127.0.0.1:7002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -549,7 +549,7 @@ def get_submission(request):
                         ratingAnswer.delete()
 
             # 向management传输submission信息
-            submission_save_url=f'{managementServeAddress}/survey/submission_save'
+            submission_save_url=f'{managementServeAddress}/survey/submission_save/'
             data={'SurveyID':survey_data.SurveyID,'RespondentID':user_data.UserID,'SubmissionTime':currentTime,
                   'Status':status,'Score':score,'Interval':duration}
             
@@ -786,7 +786,9 @@ def save_qs_design(request):
                 print("TieZhu")
                 #survey.QuotaLimit=people
                 ###############huyanzhe
-                url = f'{managementServeAddress}/survey/update-survey'
+                url = f'{managementServeAddress}/survey/update-survey/'
+                print("TieZhu")
+                print(user_data)
                 data = {
                     'SurveyID': surveyID,
                     'OwnerID': user_data.UserID,
@@ -801,8 +803,11 @@ def save_qs_design(request):
                     'IsOrder': isOrder,
                     'PublishDate': None
                 }
+                print('*')
                 try:
+                    print('*')
                     response = requests.post(url, data)
+                    print('*')
                     response.raise_for_status()
                     response_data = response.json()
                     id = response_data['SurveyID']
@@ -812,7 +817,7 @@ def save_qs_design(request):
             #已有该问卷的编辑记录
             else:
                 #####################huyanzhe
-                url = f'{managementServeAddress}/survey/update-survey'
+                url = f'{managementServeAddress}/survey/update-survey/'
                 data = {
                     'SurveyID': surveyID,
                     'OwnerID': None,
