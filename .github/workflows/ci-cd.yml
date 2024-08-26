@@ -72,12 +72,12 @@ jobs:
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
           script: |
-            if [ -d "PaperWingsCarryingQuestions_Basic" ]; then
-              cd PaperWingsCarryingQuestions_Basic
+            if [ -d "PaperWingsCarryingQuestions_Advanced" ]; then
+              cd PaperWingsCarryingQuestions_Advanced
               git pull
             else
-              git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Basic.git
-              cd PaperWingsCarryingQuestions_Basic
+              git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Advanced.git
+              cd PaperWingsCarryingQuestions_Advanced
             fi
             cd PaperWingsCarryingQuestions_Advanced
             cd Questionnaire
@@ -87,21 +87,21 @@ jobs:
             
             sudo docker-compose build
 
-            docker tag questionnaire-app tiezhugiegie/questionnaire-app
-            docker tag my_edition_db tiezhugiegie/my_edition_db
-            docker tag my_management_db tiezhugiegie/my_management_db
-            docker tag my_user_db tiezhugiegie/my_user_db
-            docker tag my_edition_back tiezhugiegie/my_edition_back
-            docker tag my_management_back tiezhugiegie/my_management_back
-            docker tag my_user_back tiezhugiegie/my_user_back
+            sudo docker tag questionnaire-app tiezhugiegie/questionnaire-app
+            sudo docker tag my_edition_db tiezhugiegie/my_edition_db
+            sudo docker tag my_management_db tiezhugiegie/my_management_db
+            sudo docker tag my_user_db tiezhugiegie/my_user_db
+            sudo docker tag my_edition_back tiezhugiegie/my_edition_back
+            sudo docker tag my_management_back tiezhugiegie/my_management_back
+            sudo docker tag my_user_back tiezhugiegie/my_user_back
 
-            docker push tiezhugiegie/questionnaire-app
-            docker push tiezhugiegie/my_edition_db
-            docker push tiezhugiegie/my_management_db
-            docker push tiezhugiegie/my_user_db
-            docker push tiezhugiegie/my_edition_back
-            docker push tiezhugiegie/my_management_back
-            docker push tiezhugiegie/my_user_back
+            sudo docker push tiezhugiegie/questionnaire-app
+            sudo docker push tiezhugiegie/my_edition_db
+            sudo docker push tiezhugiegie/my_management_db
+            sudo docker push tiezhugiegie/my_user_db
+            sudo docker push tiezhugiegie/my_edition_back
+            sudo docker push tiezhugiegie/my_management_back
+            sudo docker push tiezhugiegie/my_user_back
 
 
             sudo kubectl apply -f ~/test/deployment.yml
