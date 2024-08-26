@@ -1,0 +1,12 @@
+apiVersion: autoscaling.k8s.io/v1
+kind: VerticalPodAutoscaler
+metadata:
+  name: my_user_back_vpa
+  namespace: zhiyi
+spec:
+  targetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: my_user_back
+  updatePolicy:
+    updateMode: Auto
