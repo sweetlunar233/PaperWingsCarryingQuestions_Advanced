@@ -4,7 +4,7 @@ from django.db import models
 
 class BaseQuestion(models.Model):
     QuestionID = models.AutoField(primary_key=True)
-    SurveyID = models.IntegerField(unique=True)
+    SurveyID = models.IntegerField(blank=False)
     Text = models.TextField(max_length=500)
     IsRequired = models.BooleanField(default=True)
     QuestionNumber = models.IntegerField(default=0)
@@ -63,9 +63,9 @@ class RatingAnswer(Answer):
 
 class Submission(models.Model):
     SubmissionID = models.AutoField(primary_key=True)
-    SurveyID = models.IntegerField(unique=True)
-    RespondentID = models.IntegerField(unique=True)
-    SubmissionTime = models.DateTimeField(auto_now_add=True)
+    SurveyID = models.IntegerField(blank=False)
+    RespondentID = models.IntegerField(blank=False)
+    SubmissionTime = models.DateTimeField(null=True)
     Status = models.CharField(max_length=20, choices=[('Unsubmitted', 'Unsubmitted'), ('Submitted', 'Submitted'), ('Graded', 'Graded'),('Deleted','Deleted')])
     Score = models.IntegerField(null=True, blank=True)
     #Duration = models.IntegerField(null=True, blank=True)

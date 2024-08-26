@@ -35,10 +35,11 @@ from rest_framework import status
 from .models import User
 from rest_framework.decorators import api_view
 from .serializers import UserSerializer
+import json
 
-userServeAddress='http://81.70.184.96:7000'
-managementServeAddress='http://81.70.184.96:7001'
-editionServeAddress='http://81.70.184.96:7002'
+userServeAddress='http://127.0.0.1:7000'
+managementServeAddress='http://127.0.0.1:7001'
+editionServeAddress='http://127.0.0.1:7002'
 
 serveAddress='http://81.70.184.96:7000'
 
@@ -289,7 +290,6 @@ def UserDetailView(request, username):
 @api_view(['GET'])
 def UserDetailViewID(request, UserID):
     try:
-        print('aaa')
         user = User.objects.get(UserID=UserID)
         serializer = UserSerializer(user)
         return Response(serializer.data, status=status.HTTP_200_OK)

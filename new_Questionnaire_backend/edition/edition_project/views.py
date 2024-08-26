@@ -38,6 +38,7 @@ from rest_framework import status
 
 import requests
 from io import BytesIO
+import json
   
 userServeAddress='http://127.0.0.1:7000'
 managementServeAddress='http://127.0.0.1:7001'
@@ -787,11 +788,9 @@ def save_qs_design(request):
                 #survey.QuotaLimit=people
                 ###############huyanzhe
                 url = f'{managementServeAddress}/survey/update-survey/'
-                print("TieZhu")
-                print(user_data)
                 data = {
                     'SurveyID': surveyID,
-                    'OwnerID': user_data.UserID,
+                    'OwnerID': user_data['UserID'],
                     'Title': title,
                     'Description': description,
                     'Is_released': Is_released,
@@ -801,19 +800,18 @@ def save_qs_design(request):
                     'TotalScore': 0,
                     'TimeLimit': timelimit,
                     'IsOrder': isOrder,
-                    'PublishDate': None
                 }
-                print('*')
+                print(data)
                 try:
                     print('*')
-                    response = requests.post(url, data)
+                    response = requests.post(url, json=data)
                     print('*')
                     response.raise_for_status()
                     response_data = response.json()
                     id = response_data['SurveyID']
-                    print(f"Successfully deleted edition service: {response.json()}")
+                    print(f"Successfully creates edition service: {response.json()}")
                 except requests.exceptions.RequestException as e:
-                    print(f"Error deleting edition service: {e}")
+                    print(f"Error modifying edition service: {e}")
             #已有该问卷的编辑记录
             else:
                 #####################huyanzhe
@@ -829,11 +827,11 @@ def save_qs_design(request):
                     'Category': catecory,
                     'TotalScore': None,
                     'TimeLimit': timelimit,
-                    'IsOrder': isOrder,
-                    'PublishDate': publishDate
+                    'IsOrder': isOrder
                 }
+                print(data)
                 try:
-                    response = requests.post(url, data)
+                    response = requests.post(url, json=data)
                     response.raise_for_status()
                     response_data = response.json()
                     id = response_data['SurveyID']

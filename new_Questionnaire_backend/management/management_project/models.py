@@ -3,7 +3,7 @@ from django.db import models
 # Create your models here.
 class Survey(models.Model):
     SurveyID = models.AutoField(primary_key=True)
-    OwnerID = models.IntegerField(unique=True)
+    OwnerID = models.IntegerField(blank=False)
     Title = models.CharField(max_length=200)
     Description = models.TextField(max_length=500, blank=True)
     Is_released = models.BooleanField(blank=True)
@@ -20,9 +20,9 @@ class Survey(models.Model):
 
 class Submission(models.Model):
     SubmissionID = models.AutoField(primary_key=True)
-    SurveyID = models.IntegerField(unique=True)
-    RespondentID = models.IntegerField(unique=True)
-    SubmissionTime = models.DateTimeField(auto_now_add=True)
+    SurveyID = models.IntegerField(blank=False)
+    RespondentID = models.IntegerField(blank=False)
+    SubmissionTime = models.DateTimeField(null=True)
     Status = models.CharField(max_length=20, choices=[('Unsubmitted', 'Unsubmitted'), ('Submitted', 'Submitted'), ('Graded', 'Graded'),('Deleted','Deleted')])
     Score = models.IntegerField(null=True, blank=True)
     #Duration = models.IntegerField(null=True, blank=True)

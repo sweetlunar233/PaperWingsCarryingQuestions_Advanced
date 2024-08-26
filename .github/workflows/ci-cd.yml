@@ -105,6 +105,7 @@ jobs:
 
 
             sudo kubectl apply -f ~/test/deployment.yml
+            my-app-59658d95d5-xc8tr
 
             sudo docker exec -it my_backend python manage.py test
 

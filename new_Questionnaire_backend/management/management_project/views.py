@@ -32,10 +32,12 @@ from .models import Survey
 from .serializers import SurveySerializer
 
 from django.views.decorators.http import require_http_methods
+import json
+import datetime
 
-userServeAddress='http://81.70.184.96:7000'
-managementServeAddress='http://81.70.184.96:7001'
-editionServeAddress='http://81.70.184.96:7002'
+userServeAddress='http://127.0.0.1:7000'
+managementServeAddress='http://127.0.0.1:7001'
+editionServeAddress='http://127.0.0.1:7002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -422,7 +424,6 @@ def get_survey(request, survey_id):
     serializer = SurveySerializer(survey)
     return Response(serializer.data)
 
-@api_view(['POST'])
 def UpdateSurvey(request):
     if(request.method=='POST'):
         try:
@@ -438,14 +439,17 @@ def UpdateSurvey(request):
             TotalScore=body['TotalScore']
             TimeLimit=body['TimeLimit']
             IsOrder=body['IsOrder']
-            PublishDate=body['PublishDate']
 
             if(SurveyID==-1):
+                print('erer')
+                
                 survey=Survey.objects.create(OwnerID=OwnerID,Title=Title,
                                              Description=Description,Is_released=Is_released,
                                              Is_open=Is_open,Is_deleted=Is_deleted,Category=Category,
-                                             TotalScore=TotalScore,TimeLimit=TimeLimit,IsOrder=IsOrder
+                                             TotalScore=TotalScore,TimeLimit=TimeLimit,IsOrder=IsOrder,
+                                             PublishDate=timezone.now()
                                             )
+                print('hert')
                 return JsonResponse({'SurveyID':survey.SurveyID})
             else:
                 survey=Survey.objects.get(SurveyID=SurveyID)
@@ -455,7 +459,7 @@ def UpdateSurvey(request):
                 survey.Category=Category
                 survey.TimeLimit=TimeLimit
                 survey.IsOrder=IsOrder
-                survey.PublishDate=PublishDate
+                survey.PublishDate=timezone.now()
                 survey.save()
                 return JsonResponse({'SurveyID':survey.SurveyID})
         except Submission.DoesNotExist:
