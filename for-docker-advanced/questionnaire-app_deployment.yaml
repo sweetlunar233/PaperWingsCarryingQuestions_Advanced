@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: questionnaire-app
+  namespace: zhiyi
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: questionnaire-app
+  template:
+    metadata:
+      labels:
+        app: questionnaire-app
+    spec:
+      containers:
+      - name: questionnaire-app
+        image: questionnaire-app
+        ports:
+        - containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 80
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 80
+          initialDelaySeconds: 5
+          periodSeconds: 10
