@@ -16,7 +16,7 @@ jobs:
       - name: Setup SSH
         uses: appleboy/ssh-action@master
         with:
-          host: 192.144.237.215
+          host: 81.70.184.96
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -24,7 +24,7 @@ jobs:
       - name: Install Updates and Basic Tools
         uses: appleboy/ssh-action@master
         with:
-          host: 192.144.237.215
+          host: 81.70.184.96
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -38,7 +38,7 @@ jobs:
       - name: Install Docker
         uses: appleboy/ssh-action@master
         with:
-          host: 192.144.237.215
+          host: 81.70.184.96
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -53,7 +53,7 @@ jobs:
       - name: Install Docker Compose
         uses: appleboy/ssh-action@master
         with:
-          host: 192.144.237.215
+          host: 81.70.184.96
           username: ubuntu
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
@@ -64,28 +64,37 @@ jobs:
               sudo apt  install docker-compose 
             fi
 
-      # - name: Prepare Application Environment
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: 192.144.237.215
-      #     username: ubuntu
-      #     password: BUaa2221
-      #     key: ${{ secrets.SSH_KEY }}
-      #     script: |
-      #       # if [ -d "PaperWingsCarryingQuestions_Basic" ]; then
-      #       #   cd PaperWingsCarryingQuestions_Basic
-      #       #   git pull
-      #       # else
-      #       #   git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Basic.git
-      #       #   cd PaperWingsCarryingQuestions_Basic
-      #       # fi
-      #       cd PaperWingsCarryingQuestions_Basic
-      #       cd Questionnaire
-      #       sudo npm install
-      #       sudo npm run build
-      #       cd ..
-      #       sudo docker-compose up --build
-      #       docker exec -it my_backend python manage.py test
+      - name: Prepare Application Environment
+        uses: appleboy/ssh-action@master
+        with:
+          host: 81.70.184.96
+          username: ubuntu
+          password: BUaa2221
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            # if [ -d "PaperWingsCarryingQuestions_Basic" ]; then
+            #   cd PaperWingsCarryingQuestions_Basic
+            #   git pull
+            # else
+            #   git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Basic.git
+            #   cd PaperWingsCarryingQuestions_Basic
+            # fi
+            cd PaperWingsCarryingQuestions_Advanced
+            cd Questionnaire
+            sudo npm install
+            sudo npm run build
+            cd ..
+            
+            sudo docker-compose build
+
+            docker tag questionnaire-app tiezhugiegie/questionnaire-app
+
+            docker push tiezhugiegie/questionnaire-app
+
+            sudo kubectl apply -f ~/test/deployment.yml
+
+
+            docker exec -it my_backend python manage.py test
 
           # # 部署到 Kubernetes
           # - name: Deploy to Kubernetes

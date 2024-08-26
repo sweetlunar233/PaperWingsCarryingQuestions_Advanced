@@ -4,8 +4,8 @@ WORKDIR /build-app
 
 COPY . .
 #流水线注释下面两行
-RUN npm install
-RUN npm run build 
+# RUN npm install
+# RUN npm run build 
 
 
 # 第二阶段：nginx打包
