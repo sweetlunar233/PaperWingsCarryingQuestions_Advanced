@@ -87,7 +87,7 @@ jobs:
             
             sudo docker-compose build
 
-            # sudo docker tag questionnaire-app tiezhugiegie/questionnaire-app
+            sudo docker tag questionnaire-app tiezhugiegie/questionnaire-app
             # sudo docker tag my_edition_db tiezhugiegie/my_edition_db
             # sudo docker tag my_management_db tiezhugiegie/my_management_db
             # sudo docker tag my_user_db tiezhugiegie/my_user_db
@@ -95,7 +95,7 @@ jobs:
             # sudo docker tag my_management_back tiezhugiegie/my_management_back
             # sudo docker tag my_user_back tiezhugiegie/my_user_back
 
-            # sudo docker push tiezhugiegie/questionnaire-app
+            sudo docker push tiezhugiegie/questionnaire-app
             # sudo docker push tiezhugiegie/my_edition_db
             # sudo docker push tiezhugiegie/my_management_db
             # sudo docker push tiezhugiegie/my_user_db
@@ -105,12 +105,13 @@ jobs:
 
 
             sudo kubectl apply -f ~/for-docker-advanced/front_deployment.yml
-            sudo kubectl apply -f ~/for-docker-advanced/my_edition_back_deployment.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/my_management_back_deployment.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/my_user_back_deployment.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/db/my_edition_db_statefulset.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/db/my_management_db_statefulset.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/db/my_user_db_statefulset.yaml
+
+            # sudo kubectl apply -f ~/for-docker-advanced/my_edition_back_deployment.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/my_management_back_deployment.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/my_user_back_deployment.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/db/my_edition_db_statefulset.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/db/my_management_db_statefulset.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/db/my_user_db_statefulset.yaml
 
             # sudo docker exec -it my_backend python manage.py test
 
