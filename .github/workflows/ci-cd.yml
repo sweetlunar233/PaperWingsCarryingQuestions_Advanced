@@ -104,10 +104,15 @@ jobs:
             # sudo docker push tiezhugiegie/my_user_back
 
 
-            sudo kubectl apply -f ~/test/deployment.yml
-            my-app-59658d95d5-xc8tr
+            sudo kubectl apply -f ~/for-docker-advanced/front_deployment.yml
+            sudo kubectl apply -f ~/for-docker-advanced/my_edition_back_deployment.yaml
+            sudo kubectl apply -f ~/for-docker-advanced/my_management_back_deployment.yaml
+            sudo kubectl apply -f ~/for-docker-advanced/my_user_back_deployment.yaml
+            sudo kubectl apply -f ~/for-docker-advanced/db/my_edition_db_statefulset.yaml
+            sudo kubectl apply -f ~/for-docker-advanced/db/my_management_db_statefulset.yaml
+            sudo kubectl apply -f ~/for-docker-advanced/db/my_user_db_statefulset.yaml
 
-            sudo docker exec -it my_backend python manage.py test
+            # sudo docker exec -it my_backend python manage.py test
 
           # # 部署到 Kubernetes
           # - name: Deploy to Kubernetes
