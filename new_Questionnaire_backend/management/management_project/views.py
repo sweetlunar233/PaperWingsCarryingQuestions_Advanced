@@ -172,7 +172,7 @@ def delete_unreleased_qs(request):
 def get_drafted_qs(request, username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'{userServeAddress}/user/{username}/'
+        user_api_url = f'{userServeAddress}/user/username/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -216,7 +216,7 @@ def get_drafted_qs(request, username):
 def get_released_qs(request,username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'{userServeAddress}/user/{username}/'
+        user_api_url = f'{userServeAddress}/user/username/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -241,7 +241,7 @@ def get_filled_qs(request,username):
     if(request.method=='GET'):
         # 调用 user 项目的 API 获取用户信息
         
-        user_api_url = f'{userServeAddress}/user/{username}/'
+        user_api_url = f'{userServeAddress}/user/username/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -263,9 +263,13 @@ def get_filled_qs(request,username):
                     else:
                         status_Chinese="已删除"
                     # 新加的
-                    data_list.append({'Title':submission.Survey.Title,'PublishDate':submission.SubmissionTime,
-                                    'SurveyID':submission.Survey.SurveyID,'Category':submission.Survey.Category,
-                                    'Description':submission.Survey.Description,'Status':status_Chinese,
+                    survey=Survey.objects.get(SurveyID=submission.SurveyID)
+                    if survey is None:
+                        return JsonResponse(content='Survey not found.',status=404)
+
+                    data_list.append({'Title':survey.Title,'PublishDate':submission.SubmissionTime,
+                                    'SurveyID':submission.SurveyID,'Category':survey.Category,
+                                    'Description':survey.Description,'Status':status_Chinese,
                                     'SubmissionID':submission.SubmissionID})
             data={'data':data_list}
             return JsonResponse(data)
@@ -287,7 +291,7 @@ def check_qs_open_stautus(request,questionnaireId):
 #问卷广场：检查投票/考试问卷
 def check_qs(request,username,questionnaireId,type):
     # 调用 user 项目的 API 获取用户信息
-    user_api_url = f'{userServeAddress}/user/{username}/'
+    user_api_url = f'{userServeAddress}/user/username/{username}/'
     try:
         user_response = requests.get(user_api_url)
         user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -386,7 +390,7 @@ def check_qs(request,username,questionnaireId,type):
     #普通问卷
     else: 
         #检查是否有未提交的填写记录
-        unsubmitted_query=Submission.objects.filter(RespondentID=user_id,Survey=qs,Status="Unsubmitted")
+        unsubmitted_query=Submission.objects.filter(RespondentID=user_id,SurveyID=qs.SurveyID,Status="Unsubmitted")
         if unsubmitted_query.exists():
             data={'message':False,"content":"对于当前问卷，您有未提交的填写记录"}
         else:
@@ -402,12 +406,21 @@ def get_all_released_qs(request):
 
         for survey in qs_query:
             reward=RewardOffering.objects.filter(Survey=survey).first()
+
+            user_api_url = f'{userServeAddress}/user/userid/{survey.OwnerID}/'
+            try:
+                user_response = requests.get(user_api_url)
+                user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
+                user_data = user_response.json()
+            except Exception as e:  
+                return JsonResponse({'error': str(e)}, status=500) 
+
             if reward is not None:
-                data_list.append({'Title':survey.Title,'PostMan':survey.Owner.username,'PublishDate':survey.PublishDate,
+                data_list.append({'Title':survey.Title,'PostMan':user_data['username'],'PublishDate':survey.PublishDate,
                                   'SurveyID':survey.SurveyID,'categoryId':survey.Category,'Description':survey.Description,
                                   'Reward':reward.Zhibi,'HeadCount':reward.AvailableQuota})
             else:
-                data_list.append({'Title':survey.Title,'PostMan':survey.Owner.username,'PublishDate':survey.PublishDate,
+                data_list.append({'Title':survey.Title,'PostMan':user_data['username'],'PublishDate':survey.PublishDate,
                                   'SurveyID':survey.SurveyID,'categoryId':survey.Category,'Description':survey.Description,
                                   'Reward':None})
         data={'data':data_list}
@@ -469,12 +482,29 @@ def save_submission(request):
     if(request.method=='POST'):
         try:
             body=json.loads(request.body)
-            submission=Submission.objects.create(SurveyID=body['SurveyID'],RespondentID=body['RespondentID'],   
-                                             SubmissionTime=body['SubmissionTime'],Status=body['Status'],
-                                             Interval=body['Interval'],Score=body['Score']
-                                             )
+            if body['submissionID']==-1:
+                print('aaa')
+                submission=Submission.objects.create(SurveyID=body['SurveyID'],RespondentID=body['RespondentID'],Status="Unsubmitted",
+                                                    Interval=0)
+                submission.save()
+            
+            else:
+                print('bbb')
+                print(body['submissionID'])
+                submission=Submission.objects.get(SubmissionID=body['submissionID'])
+                if submission is None:
+                    return HttpResponse(content='Submission not found.',status=404)
+                print(body['Status'])
+                print(body['Interval'])
+                print(body['Score'])
+                print(timezone.now())
+                submission.Status=body['Status']
+                submission.Interval=body['Interval']
+                submission.Score=body['Score']
+                submission.SubmissionTime=timezone.now()
 
-            submission.save()
+                submission.save()
+                print('ccc')
 
             data={'message':'True'}
             return JsonResponse(data)

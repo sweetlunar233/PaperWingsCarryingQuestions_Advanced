@@ -42,5 +42,5 @@ spec:
     - protocol: TCP
       port: 80
       targetPort: 80
-      nodePort: 31234  # 您可以指定一个介于30000-32767之间的端口号
+      nodePort: 31235  # 您可以指定一个介于30000-32767之间的端口号
   type: NodePort

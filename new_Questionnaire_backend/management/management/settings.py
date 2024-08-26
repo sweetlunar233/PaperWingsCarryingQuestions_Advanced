@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-q2w*rnh!!tb2gu7t@x^n6-xgx44q17x!vql$e)w1f$u2sbfqb@
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','81.70.184.96']
 
 
 # Application definition
@@ -61,6 +61,7 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     'http://81.70.184.96:31234',  # 允许Vue应用的域名访问
+    'http://81.70.184.96:31235',
     'http://127.0.0.1:7000',
     'http://127.0.0.1:7001',
     'http://127.0.0.1:7002',

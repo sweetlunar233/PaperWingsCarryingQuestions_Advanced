@@ -55,7 +55,7 @@ def health_check(request):
 #普通问卷的展示界面：
 def display_answer_normal(request,username,questionnaireId,submissionId):
     # 调用 user 项目的 API 获取用户信息
-    user_api_url = f'{userServeAddress}/user/{username}/'
+    user_api_url = f'{userServeAddress}/user/username/{username}/'
     try:
         user_response = requests.get(user_api_url)
         user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -83,9 +83,11 @@ def display_answer_normal(request,username,questionnaireId,submissionId):
     if submission is None:
         return HttpResponse(content='Submission not found', status=404)  
     
-    all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(Survey=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
-                                                    ChoiceQuestion.objects.filter(Survey=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
-                                                    RatingQuestion.objects.filter(Survey=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
+
+    
+    all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
+                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
+                                                    RatingQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
                                                     
     # 将迭代器转换为列表 (按QuestionNumber递增排序)
     all_questions_list = list(all_questionList_iterator)
@@ -154,7 +156,7 @@ def display_answer_normal(request,username,questionnaireId,submissionId):
             questionList.append({'type':question["Category"],'question':question["Text"],'questionID':question["QuestionID"],
                                     'isNecessary':question["IsRequired"],'score':question["Score"],'Answer':answer})
 
-    data={'Title':survey_data.Title,'description':survey_data.Description,'questionList':questionList}
+    data={'Title':survey_data['Title'],'description':survey_data['Description'],'questionList':questionList}
     return JsonResponse(data)
 
 
@@ -165,7 +167,7 @@ def display_answer_test(request,username,questionnaireId,submissionId):
 
 
     # 调用 user 项目的 API 获取用户信息
-    user_api_url = f'{userServeAddress}/user/{username}/'
+    user_api_url = f'{userServeAddress}/user/username/{username}/'
     try:
         user_response = requests.get(user_api_url)
         user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -195,9 +197,9 @@ def display_answer_test(request,username,questionnaireId,submissionId):
         return HttpResponse(content='Submission not found', status=404)  
     score=submission.Score
     
-    all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
-                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
-                                                    RatingQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
+    all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
+                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
+                                                    RatingQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
     
     # 将迭代器转换为列表 (按QuestionNumber递增排序)
     all_questions_list = list(all_questionList_iterator)
@@ -265,7 +267,7 @@ def display_answer_test(request,username,questionnaireId,submissionId):
                                     'isNecessary':question["IsRequired"],'score':question["Score"],'Answer':answer})
 
 
-    data={'Title':survey_data.Title,'description':survey_data.Description,'questionList':questionList,'score':score}
+    data={'Title':survey_data['Title'],'description':survey_data['Description'],'questionList':questionList,'score':score}
     # print(questionList[0])
     return JsonResponse(data)
 
@@ -279,7 +281,7 @@ class GetStoreFillView(APIView):
         submissionID=kwargs.get('submissionID')  
 
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'{userServeAddress}/user/{userName}/'
+        user_api_url = f'{userServeAddress}/user/username/{userName}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -306,7 +308,7 @@ class GetStoreFillView(APIView):
         
         #从问卷广场界面进入：查找该用户是否有该问卷未提交的填写记录
         if submissionID=="-1":
-            submission_query=Submission.objects.filter(RespondentID=user_data.UserID,SurveyID=survey_data.SurveyID,Status='Unsubmitted')
+            submission_query=Submission.objects.filter(RespondentID=user_data['UserID'],SurveyID=survey_data['SurveyID'],Status='Unsubmitted')
             if submission_query.exists():
                 submissionID=submission_query.first().SubmissionID  #找到未填写的记录
                 duration=submission_query.first().Interval
@@ -314,10 +316,21 @@ class GetStoreFillView(APIView):
                 # newsubmissionID = submissionID
             
             else:      #不存在：创建一条新的填写记录
-                submission=Submission.objects.create(SurveyID=survey_data.SurveyID,RespondentID=user_data.UserID,Status="Unsubmitted",
+                submission=Submission.objects.create(SurveyID=survey_data['SurveyID'],RespondentID=user_data['UserID'],Status="Unsubmitted",
                                                     Interval=0)
+                
+                submission_save_url=f'{managementServeAddress}/survey/submission_save/'
+                data={'SurveyID':survey_data['SurveyID'],'RespondentID':user_data['UserID'],
+                    'Status':"Unsubmitted",'Score':0,'Interval':0,'submissionID':-1}
+                try:
+                    response=requests.post(submission_save_url,json=data)
+                    response.raise_for_status()
+                except requests.exceptions.RequestException as e:
+                    print(f'Error deleting edition service:{e}')
+
                 duration=0
                 submissionID=submission.SubmissionID
+
                 # newsubmissionID = submission.SubmissionID
                 # return HttpResponse(content='Submission not existed', status=404) 
                 #################huyanzhe
@@ -325,9 +338,9 @@ class GetStoreFillView(APIView):
         #submissionID=-2时,只传回问卷题干(同问卷编辑的GET接口)
         elif submissionID=="-2":
             print("--here---")
-            all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
-                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
-                                                    RatingQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionNumber','QuestionID').all())
+            all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
+                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
+                                                    RatingQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionNumber','QuestionID').all())
                                                     
             # 将迭代器转换为列表  
             all_questions_list = list(all_questionList_iterator)
@@ -357,8 +370,8 @@ class GetStoreFillView(APIView):
                                      'isNecessary':question["IsRequired"],'score':question["Score"]})
 
         
-            data={'Title':survey_data.Title,'category':survey_data.Category,'TimeLimit':survey_data.TimeLimit,
-                'description':survey_data.Description,'questionList':questionList}
+            data={'Title':survey_data['Title'],'category':survey_data['Category'],'TimeLimit':survey_data['TimeLimit'],
+                'description':survey_data['Description'],'questionList':questionList}
             return JsonResponse(data)
         
         submission=Submission.objects.filter(SubmissionID=submissionID).first()
@@ -367,22 +380,18 @@ class GetStoreFillView(APIView):
         if not submission:
             return HttpResponse(content='Submission not found', status=404) 
     
-        Title=survey_data.Title
-        Description=survey_data.Description
-        category=survey_data.Category
-        TimeLimit=survey_data.TimeLimit
         #people=survey.QuotaLimit
         
         '''1.以下部分与问卷编辑界面的get函数类似，拿到题干'''
         '''2.拿到当前submissionID对应填写记录'''
-        all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
-                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID','MaxSelectable').all(),
-                                                    RatingQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
+        all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
+                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID','MaxSelectable').all(),
+                                                    RatingQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
                                                     
         all_questions_list = list(all_questionList_iterator)
 
         # 将迭代器转换为列表 (按QuestionNumber递增排序)--顺序展示
-        if survey_data.IsOrder:
+        if survey_data['IsOrder']:
             all_questions_list.sort(key=lambda x: x['QuestionNumber']) 
         
         #print(all_questions_list.length())
@@ -423,7 +432,7 @@ class GetStoreFillView(APIView):
                     optionList.append({'content':option.Text,'optionNumber':option.OptionNumber,'isCorrect':option.IsCorrect,
                                        'optionId':option.OptionID,'MaxSelectablePeople':option.MaxSelectablePeople})
                 
-                if survey_data.Category == 3 and survey_data.IsOrder == False: #选项乱序展示
+                if survey_data['Category'] == 3 and survey_data['IsOrder'] == False: #选项乱序展示
                     random.shuffle(optionList)
                 
                 questionList.append({'type':question["Category"],'question':question["Text"],'questionID':question["QuestionID"],
@@ -457,13 +466,13 @@ class GetStoreFillView(APIView):
                                      'isNecessary':question["IsRequired"],'score':question["Score"],'Answer':answer})
         
         #题干乱序展示
-        if survey_data.Category == 3 and survey_data.IsOrder == False:
+        if survey_data['Category'] == 3 and survey_data['IsOrder'] == False:
             random.shuffle(questionList)
 
         #传回题干和填写记录
-        data={'Title':survey_data.Title,'category':survey_data.Category,'TimeLimit':survey_data.TimeLimit,
-            'description':survey_data.Description,'questionList':questionList,'duration':submission.Interval, 'submissionID':submissionID}
-        
+        data={'Title':survey_data['Title'],'category':survey_data['Category'],'TimeLimit':survey_data['TimeLimit'],
+            'description':survey_data['Description'],'questionList':questionList,'duration':submission.Interval, 'submissionID':submissionID}
+
         return JsonResponse(data)
         
 from .serializers import SubmissionSerializer
@@ -482,9 +491,6 @@ def get_submission(request):
             duration=body['duration']  
             score=body['score'] 
 
-            # 新加的
-            publishDate=body['date']  #日期
-
             survey_api_url = f'{managementServeAddress}/survey/{surveyID}/'
             try:
                 survey_response = requests.get(survey_api_url)
@@ -498,7 +504,7 @@ def get_submission(request):
                 return HttpResponse(content='Questionnaire not found',status=404)
             
             # 调用 user 项目的 API 获取用户信息
-            user_api_url = f'{userServeAddress}/user/{username}/'
+            user_api_url = f'{userServeAddress}/user/username/{username}/'
             try:
                 user_response = requests.get(user_api_url)
                 user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -510,11 +516,12 @@ def get_submission(request):
             if user_data is None:
                 return HttpResponse(content='User not found',status=404)
         
-
+            print(submissionID)
             #当前不存在该填写记录，创建：  //实际上用不到，在getStoreFill的时候就给不存在的submission创建新的Id了
             currentTime=timezone.now()
             if submissionID==-1:
-                submission=Submission.objects.create(SurveyID=survey_data.SurveyID,RespondentID=user_data.UserID,
+                print('hi')
+                submission=Submission.objects.create(SurveyID=survey_data['SurveyID'],RespondentID=user_data['UserID'],
                                              SubmissionTime=currentTime,Status=status,
                                              Interval=duration,Score=score)
                 print(submission.SubmissionTime)
@@ -551,16 +558,17 @@ def get_submission(request):
 
             # 向management传输submission信息
             submission_save_url=f'{managementServeAddress}/survey/submission_save/'
-            data={'SurveyID':survey_data.SurveyID,'RespondentID':user_data.UserID,'SubmissionTime':currentTime,
-                  'Status':status,'Score':score,'Interval':duration}
-            
+            data={'SurveyID':survey_data['SurveyID'],'RespondentID':user_data['UserID'],
+                  'Status':status,'Score':score,'Interval':duration,'submissionID':submissionID}
+            print(data)
             try:
-                response=request.post(submission_save_url,data)
+                response=requests.post(submission_save_url,json=data)
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
-                print(f'Error deleting edition service:{e}')
+                print(f'Error saving submission service:{e}')
 
-
+            
+            print('111111')
             for submissionItem in submissionList:
                 # print("TieZhu")
                 questionID=submissionItem["questionID"]     #问题ID
@@ -611,7 +619,7 @@ def get_submission(request):
                     choiceAnswer.save()
 
                     #若已提交，报名问卷的必填选择题中，选择的对应选项人数-1
-                    if status=='Submitted' and survey_data.Category==2 and question.IsRequired==True:
+                    if status=='Submitted' and survey_data['Category']==2 and question.IsRequired==True:
                         print(option.MaxSelectablePeople)
 
                         if option.MaxSelectablePeople<=0:
@@ -633,7 +641,7 @@ def get_submission(request):
                         choiceAnswer.save()
 
                         #若已提交，报名问卷的必填选择题中，选择的对应选项人数-1
-                        if status=='Submitted' and survey_data.Category==2 and question.IsRequired==True:
+                        if status=='Submitted' and survey_data['Category']==2 and question.IsRequired==True:
                             if option.MaxSelectablePeople<=0:
                                 data={'message':False,'content':'报名人数已满'}
                                 return JsonResponse(data)
@@ -650,15 +658,16 @@ def get_submission(request):
                     ratingAnswer=RatingAnswer.objects.create(Question=question,Submission=submission,Rate=answer)
                     ratingAnswer.save()
 
-            user_data.zhibi+=50
-            user_data.save()
-
+            print(user_data)
+            print(user_data['zhibi'])
+            user_data['zhibi']+=50
+            print(user_data['zhibi'])
             # 向user传输更新后的zhibi信息
-            user_save_url=f'{userServeAddress}/user_save/'
-            data={'UserID':user_data.UserID,'zhibi':user_data.zhibi}
+            user_save_url=f'{userServeAddress}/user/user_save/'
+            data={'UserID':user_data['UserID'],'zhibi':user_data['zhibi']}
             
             try:
-                response=request.post(user_save_url,data)
+                response=requests.post(user_save_url,json=data)
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
                 print(f'Error deleting edition service:{e}')
@@ -690,10 +699,6 @@ class GetQuestionnaireView(APIView):
         # survey=Survey.objects.get(SurveyID=survey_id)
         if survey_data is None:
             return HttpResponse(content='Questionnaire not found', status=400) 
-        title=survey_data.Title
-        catecory=survey_data.Category
-        #people=survey.QuotaLimit
-        TimeLimit=survey_data.TimeLimit
 
         '''
         blank_questions = list(BlankQuestion.objects.filter(Survey=survey).values_list('id', 'QuestionNumber'))  
@@ -704,9 +709,9 @@ class GetQuestionnaireView(APIView):
         combined_questions = sorted(chain(blank_questions, choice_questions, rating_questions), key=lambda x: x[1])
         '''
 
-        all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
-                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','MaxSelectable','QuestionID').all(),
-                                                    RatingQuestion.objects.filter(SurveyID=survey_data.SurveyID).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionNumber','QuestionID').all())
+        all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
+                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','MaxSelectable','QuestionID').all(),
+                                                    RatingQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionNumber','QuestionID').all())
                                                     
         # 将迭代器转换为列表  
         all_questions_list = list(all_questionList_iterator)
@@ -737,8 +742,8 @@ class GetQuestionnaireView(APIView):
                                      'isNecessary':question["IsRequired"],'score':question["Score"]})
 
         
-        data={'Title':survey_data.Title,'category':survey_data.Category,'TimeLimit':survey_data.TimeLimit,
-              'description':survey_data.Description,'questionList':questionList}
+        data={'Title':survey_data['Title'],'category':survey_data['Category'],'TimeLimit':survey_data['TimeLimit'],
+              'description':survey_data['Description'],'questionList':questionList}
         
         return JsonResponse(data, status=200)
 
@@ -760,13 +765,10 @@ def save_qs_design(request):
 
             questionList=body['questionList']   #问卷题目列表
 
-            # 新加的
-            publishDate=body['date'] #日期
-
             print(questionList)
 
             # 调用 user 项目的 API 获取用户信息
-            user_api_url = f'{userServeAddress}/user/{username}/'
+            user_api_url = f'{userServeAddress}/user/username/{username}/'
             try:
                 user_response = requests.get(user_api_url)
                 user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -975,9 +977,9 @@ def download_submissions(request, surveyID):
             ws.cell(1,3).value='所用时间'
 
             #该问卷的所有问题
-            all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
-                                                        ChoiceQuestion.objects.filter(SurveyID=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
-                                                        RatingQuestion.objects.filter(SurveyID=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionNumber','QuestionID').all())
+            all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
+                                                        ChoiceQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID').all(),
+                                                        RatingQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionNumber','QuestionID').all())
                                                     
             # 将迭代器转换为列表  
             all_questions_list = list(all_questionList_iterator)
@@ -988,7 +990,7 @@ def download_submissions(request, surveyID):
                 ws.cell(1,i+4,'、'.join([str(i+1),question['Text']])).value='、'.join([str(i+1),question['Text']])    #题号+题干
 
             #找出该问卷的所有已提交/已打分的填写记录，按提交时间从前向后排序
-            submission_list=list(Submission.objects.filter(SurveyID=survey_data, Status__in=['Submitted', 'Graded']).values(
+            submission_list=list(Submission.objects.filter(SurveyID=survey_data['SurveyID'], Status__in=['Submitted', 'Graded']).values(
                 'SubmissionID','SubmissionTime','Respondent','Survey','Interval','Score'
             ))
             if len(submission_list)==0:
@@ -1002,7 +1004,7 @@ def download_submissions(request, surveyID):
                 sub_index+=1
                 # 调用 user 项目的 API 获取用户信息
                 id = submission.RespondentID
-                user_api_url = f'{userServeAddress}/user/{id}/'
+                user_api_url = f'{userServeAddress}/user/userid/{id}/'
                 try:
                     user_response = requests.get(user_api_url)
                     user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -1010,11 +1012,11 @@ def download_submissions(request, surveyID):
                 except requests.RequestException as e:
                     return JsonResponse({'error': str(e)}, status=500)
                 # user=User.objects.get(UserID=submission['Respondent'])
-                ws.cell(sub_index,1).value=user_data.username
+                ws.cell(sub_index,1).value=user_data['username']
 
                 ws.cell(sub_index,2).value=submissionTime=submission['SubmissionTime'].strftime('%Y-%m-%d %H:%M:%S')
             
-                if survey_data.Category==3:  #考试问卷：所用时间为Duration；其他问卷：'--'
+                if survey_data['Category']==3:  #考试问卷：所用时间为Duration；其他问卷：'--'
                     ws.cell(sub_index,3).value=submission['Interval']
                 else:
                     ws.cell(sub_index,3).value='--'
@@ -1054,7 +1056,7 @@ def download_submissions(request, surveyID):
                         else: 
                             ws.cell(sub_index,ques_index).value=answer.Rate
 
-                if survey_data.Category==3:      #考试问卷：增加该填写记录的总得分
+                if survey_data['Category']==3:      #考试问卷：增加该填写记录的总得分
                     ws.cell(sub_index,ques_index).value=submission['Score']
 
             # 准备写入到IO中
@@ -1067,7 +1069,7 @@ def download_submissions(request, surveyID):
             # 设置HttpResponse的类型
             response = HttpResponse(output.getvalue(), content_type='application/vnd.ms-excel')
             formatted_now = datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')
-            file_name = '-'.join([survey_data.Title, '填写记录统计']) + '_' + formatted_now + '.xlsx' 
+            file_name = '-'.join([survey_data['Title'], '填写记录统计']) + '_' + formatted_now + '.xlsx' 
 
             file_name = quote(file_name)	 # 使用urlquote()方法解决中文无法使用的问题
             response['Content-Disposition'] = 'attachment; filename=%s' % file_name
@@ -1101,9 +1103,9 @@ def survey_statistics(request, surveyID):
         # print("lorian")
         
         
-        all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
-                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID','MaxSelectable').all(),
-                                                    RatingQuestion.objects.filter(SurveyID=survey_data).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
+        all_questionList_iterator = itertools.chain(BlankQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','CorrectAnswer','QuestionNumber','QuestionID').all(),
+                                                    ChoiceQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','OptionCnt','QuestionNumber','QuestionID','MaxSelectable').all(),
+                                                    RatingQuestion.objects.filter(SurveyID=survey_data['SurveyID']).values('Category', 'Text', 'QuestionID', 'IsRequired', 'Score','QuestionID','QuestionNumber').all())
 
         # 将迭代器转换为列表 (按QuestionNumber递增排序)                                        
         all_questions_list = list(all_questionList_iterator)
@@ -1162,8 +1164,8 @@ def survey_statistics(request, surveyID):
 
 
         #传回题干和填写记录的统计数据
-        data={'title':survey_data.Title,'category':survey_data.Category,'TimeLimit':survey_data.TimeLimit,
-            'description':survey_data.Description,'questionList':questionList}
+        data={'title':survey_data['Title'],'category':survey_data['Category'],'TimeLimit':survey_data['TimeLimit'],
+            'description':survey_data['Description'],'questionList':questionList}
         return JsonResponse(data)
 
     
