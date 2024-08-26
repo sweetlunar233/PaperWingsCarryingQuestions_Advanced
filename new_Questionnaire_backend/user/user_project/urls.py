@@ -14,7 +14,7 @@ urlpatterns = [
     path('personal/message/',views.modify_user_info,name='modify-user-info-url'),
     path('personal/shop/',views.modify_photo_in_shop,name='modify-photo-in-shop-url'),
     
-    path('user/<str:username>/', UserDetailView, name='user-detail'),
-    path('user/<int:UserID>/', UserDetailViewID, name='user-detail-id'),
+    path('user/username/<str:username>/', UserDetailView, name='user-detail'),
+    path('user/userid/<int:UserID>/', UserDetailViewID, name='user-detail-id'),
     path('user/user_save/',views.save_user,'save-user-url'),
 ]

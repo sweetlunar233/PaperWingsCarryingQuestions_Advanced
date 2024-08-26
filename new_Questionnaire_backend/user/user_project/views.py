@@ -105,12 +105,16 @@ def get_user_info(request,username):
 
 #修改个人信息
 def modify_user_info(request):
+    print("==============123456=================")
     if(request.method=='POST'):
         try:
+            print("==============123456=================")
             body=json.loads(request.body)
             username=body['username']
             flag=body['flag']
+            print("==============TieZhu=================")
             user=User.objects.get(username=username)
+            print("==============TieZhu=================")
             if user is None:
                 return JsonResponse({'error': 'No user found'}, status=400) 
 
