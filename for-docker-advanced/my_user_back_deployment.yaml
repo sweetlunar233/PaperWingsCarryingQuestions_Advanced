@@ -16,6 +16,7 @@ spec:
       containers:
       - name: my_user_back
         image: my_user_back
+        imagePullPolicy: Never
         ports:
         - containerPort: 8080
         livenessProbe:

@@ -106,7 +106,7 @@ services:
     image: questionnaire-app
     container_name: questionnaire-app
     ports:
-      - "1234:80"  # 示例端口，视前端应用而定
+      - "31234:80"  # 示例端口，视前端应用而定
     networks:
       - mynetwork
 
