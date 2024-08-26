@@ -103,7 +103,6 @@ jobs:
             # sudo docker push tiezhugiegie/my_management_back
             # sudo docker push tiezhugiegie/my_user_back
 
-
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/front_deployment.yml
             # sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my_edition_back_deployment.yaml
             # sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my_management_back_deployment.yaml
