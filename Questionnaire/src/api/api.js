@@ -1,7 +1,7 @@
 import axios from "axios";
 
 //const serveAddress = "http://8.140.247.134:8001";
-const serveAddress = "http://82.156.97.95:8000";
+const serveAddress = "http://81.70.184.96:8000";
 
 export function post(url,data){
     return new Promise((resolve,reject) => {
