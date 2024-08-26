@@ -105,12 +105,12 @@ jobs:
 
 
             sudo kubectl apply -f ~/for-docker-advanced/front_deployment.yml
-            sudo kubectl apply -f ~/for-docker-advanced/my_edition_back_deployment.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/my_management_back_deployment.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/my_user_back_deployment.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/db/my_edition_db_statefulset.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/db/my_management_db_statefulset.yaml
-            sudo kubectl apply -f ~/for-docker-advanced/db/my_user_db_statefulset.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/my_edition_back_deployment.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/my_management_back_deployment.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/my_user_back_deployment.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/db/my_edition_db_statefulset.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/db/my_management_db_statefulset.yaml
+            # sudo kubectl apply -f ~/for-docker-advanced/db/my_user_db_statefulset.yaml
 
             # sudo docker exec -it my_backend python manage.py test
 
