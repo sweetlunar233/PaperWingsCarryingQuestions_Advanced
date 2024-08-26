@@ -72,13 +72,13 @@ jobs:
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
           script: |
-            # if [ -d "PaperWingsCarryingQuestions_Basic" ]; then
-            #   cd PaperWingsCarryingQuestions_Basic
-            #   git pull
-            # else
-            #   git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Basic.git
-            #   cd PaperWingsCarryingQuestions_Basic
-            # fi
+            if [ -d "PaperWingsCarryingQuestions_Basic" ]; then
+              cd PaperWingsCarryingQuestions_Basic
+              git pull
+            else
+              git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Basic.git
+              cd PaperWingsCarryingQuestions_Basic
+            fi
             cd PaperWingsCarryingQuestions_Advanced
             cd Questionnaire
             sudo npm install
