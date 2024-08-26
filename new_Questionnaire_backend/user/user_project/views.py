@@ -167,7 +167,7 @@ class Token:
 token_confirm = Token(django_settings.SECRET_KEY)
 def get_token(request):
 
-    url = serveAddress+'user/' + token_confirm.generate_validate_token(username='username')
+    url = serveAddress+'user/' + token_confirm.generate_validate_token(username='username')+'/'
     '''此处将这个url发送到客户邮箱，我们这里就不进行邮件发送的操作了'''
     return HttpResponse(status=200,content=True)
 

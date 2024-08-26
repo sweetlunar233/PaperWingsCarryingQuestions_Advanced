@@ -93,7 +93,6 @@ jobs:
 
             sudo kubectl apply -f ~/test/deployment.yml
 
-
             docker exec -it my_backend python manage.py test
 
           # # 部署到 Kubernetes

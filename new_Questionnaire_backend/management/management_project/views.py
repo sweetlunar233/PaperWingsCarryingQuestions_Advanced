@@ -102,7 +102,7 @@ def update_or_delete_released_qs(request):
                             ##############################################################################
                             # 需要发送通信,使edition改变该填写记录的状态（改为Deleted）huyanzhe
                             ##############################################################################
-                            url = f'{editionServeAddress}/edition/update-submission-status/{submission.SubmissionID}'
+                            url = f'{editionServeAddress}/edition/update-submission-status/{submission.SubmissionID}/'
                             try:
                                 response = requests.get(url)
                                 response.raise_for_status()
@@ -214,7 +214,7 @@ def get_drafted_qs(request, username):
 def get_released_qs(request,username):
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        user_api_url = f'{userServeAddress}/user/{username}'
+        user_api_url = f'{userServeAddress}/user/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -238,12 +238,14 @@ def get_released_qs(request,username):
 def get_filled_qs(request,username):
     if(request.method=='GET'):
         # 调用 user 项目的 API 获取用户信息
+        
         user_api_url = f'{userServeAddress}/user/{username}/'
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
             user_data = user_response.json()
             user_id = user_data.get('UserID')
+            print(user_id)
 
             submission_query=Submission.objects.filter(RespondentID=user_id)
             data_list=[]
@@ -333,7 +335,7 @@ def check_qs(request,username,questionnaireId,type):
         #检查是否超人数(检查每个必填选择题的所有选项，是否都超人数)
         submission_query=Submission.objects.filter(RespondentID=user_id,Survey=qs)
 
-        edition_api_url = f'{editionServeAddress}/edition/check-survey-status'
+        edition_api_url = f'{editionServeAddress}/edition/check-survey-status/'
         payload = {'survey_id': qs.SurveyID}
         try:
             response = requests.post(edition_api_url, json=payload)
