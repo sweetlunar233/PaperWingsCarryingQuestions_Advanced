@@ -670,7 +670,7 @@ def get_submission(request):
                 response=requests.post(user_save_url,json=data)
                 response.raise_for_status()
             except requests.exceptions.RequestException as e:
-                print(f'Error deleting edition service:{e}')
+                print(f'Error saving user service:{e}')
             ######################huyanzhe
                 
         except json.JSONDecodeError:  

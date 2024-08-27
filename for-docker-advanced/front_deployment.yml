@@ -14,10 +14,10 @@ spec:
     spec:
       containers:
       - name: questionnaire
-        image: tiezhugiegie/questionnaire-app  # 使用本地镜像名称
+        image: tiezhugiegie/questionnaire-app:latest  # 使用本地镜像名称
         ports:
         - containerPort: 80
-        # imagePullPolicy: Never  # 不从远程拉取镜像，直接使用本地镜像
+        imagePullPolicy: Never  # 不从远程拉取镜像，直接使用本地镜像
         # livenessProbe:
         #   httpGet:
         #     path: /healthz

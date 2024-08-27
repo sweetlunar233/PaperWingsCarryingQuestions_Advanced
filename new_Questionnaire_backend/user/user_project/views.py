@@ -41,7 +41,7 @@ userServeAddress='http://127.0.0.1:7000'
 managementServeAddress='http://127.0.0.1:7001'
 editionServeAddress='http://127.0.0.1:7002'
 
-serveAddress='http://81.70.184.96:7000'
+serveAddress='http://82.156.88.4:7000'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -54,6 +54,7 @@ def health_check(request):
 '''个人中心界面'''
 #购买商店中的头像
 def modify_photo_in_shop(request):
+    print("---------------------123--------------")
     if(request.method=='POST'):
         try:
             body=json.loads(request.body)
@@ -305,10 +306,13 @@ def save_user(request):
     if(request.method=='POST'):
         try:
             body=json.loads(request.body)
+            print('hello')
             user=User.objects.get(UserID=body['UserID'])
             if user is None:
                 return HttpResponse(content='User not found',status=404)
             
+            print(body['UserID'])
+            print(body['zhibi'])
             user.zhibi=body['zhibi']
             user.save()
 

@@ -55,7 +55,7 @@ class GetUserInfoTest(TestCase):
 
 class ModifyUserInfoTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create(username='testuser', email='user@example.com', password='password123', zhibi=100)
+        User.objects.create(username='testuser', email='user@example.com', password='password123')
         self.valid_payload = {
             'username': 'testuser',
             'flag': 1,
@@ -69,8 +69,8 @@ class ModifyUserInfoTest(TestCase):
 
     def test_modify_user_info_success(self):
         response = self.client.post('/personal/message/', json.dumps(self.valid_payload), content_type='application/json')
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json()['message'], "True")
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.json()['error'], "True")
 
     def test_invalid_parameters(self):
         response = self.client.post('/personal/message/', json.dumps(self.invalid_payload), content_type='application/json')
@@ -110,12 +110,35 @@ class UserDetailTest(TestCase):
         self.client = APIClient()
 
     def test_user_detail_view_success(self):
-        response = self.client.get('/user/testuser/')
+        response = self.client.get('/user/username/testuser/')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
         self.assertEqual(response.json()['username'],'testuser')
         self.assertEqual(response.json()['email'],'user@example.com')
         self.assertEqual(response.json()['password'],'password123')
 
     def test_invalid_method(self):
-        response = self.client.post('/user/testuser/')
+        response = self.client.post('/user/username/testuser/')
         self.assertEqual(response.status_code, 405)
+
+class UserDetailViewIDTest(TestCase):
+    def setUp(self):
+        # 创建一个用户以便测试
+        self.client = APIClient()
+        self.user = User.objects.create(username='testuser', email='user@example.com', password='password123')
+        self.user_id = self.user.pk  # 获取创建用户的主键ID
+
+    def test_get_user_success(self):
+        # 测试获取现有用户的详细信息
+        response = self.client.get(f'/user/userid/{self.user_id}/')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.assertEqual(response.json()['username'],'testuser')
+        self.assertEqual(response.json()['email'],'user@example.com')
+        self.assertEqual(response.json()['password'],'password123')
+
+    def test_user_not_found(self):
+        # 测试当用户不存在时的情况
+        response = self.client.get('/user/userid/999999/')  # 使用一个肯定不存在的用户ID
+        self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
+        self.assertEqual(response.data, {'error': 'User not found'})
+
+

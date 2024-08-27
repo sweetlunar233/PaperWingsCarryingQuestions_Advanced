@@ -108,7 +108,7 @@
             ElMessage.error('密码必须为5到25位非空字符');
             return;
         }
-        console.log("hello")
+        console.log("hello 2024.8.27 9:54")
         var promise = postUserMessage(loginData.value.username, loginData.value.password, false);
         promise.then((result)=>{
             console.log("i m out")

@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-w&posf^u467@&dn85i3-5+-ge(ro)u05lg48d!_3244!#&w(!a
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost', '127.0.0.1','81.70.184.96']
+ALLOWED_HOSTS = ['localhost', '127.0.0.1','82.156.88.4']
 
 
 # Application definition
@@ -65,15 +65,29 @@ MIDDLEWARE = [
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
-    'http://81.70.184.96:31234',  # 允许Vue应用的域名访问
-    'http://81.70.184.96:31235',
-    'http://81.70.184.96:7000', 
-    'http://81.70.184.96:7001', 
-    'http://81.70.184.96:7002', 
+    'http://82.156.88.4:31234',  # 允许Vue应用的域名访问
+    'http://82.156.88.4:31235',
+    'http://82.156.88.4:7000', 
+    'http://82.156.88.4:7001', 
+    'http://82.156.88.4:7002', 
     'http://127.0.0.1:7000',
     'http://127.0.0.1:7001',
     'http://127.0.0.1:7002',
 ]
+
+CORS_ALLOW_METHODS = [
+    'GET',
+    'POST',
+    'OPTIONS',
+]
+
+CORS_ALLOW_HEADERS = [
+    '*',
+]
+
+# Consul配置信息
+CONSUL_HOST = '127.0.0.1'
+CONSUL_PORT = 8500
 
 ROOT_URLCONF = "user.urls"
 

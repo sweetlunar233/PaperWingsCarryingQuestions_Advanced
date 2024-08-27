@@ -103,7 +103,7 @@ services:
   front:
     build:
       context: ./Questionnaire  # 指向前端文件夹的上下文
-    image: questionnaire-app
+    image: tiezhugiegie/questionnaire-app:latest
     container_name: questionnaire-app
     ports:
       - "31235:80"  # 示例端口，视前端应用而定

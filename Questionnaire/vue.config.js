@@ -5,7 +5,7 @@ module.exports = defineConfig({
   //  devServer: {
   //    proxy: {
   //     '/personal/login': {
-  //       target: 'http://81.70.184.96:7000', // Django服务器的地址
+  //       target: 'http://82.156.88.47000', // Django服务器的地址
   //       changeOrigin: true,
   //       pathRewrite: {
   //       '^/personal': ''
