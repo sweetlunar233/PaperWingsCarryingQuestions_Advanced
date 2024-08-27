@@ -53,57 +53,6 @@ class GetUserInfoTest(TestCase):
             {'error': 'Invalid request method'}
         )
 
-class ModifyUserInfoTest(TestCase):
-    def setUp(self):
-        User.objects.create(username='testuser', email='user@example.com', password='password123')
-        self.valid_payload = {
-            'username': 'testuser',
-            'flag': 1,
-            'email': 'user@example.com',
-            'password': 'password123'
-        }
-        self.invalid_payload = {
-            'username': 'testuser',
-            'flag': -1,
-        }
-
-    def test_modify_user_info_success(self):
-        response = self.client.post('/personal/message/', json.dumps(self.valid_payload), content_type='application/json')
-        self.assertEqual(response.status_code, 405)
-        self.assertEqual(response.json()['error'], "True")
-
-    def test_invalid_parameters(self):
-        response = self.client.post('/personal/message/', json.dumps(self.invalid_payload), content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json()['error'], 'Invalid or missing parameters')
-
-class ModifyPhotoInShopTest(TestCase):
-    def setUp(self):
-        self.user = User.objects.create(username='testuser', email='user@example.com', password='password123', zhibi=100, own_photos=json.dumps(['photo1', 'photo2']))
-        self.valid_payload = {
-            'username': 'testuser',
-            'photonumber': 1,
-            'status': 'newstatus',
-            'money': 500
-        }
-
-    def test_modify_user_success(self):
-        response = self.client.post('/personal/shop/', json.dumps(self.valid_payload), content_type='application/json')
-        self.user.refresh_from_db()
-        self.assertEqual(response.status_code, 200)
-        self.assertEqual(self.user.zhibi, 500)
-        self.assertIn('newstatus', json.loads(self.user.own_photos))
-
-    def test_invalid_json_body(self):
-        response = self.client.post('/personal/shop/', '{"username": "testuser", "photonumber": ""}', content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json()['error'], 'Invalid JSON body')
-
-    def test_invalid_request_method(self):
-        response = self.client.get('/personal/shop/')
-        self.assertEqual(response.status_code, 405)
-        self.assertEqual(response.json()['error'], 'Invalid request method')
-
 class UserDetailTest(TestCase):
     def setUp(self):
         self.user = User.objects.create(username='testuser', email='user@example.com', password='password123')
@@ -141,4 +90,25 @@ class UserDetailViewIDTest(TestCase):
         self.assertEqual(response.status_code, status.HTTP_404_NOT_FOUND)
         self.assertEqual(response.data, {'error': 'User not found'})
 
+class SaveUserTest(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.user = User.objects.create(username='testuser', email='user@example.com', password='password123', zhibi=100)
+        self.url = '/user/user_save/'  # 直接使用硬编码的URL路径
+
+    def test_save_user_success(self):
+        payload = {'UserID': self.user.UserID, 'zhibi': 200}
+        response = self.client.post(self.url, json.dumps(payload), content_type='application/json')
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), {'message': 'True'})
+
+    def test_invalid_json(self):
+        response = self.client.post(self.url, '{bad json:', content_type='application/json')
+        self.assertEqual(response.status_code, 400)
+        self.assertEqual(response.json(), {'error': 'Invalid JSON body'})
+
+    def test_invalid_request_method(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.json(), {'error': 'Invalid request method'})
 

@@ -54,12 +54,14 @@ def delete_filled_qs(request):
             body=json.loads(request.body)
             submissionID=body
             submission=Submission.objects.get(SubmissionID=submissionID)     #对应填写记录
+            print(submission)
             if submission is None:
                 return JsonResponse({'error': 'No ID provided'}, status=400) 
             submission.delete()
+
             ###############huyanzhe
-            id = submission.SubmissionID
-            url = f'{editionServeAddress}/edition/delete-submission/{id}/'
+            url = f'{editionServeAddress}/edition/delete_submission/{submissionID}/'
+
             try:
                 response = requests.get(url)
                 response.raise_for_status()
@@ -104,7 +106,7 @@ def update_or_delete_released_qs(request):
                             ##############################################################################
                             # 需要发送通信,使edition改变该填写记录的状态（改为Deleted）huyanzhe
                             ##############################################################################
-                            url = f'{editionServeAddress}/edition/update-submission-status/{submission.SubmissionID}/'
+                            url = f'{editionServeAddress}/edition/update_submission_status/{submission.SubmissionID}/'
                             try:
                                 response = requests.get(url)
                                 response.raise_for_status()
@@ -307,7 +309,7 @@ def check_qs(request,username,questionnaireId,type):
     
     #投票问卷:每个用户只可提交一次
     if qs.Category==1:
-        submission_query=Submission.objects.filter(RespondentID=user_id,Survey=qs)
+        submission_query=Submission.objects.filter(RespondentID=user_id,SurveyID=qs.SurveyID)
         if submission_query.exists():
             submission=submission_query.first()
             if submission.Status=='Unsubmitted':
@@ -322,7 +324,7 @@ def check_qs(request,username,questionnaireId,type):
     
     #考试问卷：每个用户只可提交一次
     elif qs.Category==3:
-        submission_query=Submission.objects.filter(RespondentID=user_id,Survey=qs)
+        submission_query=Submission.objects.filter(RespondentID=user_id,SurveyID=qs.SurveyID)
         if submission_query.exists():
             submission=submission_query.first()
             if submission.Status=='Unsubmitted':
@@ -339,20 +341,23 @@ def check_qs(request,username,questionnaireId,type):
     elif qs.Category==2:
         print("TieZhu")
         #检查是否超人数(检查每个必填选择题的所有选项，是否都超人数)
-        submission_query=Submission.objects.filter(RespondentID=user_id,Survey=qs)
+        submission_query=Submission.objects.filter(RespondentID=user_id,SurveyID=qs.SurveyID)
 
-        edition_api_url = f'{editionServeAddress}/edition/check-survey-status/'
+        edition_api_url = f'{editionServeAddress}/edition/check_survey_status/'
         payload = {'survey_id': qs.SurveyID}
         try:
             response = requests.post(edition_api_url, json=payload)
             response.raise_for_status()
             result = response.json()
+        
             if result.get('is_full')==True:
                 data={'message':False,"content":"当前报名人数已满"}
                 return JsonResponse(data)
+            data={'message':"True","content":"可以开始/继续填写"}
+        
         except requests.exceptions.RequestException as e:
             print(f"An error occurred: {e}")
-            return None
+            return HttpResponse(content='Error',status=400)
         
         # choiceQuestion_query=ChoiceQuestion.objects.filter(Survey=qs,Category__in=[1,2],IsRequired=True)
 
@@ -380,7 +385,7 @@ def check_qs(request,username,questionnaireId,type):
         '''
 
         #检查是否有未提交的填写记录
-        unsubmitted_query=Submission.objects.filter(RespondentID=user_id,Survey=qs,Status="Unsubmitted")
+        unsubmitted_query=Submission.objects.filter(RespondentID=user_id,SurveyID=qs.SurveyID,Status="Unsubmitted")
         if unsubmitted_query.exists():
             data={'message':False,"content":"对于当前问卷，您有未提交的填写记录"}
         

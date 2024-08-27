@@ -789,7 +789,7 @@ def save_qs_design(request):
                 print("TieZhu")
                 #survey.QuotaLimit=people
                 ###############huyanzhe
-                url = f'{managementServeAddress}/survey/update-survey/'
+                url = f'{managementServeAddress}/survey/update_survey/'
                 data = {
                     'SurveyID': surveyID,
                     'OwnerID': user_data['UserID'],
@@ -817,7 +817,7 @@ def save_qs_design(request):
             #已有该问卷的编辑记录
             else:
                 #####################huyanzhe
-                url = f'{managementServeAddress}/survey/update-survey/'
+                url = f'{managementServeAddress}/survey/update_survey/'
                 data = {
                     'SurveyID': surveyID,
                     'OwnerID': None,
@@ -909,7 +909,7 @@ def cross_analysis(request, QuestionID1, QuestionID2):
         if QuestionID1 is None or QuestionID2 is None:
             return JsonResponse({'error': 'Missing QuestionID(s)'}, status=404)
         
-        if question1.Survey.SurveyID != question2.Survey.SurveyID:
+        if question1.SurveyID != question2.SurveyID:
             return JsonResponse({'error': 'Two questions are not from the same questionnaire.'}, status=404)
         
         if question1.Category!=1 and question1.Category!=2:
@@ -1186,11 +1186,11 @@ def UpdateSubmissionStatus(request, submission_id):
 @api_view(['POST'])
 def check_survey_status(request):
     survey_id = request.data.get('survey_id')
-    if not survey_id:
+    if survey_id is None:
         return Response({'error': 'survey_id is required'}, status=status.HTTP_400_BAD_REQUEST)
 
     try:
-        choice_questions = ChoiceQuestion.objects.filter(Survey_id=survey_id, Category__in=[1,2], IsRequired=True)
+        choice_questions = ChoiceQuestion.objects.filter(SurveyID=survey_id, Category__in=[1,2], IsRequired=True)
         is_full = True
 
         for choice_question in choice_questions:
@@ -1201,8 +1201,8 @@ def check_survey_status(request):
                     break
             if not is_full:
                 break
-
-        return Response({'is_full': is_full})
+        data = {'is_full': is_full}
+        return JsonResponse(data)
 
     except Exception as e:
         return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)

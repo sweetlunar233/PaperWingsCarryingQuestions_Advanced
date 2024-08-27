@@ -192,6 +192,7 @@ initFilled(username.value);
 
 
 const deleteQs = (id) =>{
+    console.log(id)
     ElMessageBox.confirm(
         '你确认删除该填写记录吗？',
         '温馨提示',
@@ -265,7 +266,7 @@ const handleCreate = () => {
 };
 
 const formatDate = (date) => {
-    return date.split('T')[0]; // 提取日期部分
+    return date.toISOString().slice(0, 10); // 提取日期部分
 }
 
 const goToQuestionnaireDesignCopy = (questionnaireId, questionnaireType, flag) => {

@@ -109,7 +109,7 @@ DATABASES = {
         'USER': 'buaa21374125',  # 数据库用户名
         'PASSWORD': 'BUaa21374125',  # 数据库用户密码
         'NAME': 'management_db'  # 数据库名
-    }
+    },
 
     # #容器跑
     # "default": {
@@ -130,6 +130,20 @@ DATABASES = {
     #     'PASSWORD': '123456',  # 数据库用户密码
     #     'NAME': 'management_db'  # 数据库名
     # }
+
+    # 测试使用数据库
+    'test': {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
+        'PORT': 23531,  # 数据库端口
+        'USER': 'buaa21374125',  # 数据库用户名
+        'PASSWORD': 'BUaa21374125',  # 数据库用户密码
+        'NAME': 'management_db',  # 数据库名
+        'TEST': {
+            'NAME': 'management_db',
+            'MIRROR': 'default',  # 设置为'default'来避免Django试图创建或销毁数据库
+        }
+    }
 }
 
 
