@@ -37,3 +37,6 @@ app.use(store).use(router).use(ElementPlus,{locale: zhCn}).use(RadioGroup).use(R
 
 app.config.globalProperties.$cookies = VueCookies
 VueCookies.config("1d");
+
+const cors = require("cors");
+app.use(cors()); //使用cors中间件

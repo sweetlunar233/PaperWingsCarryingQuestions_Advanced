@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'drf_spectacular',  # 接口文档 swagger
 ]
 
+# Consul配置信息
+CONSUL_HOST = '127.0.0.1'
+CONSUL_PORT = 8500
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -59,9 +63,13 @@ MIDDLEWARE = [
 
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     'http://82.156.88.4:31234',  # 允许Vue应用的域名访问
     'http://82.156.88.4:31235',
+    'http://82.156.88.4:7000', 
+    'http://82.156.88.4:7001', 
+    'http://82.156.88.4:7002', 
     'http://127.0.0.1:7000',
     'http://127.0.0.1:7001',
     'http://127.0.0.1:7002',
@@ -139,6 +147,15 @@ DATABASES = {
         'USER': 'buaa21374125',  # 数据库用户名
         'PASSWORD': 'BUaa21374125',  # 数据库用户密码
         'NAME': 'management_db',  # 数据库名
+
+        # #容器跑
+        #     'ENGINE': 'django.db.backends.mysql',
+        #     'HOST': 'management_db',  # 数据库主机
+        #     'PORT': 3306,  # 数据库端口
+        #     'USER': 'root',  # 数据库用户名
+        #     'PASSWORD': '123456',  # 数据库用户密码
+        #     'NAME': 'management_db'  # 数据库名
+
         'TEST': {
             'NAME': 'management_db',
             'MIRROR': 'default',  # 设置为'default'来避免Django试图创建或销毁数据库

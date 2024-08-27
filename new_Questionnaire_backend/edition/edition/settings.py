@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     'drf_spectacular',  # 接口文档 swagger
 ]
 
+# Consul配置信息
+CONSUL_HOST = '127.0.0.1'
+CONSUL_PORT = 8500
+
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -59,9 +63,13 @@ MIDDLEWARE = [
 
 # CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_ALL_ORIGINS = True
 CORS_ALLOWED_ORIGINS = [
     'http://82.156.88.4:31234',  # 允许Vue应用的域名访问
     'http://82.156.88.4:31235',
+    'http://82.156.88.4:7000', 
+    'http://82.156.88.4:7001', 
+    'http://82.156.88.4:7002', 
     'http://127.0.0.1:7000',
     'http://127.0.0.1:7001',
     'http://127.0.0.1:7002',
@@ -76,10 +84,6 @@ CORS_ALLOW_METHODS = [
 CORS_ALLOW_HEADERS = [
     '*',
 ]
-
-# Consul配置信息
-CONSUL_HOST = '127.0.0.1'
-CONSUL_PORT = 8500
 
 ROOT_URLCONF = "edition.urls"
 

@@ -11,6 +11,7 @@
     "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.7.4",
     "core-js": "^3.8.3",
+    "cors": "^2.8.5",
     "echarts": "^5.5.0",
     "echarts-wordcloud": "^2.1.0",
     "element-plus": "^2.7.5",
