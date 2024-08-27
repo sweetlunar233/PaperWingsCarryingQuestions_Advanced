@@ -110,6 +110,7 @@ jobs:
             
             sudo kubectl create namespace zhiyi
 
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/standard-sc.yaml
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/front-deployment.yml
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my-edition-back-deployment.yaml
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my-management-back-deployment.yaml
