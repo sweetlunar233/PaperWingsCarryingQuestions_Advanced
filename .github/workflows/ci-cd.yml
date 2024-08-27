@@ -84,6 +84,10 @@ jobs:
             sudo npm install
             sudo npm run build
             cd ..
+
+            cd new_Questionnaire_backend
+            sudo pip install mysqlclient
+            cd ..
             
             sudo docker-compose build
 
