@@ -71,15 +71,17 @@ class GetAllReleasedQsTest(TestCase):
 
 class CheckQsTest(TestCase):
     def setUp(self):
-        self.user = User.objects.create(username='testuser', email='user@example.com', password='password123', zhibi=100)
-        self.survey = Survey.objects.create(Owner=self.user, Title="Survey", Category=1, Is_released=True, PublishDate=timezone.now(), SurveyID=1, Is_open=True)
         self.url = '/Manage/square/lorian/1/1/'
 
-    def test_submission_exists_and_unsubmitted(self):
-        Submission.objects.create(Respondent=self.user, Survey=self.survey, Status='Unsubmitted')
+    def test_check_qs(self):
         response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
+        response_data = response.json()  # 获取完整的响应数据
+        self.assertIn('message', response_data)  # 检查'message'字段是否存在
+        self.assertIn('content', response_data)
 
-    def test_can_fill_survey(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
+    def test_invalid_request_method(self):
+        response = self.client.post(self.url, {})
+        self.assertEqual(response.status_code, 405)
+        self.assertEqual(response.json()['error'], 'Invalid request method')
+
