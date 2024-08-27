@@ -303,8 +303,8 @@ def check_qs(request,username,questionnaireId,type):
         return JsonResponse({'error': str(e)}, status=500)
     if user_data is None:
         return HttpResponse(content="User not found",status=404)
-    qs=Survey.objects.get(SurveyID=questionnaireId)
-    if qs is None:
+    qs=Survey.objects.filter(SurveyID=questionnaireId).first()
+    if not qs.exists():
         return HttpResponse(content="Questionnaire not found",status=404)
     
     #投票问卷:每个用户只可提交一次
