@@ -247,7 +247,7 @@ const goToQuestionnaireDesignCopy = (questionnaireId, questionnaireType, flag) =
 }
 
 const formatDate = (date) => {
-    return date.split('T')[0]; // 提取日期部分
+    return date.toISOString().slice(0, 10); // 提取日期部分
 }
 
 

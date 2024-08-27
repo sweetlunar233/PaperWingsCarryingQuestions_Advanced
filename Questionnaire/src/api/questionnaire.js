@@ -52,5 +52,5 @@ export function check(username, questionnaireId, type){
 }
 
 export function checkFilled(questionnaireId){
-    return get(managementServeAddress+"/Manage/filled/"+questionnaireId);
+    return get(managementServeAddress+"/Manage/filled/"+questionnaireId+"/");
 }

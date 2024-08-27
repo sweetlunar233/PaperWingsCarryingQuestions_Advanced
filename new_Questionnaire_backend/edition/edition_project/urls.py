@@ -30,7 +30,7 @@ urlpatterns = [
     path('dataPre/<int:surveyID>/',views.survey_statistics,name='survey-statistics-url'),
     path('dataPre/download/<int:surveyID>/',views.download_submissions,name='download_submissions-url'),
 
-    path('edition/delete-submission/', DeleteSubmission, name='delete-submission'),
-    path('edition/check-survey-status/', check_survey_status, name='check_survey_status'),
-    path('edition/update-submission-status/<int:submission_id>/', UpdateSubmissionStatus, name='update-submission-status'),
+    path('edition/delete_submission/<int:SubmissionID>', DeleteSubmission, name='delete-submission'),
+    path('edition/check_survey_status/', check_survey_status, name='check_survey_status'),
+    path('edition/update_submission_status/<int:submission_id>/', UpdateSubmissionStatus, name='update-submission-status'),
 ]

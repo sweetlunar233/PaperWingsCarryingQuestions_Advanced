@@ -19,7 +19,7 @@ export function GetCrossData(QuestionID1,QuestionID2){
 }
 //拿到其他数据
 export function GetOtherData(surveyID){
-    return get(editionServeAddress+"/dataPre/"+surveyID);
+    return get(editionServeAddress+"/dataPre/"+surveyID+"/");
 }
 //拿到暂存的填写记录
 export function GetStoreFill(userName,surveyID,submissionID){

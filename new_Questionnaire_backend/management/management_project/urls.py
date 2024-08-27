@@ -25,6 +25,6 @@ urlpatterns = [
 
     # 微服务通信：获取surveyID
     path('survey/<int:survey_id>/', get_survey, name='get_survey'),
-    path('survey/update-survey/', UpdateSurvey, name='update_survey'),
+    path('survey/update_survey/', UpdateSurvey, name='update_survey'),
     path('survey/submission_save/',views.save_submission, name='save-submission-url'),    #传入待保存的submission信息
 ]

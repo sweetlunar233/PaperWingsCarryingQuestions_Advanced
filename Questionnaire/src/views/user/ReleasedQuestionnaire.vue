@@ -319,7 +319,7 @@ const reviseQuestionnaire = (id, type) => {
 }
 
 const formatDate = (date) => {
-    return date.split('T')[0]; // 提取日期部分
+    return date.toISOString().slice(0, 10); // 提取日期部分
 }
 
 
@@ -372,7 +372,7 @@ const copyToClipboard = async () => {
 
 const shareQuestionnaire = (SurveyID) => {
     showShareDialog();
-    url.value = "http://49.232.201.229/questionnaireFill/" + SurveyID + "/-1"
+    url.value = "http://82.156.88.4:31235/questionnaireFill/" + SurveyID + "/-1"
 }
 
 // 使用 ref 创建响应式数据

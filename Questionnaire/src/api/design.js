@@ -22,12 +22,12 @@ export function ConserveOrReleaseQuestionnaire(
     data.isDisorder = isDisorder;
     data.title = title;
     data.flag = flag;
-    return post(editionServeAddress+"/questionnaireDesign/"+username, data);
+    return post(editionServeAddress+"/questionnaireDesign/"+username+"/", data);
 }
 
 export function GetQuestionnaireDesign(username, questionnaireId, type){ //获取问卷设计
     let data = {};
     data.questionnaireId = questionnaireId;
     data.type = type;
-    return get(editionServeAddress+"/questionnaireDesign/"+username+"/"+questionnaireId+"/"+type);
+    return get(editionServeAddress+"/questionnaireDesign/"+username+"/"+questionnaireId+"/"+type+"/");
 }
