@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my_management_back
+  name: my-user-back
   namespace: zhiyi
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my_management_back
+      app: my-user-back
   template:
     metadata:
       labels:
-        app: my_management_back
+        app: my-user-back
     spec:
       containers:
-      - name: my_management_back
-        image: my_management_back
+      - name: my-user-back
+        image: my-user-back
         imagePullPolicy: Never
         ports:
         - containerPort: 8080

@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my_management_back_service
+  name: my-management-back-service
   namespace: zhiyi
 spec:
   type: ClusterIP
   selector:
-    app: my_management_back
+    app: my-management-back
   ports:
   - name: http
     port: 8080

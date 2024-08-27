@@ -1,12 +1,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my_user_db_service
+  name: my-user-db-service
   namespace: zhiyi
 spec:
   type: ClusterIP
   selector:
-    app: my_user_db
+    app: my-user-db
   ports:
   - name: mysql
     port: 3306

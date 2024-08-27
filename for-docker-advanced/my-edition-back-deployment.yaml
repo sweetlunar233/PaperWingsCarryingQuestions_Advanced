@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: my_edition_back
+  name: my-edition-back
   namespace: zhiyi
 spec:
   replicas: 2
   selector:
     matchLabels:
-      app: my_edition_back
+      app: my-edition-back
   template:
     metadata:
       labels:
-        app: my_edition_back
+        app: my-edition-back
     spec:
       containers:
-      - name: my_edition_back
-        image: my_edition_back
+      - name: my-edition-back
+        image: my-edition-back
         imagePullPolicy: Never
         ports:
         - containerPort: 8080

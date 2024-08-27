@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: questionnaire-app_service
+  name: questionnaire-app-service
   namespace: zhiyi
 spec:
   type: NodePort

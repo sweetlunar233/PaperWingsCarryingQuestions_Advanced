@@ -87,30 +87,30 @@ jobs:
             sudo docker-compose build
 
             # sudo docker tag questionnaire-app tiezhugiegie/questionnaire-app
-            # sudo docker tag my_edition_db tiezhugiegie/my_edition_db
-            # sudo docker tag my_management_db tiezhugiegie/my_management_db
-            # sudo docker tag my_user_db tiezhugiegie/my_user_db
-            # sudo docker tag my_edition_back tiezhugiegie/my_edition_back
-            # sudo docker tag my_management_back tiezhugiegie/my_management_back
-            # sudo docker tag my_user_back tiezhugiegie/my_user_back
+            # sudo docker tag my-edition-db tiezhugiegie/my-edition-db
+            # sudo docker tag my-management-db tiezhugiegie/my-management-db
+            # sudo docker tag my-user-db tiezhugiegie/my-user-db
+            # sudo docker tag my-edition-back tiezhugiegie/my-edition-back
+            # sudo docker tag my-management-back tiezhugiegie/my-management-back
+            # sudo docker tag my-user-back tiezhugiegie/my-user-back
 
             # sudo docker push tiezhugiegie/questionnaire-app
-            # sudo docker push tiezhugiegie/my_edition_db
-            # sudo docker push tiezhugiegie/my_management_db
-            # sudo docker push tiezhugiegie/my_user_db
-            # sudo docker push tiezhugiegie/my_edition_back
-            # sudo docker push tiezhugiegie/my_management_back
-            # sudo docker push tiezhugiegie/my_user_back
+            # sudo docker push tiezhugiegie/my-edition-db
+            # sudo docker push tiezhugiegie/my-management-db
+            # sudo docker push tiezhugiegie/my-user-db
+            # sudo docker push tiezhugiegie/my-edition-back
+            # sudo docker push tiezhugiegie/my-management-back
+            # sudo docker push tiezhugiegie/my-user-back
 
-            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/front_deployment.yml
-            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my_edition_back_deployment.yaml
-            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my_management_back_deployment.yaml
-            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my_user_back_deployment.yaml
-            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my_edition_db_statefulset.yaml
-            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my_management_db_statefulset.yaml
-            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my_user_db_statefulset.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/front-deployment.yml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my-edition-back-deployment.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my-management-back-deployment.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my-user-back-deployment.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my-edition-db-statefulset.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my-management-db-statefulset.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my-user-db-statefulset.yaml
 
-            # sudo docker exec -it my_backend python manage.py test
+            # sudo docker exec -it my-backend python manage.py test
 
           # # 部署到 Kubernetes
           # - name: Deploy to Kubernetes

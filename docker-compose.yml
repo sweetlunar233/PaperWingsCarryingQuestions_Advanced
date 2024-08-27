@@ -4,8 +4,8 @@ services:
   edition_db:
     build:
       context: ./new_Questionnaire_backend/appDB/edition_db  # 指向数据库 Dockerfile 的上下文
-    image: my_edition_db
-    container_name: my_edition_db
+    image: my-edition-db
+    container_name: my-edition-db
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: edition_db
@@ -19,8 +19,8 @@ services:
   management_db:
     build:
       context: ./new_Questionnaire_backend/appDB/management_db  # 指向数据库 Dockerfile 的上下文
-    image: my_management_db
-    container_name: my_management_db
+    image: my-management-db
+    container_name: my-management-db
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: management_db
@@ -34,8 +34,8 @@ services:
   user_db:
     build:
       context: ./new_Questionnaire_backend/appDB/user_db  # 指向数据库 Dockerfile 的上下文
-    image: my_user_db
-    container_name: my_user_db
+    image: my-user-db
+    container_name: my-user-db
     environment:
       MYSQL_ROOT_PASSWORD: 123456
       MYSQL_DATABASE: user_db
@@ -50,8 +50,8 @@ services:
     build:
       context: ./new_Questionnaire_backend
       dockerfile: Dockerfile_edition
-    image: my_edition_back
-    container_name: my_edition_back
+    image: my-edition-back
+    container_name: my-edition-back
     environment:
       - DJANGO_DB_HOST=edition_db
       - DJANGO_DB_PORT=3306
@@ -68,8 +68,8 @@ services:
     build:
       context: ./new_Questionnaire_backend
       dockerfile: Dockerfile_management
-    image: my_management_back
-    container_name: my_management_back
+    image: my-management-back
+    container_name: my-management-back
     environment:
       - DJANGO_DB_HOST=management_db
       - DJANGO_DB_PORT=3306
@@ -86,8 +86,8 @@ services:
     build:
       context: ./new_Questionnaire_backend
       dockerfile: Dockerfile_user
-    image: my_user_back
-    container_name: my_user_back
+    image: my-user-back
+    container_name: my-user-back
     environment:
       - DJANGO_DB_HOST=user_db
       - DJANGO_DB_PORT=3306

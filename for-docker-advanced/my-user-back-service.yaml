@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: my_edition_db_service
+  name: my-user-back-service
   namespace: zhiyi
 spec:
   type: ClusterIP
   selector:
-    app: my_edition_db
+    app: my-user-back
   ports:
-  - name: mysql
-    port: 3306
-    targetPort: 3306
+  - name: http
+    port: 8080
+    targetPort: 8080

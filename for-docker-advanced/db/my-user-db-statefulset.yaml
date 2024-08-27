@@ -1,22 +1,22 @@
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: my_user_db
+  name: my-user-db
   namespace: zhiyi
 spec:
-  serviceName: "my_user_db"
+  serviceName: "my-user-db"
   replicas: 1
   selector:
     matchLabels:
-      app: my_user_db
+      app: my-user-db
   template:
     metadata:
       labels:
-        app: my_user_db
+        app: my-user-db
     spec:
       containers:
-      - name: my_user_db
-        image: my_user_db
+      - name: my-user-db
+        image: my-user-db
         imagePullPolicy: Never
         env:
         - name: MYSQL_ROOT_PASSWORD
