@@ -107,6 +107,7 @@ jobs:
             # sudo docker push tiezhugiegie/my-management-back
             # sudo docker push tiezhugiegie/my-user-back
 
+            
             sudo kubectl create namespace zhiyi
 
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/standard-sc.yaml
