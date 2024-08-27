@@ -72,13 +72,14 @@ jobs:
           password: BUaa2221
           key: ${{ secrets.SSH_KEY }}
           script: |
-            if [ -d "PaperWingsCarryingQuestions_Advanced" ]; then
-              cd PaperWingsCarryingQuestions_Advanced
-              git pull
-            else
-              git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Advanced.git
-              cd PaperWingsCarryingQuestions_Advanced
-            fi
+            # if [ -d "PaperWingsCarryingQuestions_Advanced" ]; then
+            #   cd PaperWingsCarryingQuestions_Advanced
+            #   git pull
+            #   cd ..
+            # else
+            #   git clone https://github.com/sweetlunar233/PaperWingsCarryingQuestions_Advanced.git
+            # fi
+            cd PaperWingsCarryingQuestions_Advanced
             cd Questionnaire
             sudo npm install
             sudo npm run build
