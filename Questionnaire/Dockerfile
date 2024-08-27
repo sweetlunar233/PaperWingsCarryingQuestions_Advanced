@@ -15,8 +15,7 @@ WORKDIR /app
 # 替换nginx配置
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 # 将第一阶段的静态文件复制到nginx中
-RUN rm -rf /usr/share/nginx/html
-RUN mkdir /usr/share/nginx/html
+RUN rm -rf /usr/share/nginx/html && mkdir /usr/share/nginx/html
 COPY --from=frontend-builder /build-app/dist /usr/share/nginx/html
 
 # 运行
