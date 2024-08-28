@@ -35,9 +35,9 @@ from django.views.decorators.http import require_http_methods
 import json
 import datetime
 
-userServeAddress='http://127.0.0.1:31000'
-managementServeAddress='http://127.0.0.1:31001'
-editionServeAddress='http://127.0.0.1:31002'
+userServeAddress='http://my-user-back-service:31000'
+managementServeAddress='http://my-management-back-service:31001'
+editionServeAddress='http://my-edition-back-service:31002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
