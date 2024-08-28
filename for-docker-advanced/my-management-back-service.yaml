@@ -4,10 +4,10 @@ metadata:
   name: my-management-back-service
   namespace: zhiyi
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: my-management-back
   ports:
   - name: http
-    port: 8000
+    port: 7001
     targetPort: 8000

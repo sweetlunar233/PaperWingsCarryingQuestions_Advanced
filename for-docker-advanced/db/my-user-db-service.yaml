@@ -4,11 +4,10 @@ metadata:
   name: my-user-db-service
   namespace: zhiyi
 spec:
-  type: ClusterIP
+  type: NodePort
   selector:
     app: my-user-db
   ports:
   - name: mysql
     port: 3306
     targetPort: 3306
-    
