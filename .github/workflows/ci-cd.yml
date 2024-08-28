@@ -127,7 +127,6 @@ jobs:
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my-user-db-service.yaml
 
             # sudo docker exec my-backend python manage.py test
-            
 
           # # 部署到 Kubernetes
           # - name: Deploy to Kubernetes
