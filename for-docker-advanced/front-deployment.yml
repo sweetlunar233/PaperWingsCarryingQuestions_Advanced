@@ -6,14 +6,14 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: questionnaire-front
+      app: questionnaire
   template:
     metadata:
       labels:
-        app: questionnaire-front
+        app: questionnaire
     spec:
       containers:
-      - name: questionnaire-front
+      - name: questionnaire
         image: tiezhugiegie/questionnaire-app:latest  # 使用本地镜像名称
         ports:
         - containerPort: 80

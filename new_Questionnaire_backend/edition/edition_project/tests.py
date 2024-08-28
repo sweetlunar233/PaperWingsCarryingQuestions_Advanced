@@ -280,3 +280,17 @@ class display_answer_test_test(TestCase):
 #         response = self.client.get(self.url)
 #         self.assertEqual(response.status_code, 404)
 #         self.assertIn('No submission records available.', response.content.decode())
+
+
+# ----- -----
+
+class check_survey_status_test(TestCase):
+    def setUp(self):
+        self.client = APIClient()
+        self.url = reverse('check_survey_status', kwargs={'survey_id': 1})
+
+    def test_check_survey_status(self):
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 200)
+        response_data = response.json()  # 获取完整的响应数据
+        self.assertIn('is_full', response_data)
