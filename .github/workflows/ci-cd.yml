@@ -128,6 +128,7 @@ jobs:
 
             # sudo docker exec my-backend python manage.py test
 
+            
           # # 部署到 Kubernetes
           # - name: Deploy to Kubernetes
           #   run: |
