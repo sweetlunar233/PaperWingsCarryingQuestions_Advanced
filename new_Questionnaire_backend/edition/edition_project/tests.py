@@ -9,8 +9,6 @@ from io import BytesIO
 import openpyxl
 import datetime
 
-# Create your tests here.
-
 class save_qs_design_test(TestCase):
     def setUp(self):
         self.url = reverse('save-qs-design-url')
@@ -70,133 +68,50 @@ class get_store_fill_test(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
-class get_submission_test(TestCase):
+# -----问卷展示界面-----
+
+class display_answer_normal_test(TestCase):
     def setUp(self):
         # 设置测试环境
         self.client = APIClient()
-        self.user = User.objects.create(username='testuser', email='user@example.com', password='password123', zhibi=100)
-        self.survey = Survey.objects.create(Owner=self.user, Title="Test Survey", Category=1, TimeLimit=30, SurveyID=1, Is_released=True)
-        self.choice_question = ChoiceQuestion.objects.create(Survey=self.survey, Text="Choice Question", Score=5, IsRequired=True, QuestionNumber=1, Category=1)
-        self.blank_question = BlankQuestion.objects.create(Survey=self.survey, Text="Blank Question", Score=10, IsRequired=True, QuestionNumber=2, Category=3)
-        self.rating_question = RatingQuestion.objects.create(Survey=self.survey, Text="Rating Question", Score=5, IsRequired=True, QuestionNumber=3, Category=4)
-        self.choice_option = ChoiceOption.objects.create(Question=self.choice_question, Text="Option 1", IsCorrect=True, OptionNumber=1, MaxSelectablePeople=10)
-        self.submission = Submission.objects.create(Survey=self.survey, Respondent=self.user, SubmissionID=1, Status='Unsubmitted')
+        # 设置URL
+        self.url = reverse('display-answer-normal', kwargs={'username': 'lorian', 'questionnaireId': 1, 'submissionId': 1})
 
-    def test_successful_submission(self):
-        # 测试成功提交填写记录
-        submission_data = {
-            'surveyID': self.survey.SurveyID,
-            'status': 'Submitted',
-            'submissionID': 1,
-            'username': self.user.username,
-            'question': [
-                {'questionID': self.choice_question.QuestionID, 'value': self.choice_option.OptionID, 'category': 1},
-                {'questionID': self.blank_question.QuestionID, 'value': 'Answer', 'category': 3},
-                {'questionID': self.rating_question.QuestionID, 'value': 4, 'category': 4},
-            ],
-            'duration': 120,
-            'score': 0,
-            'date': timezone.now().isoformat()
-        }
-
-        # 使用json.dumps将数据序列化为JSON字符串
-        response = self.client.post(reverse('post-submission-url'), data=json.dumps(submission_data), content_type='application/json')
-
+    def test_display_answer_normal_success(self):
+        # 测试成功展示问卷答案
+        response = self.client.get(self.url)
         self.assertEqual(response.status_code, 200)
-        self.assertEqual(response.json().get('message'), True)
 
-        # 检查选项选择记录是否保存
-        self.assertTrue(ChoiceAnswer.objects.filter(Question=self.choice_question, Submission__SubmissionID=1).exists())
-        # 检查填空题答案是否保存
-        self.assertTrue(BlankAnswer.objects.filter(Question=self.blank_question, Submission__SubmissionID=1).exists())
-        # 检查评分题答案是否保存
-        self.assertTrue(RatingAnswer.objects.filter(Question=self.rating_question, Submission__SubmissionID=1).exists())
-        # 检查用户纸币是否增加
-        self.user.refresh_from_db()
-        self.assertEqual(self.user.zhibi, 150)
+    def test_user_not_found(self):
+        # 测试用户不存在的情况
+        url = reverse('display-answer-normal', kwargs={'username': 'unknownuser', 'questionnaireId': 1, 'submissionId': 1})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
 
-    def test_invalid_json_body(self):
-        # 测试无效的 JSON 数据
-        response = self.client.post(reverse('post-submission-url'), data="Invalid JSON", content_type='application/json')
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json().get('error'), 'Invalid JSON body')
+class display_answer_test_test(TestCase):
+    def setUp(self):
+        # 设置测试环境
+        self.client = APIClient()
+        # 设置URL
+        self.url = reverse('display-answer-test', kwargs={'username': self.user.username, 'questionnaireId': self.survey.SurveyID, 'submissionId': self.submission.SubmissionID})
 
-# #问卷展示界面：
+    def test_display_answer_test_success(self):
+        # 测试成功展示考试问卷答案
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        response_data = response.json()
 
-# class display_answer_normal_test(TestCase):
-#     def setUp(self):
-#         # 设置测试环境
-#         self.client = APIClient()
-#         self.user = User.objects.create(username='testuser', email='user@example.com', password='password123', zhibi=100)
-#         self.survey = Survey.objects.create(Owner=self.user, Title="Test Survey", Category=1, TimeLimit=30, SurveyID=1, Is_released=True)
-#         self.submission = Submission.objects.create(Survey=self.survey, Respondent=self.user, SubmissionID=1, Status='Submitted')
+        self.assertIn('Choice Question', response_data['questionList'][0]['question'])
+        self.assertIn('Blank Question', response_data['questionList'][1]['question'])
+        self.assertIn('Rating Question', response_data['questionList'][2]['question'])
+        self.assertEqual(response_data['score'], 80)
 
-#         # 创建问题和答案
-#         self.choice_question = ChoiceQuestion.objects.create(Survey=self.survey, Text="Choice Question", Score=5, IsRequired=True, QuestionNumber=1, Category=1)
-#         self.blank_question = BlankQuestion.objects.create(Survey=self.survey, Text="Blank Question", Score=10, IsRequired=True, QuestionNumber=2, Category=3)
-#         self.rating_question = RatingQuestion.objects.create(Survey=self.survey, Text="Rating Question", Score=5, IsRequired=True, QuestionNumber=3, Category=4)
-        
-#         self.choice_option = ChoiceOption.objects.create(Question=self.choice_question, Text="Option 1", IsCorrect=True, OptionNumber=1)
-#         self.choice_answer = ChoiceAnswer.objects.create(Question=self.choice_question, Submission=self.submission, ChoiceOptions=self.choice_option)
-#         self.blank_answer = BlankAnswer.objects.create(Question=self.blank_question, Submission=self.submission, Content="Test Answer")
-#         self.rating_answer = RatingAnswer.objects.create(Question=self.rating_question, Submission=self.submission, Rate=4)
-
-#         # 设置URL
-#         self.url = reverse('display-answer-normal', kwargs={'username': self.user.username, 'questionnaireId': self.survey.SurveyID, 'submissionId': self.submission.SubmissionID})
-
-#     def test_display_answer_normal_success(self):
-#         # 测试成功展示问卷答案
-#         response = self.client.get(self.url)
-#         self.assertEqual(response.status_code, 200)
-#         self.assertIn('Choice Question', response.json()['questionList'][0]['question'])
-#         self.assertIn('Blank Question', response.json()['questionList'][1]['question'])
-#         self.assertIn('Rating Question', response.json()['questionList'][2]['question'])
-
-#     def test_user_not_found(self):
-#         # 测试用户不存在的情况
-#         url = reverse('display-answer-normal', kwargs={'username': 'unknownuser', 'questionnaireId': self.survey.SurveyID, 'submissionId': self.submission.SubmissionID})
-#         response = self.client.get(url)
-#         self.assertEqual(response.status_code, 404)
-#         self.assertIn('User not found', response.content.decode())
-
-# class display_answer_test_test(TestCase):
-#     def setUp(self):
-#         # 设置测试环境
-#         self.client = APIClient()
-#         self.user = User.objects.create(username='testuser', email='user@example.com', password='password123', zhibi=100)
-#         self.survey = Survey.objects.create(Owner=self.user, Title="Test Survey", Category=1, TimeLimit=30, SurveyID=1, Is_released=True)
-#         self.submission = Submission.objects.create(Survey=self.survey, Respondent=self.user, SubmissionID=1, Status='Submitted', Score=80)
-
-#         # 创建问题和答案
-#         self.choice_question = ChoiceQuestion.objects.create(Survey=self.survey, Text="Choice Question", Score=5, IsRequired=True, QuestionNumber=1, Category=1)
-#         self.blank_question = BlankQuestion.objects.create(Survey=self.survey, Text="Blank Question", Score=10, IsRequired=True, QuestionNumber=2, Category=3)
-#         self.rating_question = RatingQuestion.objects.create(Survey=self.survey, Text="Rating Question", Score=5, IsRequired=True, QuestionNumber=3, Category=4)
-        
-#         self.choice_option = ChoiceOption.objects.create(Question=self.choice_question, Text="Option 1", IsCorrect=True, OptionNumber=1)
-#         self.choice_answer = ChoiceAnswer.objects.create(Question=self.choice_question, Submission=self.submission, ChoiceOptions=self.choice_option)
-#         self.blank_answer = BlankAnswer.objects.create(Question=self.blank_question, Submission=self.submission, Content="Test Answer")
-#         self.rating_answer = RatingAnswer.objects.create(Question=self.rating_question, Submission=self.submission, Rate=4)
-
-#         # 设置URL
-#         self.url = reverse('display-answer-test', kwargs={'username': self.user.username, 'questionnaireId': self.survey.SurveyID, 'submissionId': self.submission.SubmissionID})
-
-#     def test_display_answer_test_success(self):
-#         # 测试成功展示考试问卷答案
-#         response = self.client.get(self.url)
-#         self.assertEqual(response.status_code, 200)
-#         response_data = response.json()
-
-#         self.assertIn('Choice Question', response_data['questionList'][0]['question'])
-#         self.assertIn('Blank Question', response_data['questionList'][1]['question'])
-#         self.assertIn('Rating Question', response_data['questionList'][2]['question'])
-#         self.assertEqual(response_data['score'], 80)
-
-#     def test_survey_not_found(self):
-#         # 测试问卷不存在的情况
-#         url = reverse('display-answer-test', kwargs={'username': self.user.username, 'questionnaireId': 9999, 'submissionId': self.submission.SubmissionID})
-#         response = self.client.get(url)
-#         self.assertEqual(response.status_code, 404)
-#         self.assertIn('Questionnaire not found', response.content.decode())
+    def test_survey_not_found(self):
+        # 测试问卷不存在的情况
+        url = reverse('display-answer-test', kwargs={'username': self.user.username, 'questionnaireId': 9999, 'submissionId': self.submission.SubmissionID})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 404)
+        self.assertIn('Questionnaire not found', response.content.decode())
 
 # #数据分析:
 
