@@ -5,9 +5,9 @@ import { post,get } from "./api"
 //     data.username = username;
 //     return get("/login",data);
 // }
-let userServeAddress='http://82.156.88.4:7000'
-let managementServeAddress='http://82.156.88.4:7001'
-let editionServeAddress='http://82.156.88.4:7002'
+let userServeAddress='http://82.156.88.4:31000'
+let managementServeAddress='http://82.156.88.4:31001'
+let editionServeAddress='http://82.156.88.4:31002'
 
 export function getApiToken(username,password){
     let data = {};

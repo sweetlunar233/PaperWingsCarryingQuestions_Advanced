@@ -88,12 +88,15 @@ class display_answer_normal_test(TestCase):
         response = self.client.get(url)
         self.assertEqual(response.status_code, 404)
 
+
+#### TIEZHU!!!!!
+# 因为暂时还没有创建考试问卷，所以这个展示答案先没有改
 class display_answer_test_test(TestCase):
     def setUp(self):
         # 设置测试环境
         self.client = APIClient()
         # 设置URL
-        self.url = reverse('display-answer-test', kwargs={'username': self.user.username, 'questionnaireId': self.survey.SurveyID, 'submissionId': self.submission.SubmissionID})
+        self.url = reverse('display-answer-test', kwargs={'username': 'lorian', 'questionnaireId': self.survey.SurveyID, 'submissionId': self.submission.SubmissionID})
 
     def test_display_answer_test_success(self):
         # 测试成功展示考试问卷答案
@@ -113,7 +116,9 @@ class display_answer_test_test(TestCase):
         self.assertEqual(response.status_code, 404)
         self.assertIn('Questionnaire not found', response.content.decode())
 
-# #数据分析:
+# -----数据分析-----
+#### TIEZHU!!!!!
+# 因为暂时还没有很多问卷，也暂时没有改。等数据都造出来了再改
 
 # class cross_analysis_test(TestCase):
 #     def setUp(self):
