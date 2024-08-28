@@ -40,9 +40,9 @@ import requests
 from io import BytesIO
 import json
   
-userServeAddress='http://127.0.0.1:31000'
-managementServeAddress='http://127.0.0.1:31001'
-editionServeAddress='http://127.0.0.1:31002'
+userServeAddress='http://82.156.88.4:31000'
+managementServeAddress='http://82.156.88.4:31001'
+editionServeAddress='http://82.156.88.4:31002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  

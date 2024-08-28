@@ -37,9 +37,9 @@ from rest_framework.decorators import api_view
 from .serializers import UserSerializer
 import json
 
-userServeAddress='http://127.0.0.1:31000'
-managementServeAddress='http://127.0.0.1:31001'
-editionServeAddress='http://127.0.0.1:31002'
+userServeAddress='http://82.156.88.4:31000'
+managementServeAddress='http://82.156.88.4:31001'
+editionServeAddress='http://82.156.88.4:31002'
 
 serveAddress='http://82.156.88.4:31000'
 
