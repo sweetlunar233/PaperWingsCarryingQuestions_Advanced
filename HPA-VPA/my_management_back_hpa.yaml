@@ -1,7 +1,7 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: my_management_back_hpa
+  name: my-management-back-hpa
   namespace: zhiyi
 spec:
   scaleTargetRef:

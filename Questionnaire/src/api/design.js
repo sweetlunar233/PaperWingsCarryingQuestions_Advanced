@@ -1,8 +1,8 @@
 import { post,get } from "./api"
 
-let userServeAddress='http://82.156.88.4:7000'
-let managementServeAddress='http://82.156.88.4:7001'
-let editionServeAddress='http://82.156.88.4:7002'
+let userServeAddress='http://82.156.88.4:31000'
+let managementServeAddress='http://82.156.88.4:31001'
+let editionServeAddress='http://82.156.88.4:31002'
 
 export function ConserveOrReleaseQuestionnaire(
     username,

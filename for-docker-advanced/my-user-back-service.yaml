@@ -11,3 +11,4 @@ spec:
   - name: http
     port: 7000
     targetPort: 8000
+    nodePort: 31000

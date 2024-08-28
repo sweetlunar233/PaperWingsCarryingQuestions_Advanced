@@ -1,13 +1,13 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: my_edition_back_hpa
+  name: my-edition-back-hpa
   namespace: zhiyi
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: my_edition_back
+    name: my-edition-back
   minReplicas: 2
   maxReplicas: 5
   metrics:
