@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: questionnaire-front
+  name: questionnaire-app
 spec:
   replicas: 1
   selector:
@@ -14,27 +14,15 @@ spec:
     spec:
       containers:
       - name: questionnaire
-        image: tiezhugiegie/questionnaire-app:latest  # 使用本地镜像名称
+        image: tiezhugiegie/questionnaire-app:latest
         ports:
         - containerPort: 80
-        imagePullPolicy: Never  # 不从远程拉取镜像，直接使用本地镜像
-        # livenessProbe:
-        #   httpGet:
-        #     path: /healthz
-        #     port: 80
-        #   initialDelaySeconds: 30
-        #   periodSeconds: 10
-        # readinessProbe:
-        #   httpGet:
-        #     path: /ready
-        #     port: 80
-        #   initialDelaySeconds: 5
-        #   periodSeconds: 10
+        imagePullPolicy: Never
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: questionnaire-front-service
+  name: questionnaire-service-test
 spec:
   selector:
     app: questionnaire
