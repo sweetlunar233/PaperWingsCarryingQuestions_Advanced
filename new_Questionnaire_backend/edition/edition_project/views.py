@@ -1082,17 +1082,29 @@ def download_submissions(request, surveyID):
 
 from django.db.models import Count, Sum, Q
 
+from pycircuitbreaker import CircuitBreaker, CircuitBreakerError
+# 创建熔断器实例
+circuit_breaker = CircuitBreaker(
+    failure_threshold=3,  # 失败次数阈值
+    recovery_timeout=10   # 熔断器恢复时间（秒）
+)
 #数据分析：向前端传输该问卷的所有题目及填写内容的统计数据
 def survey_statistics(request, surveyID):
     if (request.method=='GET'):
         #问卷
         survey_api_url = f'{managementServeAddress}/survey/{surveyID}/'
         try:
-            survey_response = requests.get(survey_api_url)
-            survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
-            survey_data = survey_response.json()
+            with circuit_breaker:  # 使用熔断器
+                survey_response = requests.get(survey_api_url)
+                survey_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
+                survey_data = survey_response.json()
+                return JsonResponse(survey_data)
+        except CircuitBreakerError:
+            return JsonResponse({'error': 'Service unavailable'}, status=503)
         except requests.RequestException as e:
             return JsonResponse({'error': str(e)}, status=500)
+
+        
         # survey = Survey.objects.filter(SurveyID=surveyID)
         # if not survey.exists():
         #     return JsonResponse({'error': 'Survey not found'}, status=404)

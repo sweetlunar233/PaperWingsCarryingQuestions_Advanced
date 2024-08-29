@@ -15,23 +15,12 @@ export let options = {
 };
 
 export default function () {
-    const url = 'http://82.156.88.4:31000/personal/login/';
-    const payload = JSON.stringify({
-        username: 'lorian',
-        email: false,
-        password: 'lorian'
-    });
+    const url = 'http://82.156.88.4:31002/dataPre/7/';
 
-    const params = {
-        headers: {
-            'Content-Type': 'application/json',
-        },
-    };
-
-    const response = http.post(url, payload, params);
+    const response = http.get(url);
 
     check(response, {
-        'is status 200': (r) => r.status === 200,
+        'status is 200 or 503': (r) => r.status === 200 || r.status === 503,
     });
 
     sleep(1);

@@ -9,3 +9,4 @@ openpyxl==3.1.3
 python-consul       #连接Consul
 channels
 drf-spectacular
+pycircuitbreaker
