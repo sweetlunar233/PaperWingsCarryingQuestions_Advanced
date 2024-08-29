@@ -4,7 +4,7 @@ metadata:
   name: my-edition-db
   namespace: zhiyi
 spec:
-  serviceName: "my-edition-db-service"
+  serviceName: my-edition-db-service
   replicas: 1
   selector:
     matchLabels:

@@ -4,7 +4,6 @@ metadata:
   name: my-edition-db-service
   namespace: zhiyi
 spec:
-  type: NodePort
   selector:
     app: my-edition-db
   ports:
