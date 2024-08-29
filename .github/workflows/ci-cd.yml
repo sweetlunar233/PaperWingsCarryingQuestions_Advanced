@@ -90,23 +90,6 @@ jobs:
             cd ..
             
             sudo docker-compose build
-
-            # sudo docker tag questionnaire-app tiezhugiegie/questionnaire-app
-            # sudo docker tag my-edition-db tiezhugiegie/my-edition-db
-            # sudo docker tag my-management-db tiezhugiegie/my-management-db
-            # sudo docker tag my-user-db tiezhugiegie/my-user-db
-            # sudo docker tag my-edition-back tiezhugiegie/my-edition-back
-            # sudo docker tag my-management-back tiezhugiegie/my-management-back
-            # sudo docker tag my-user-back tiezhugiegie/my-user-back
-
-            # sudo docker push tiezhugiegie/questionnaire-app
-            # sudo docker push tiezhugiegie/my-edition-db
-            # sudo docker push tiezhugiegie/my-management-db
-            # sudo docker push tiezhugiegie/my-user-db
-            # sudo docker push tiezhugiegie/my-edition-back
-            # sudo docker push tiezhugiegie/my-management-back
-            # sudo docker push tiezhugiegie/my-user-back
-
             
             sudo kubectl create namespace zhiyi
             
