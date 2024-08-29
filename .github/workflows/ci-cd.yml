@@ -90,23 +90,6 @@ jobs:
             cd ..
             
             sudo docker-compose build
-
-            # sudo docker tag questionnaire-app tiezhugiegie/questionnaire-app
-            # sudo docker tag my-edition-db tiezhugiegie/my-edition-db
-            # sudo docker tag my-management-db tiezhugiegie/my-management-db
-            # sudo docker tag my-user-db tiezhugiegie/my-user-db
-            # sudo docker tag my-edition-back tiezhugiegie/my-edition-back
-            # sudo docker tag my-management-back tiezhugiegie/my-management-back
-            # sudo docker tag my-user-back tiezhugiegie/my-user-back
-
-            # sudo docker push tiezhugiegie/questionnaire-app
-            # sudo docker push tiezhugiegie/my-edition-db
-            # sudo docker push tiezhugiegie/my-management-db
-            # sudo docker push tiezhugiegie/my-user-db
-            # sudo docker push tiezhugiegie/my-edition-back
-            # sudo docker push tiezhugiegie/my-management-back
-            # sudo docker push tiezhugiegie/my-user-back
-
             
             sudo kubectl create namespace zhiyi
             
@@ -118,7 +101,6 @@ jobs:
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my-edition-db-statefulset.yaml
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my-management-db-statefulset.yaml
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/db/my-user-db-statefulset.yaml
-
 
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my-edition-back-service.yaml
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/for-docker-advanced/my-management-back-service.yaml
@@ -138,7 +120,6 @@ jobs:
             sudo kubectl exec $(sudo kubectl get pods -n zhiyi -l app=my-management-back -o jsonpath='{.items[0].metadata.name}') -n zhiyi -- python3 manage.py test
             sudo kubectl exec $(sudo kubectl get pods -n zhiyi -l app=my-edition-back -o jsonpath='{.items[0].metadata.name}') -n zhiyi -- python3 manage.py test
             
-
           # # 部署到 Kubernetes
           # - name: Deploy to Kubernetes
           #   run: |
