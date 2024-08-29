@@ -54,7 +54,7 @@ def delete_filled_qs(request):
             body=json.loads(request.body)
             submissionID=body
             submission=Submission.objects.get(SubmissionID=submissionID)     #对应填写记录
-            print(submission)
+            # print(submission)
             if submission is None:
                 return JsonResponse({'error': 'No ID provided'}, status=400) 
             submission.delete()
@@ -172,23 +172,18 @@ def delete_unreleased_qs(request):
 #         return JsonResponse(data)
 #     return JsonResponse({'error': 'Invalid request method'}, status=405)
 def get_drafted_qs(request, username):
-    print("lorian hyz")
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
-        print("lorian hyz")
         user_api_url = f'{userServeAddress}/user/username/{username}/'
-        print("lorian hyz")
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
             user_data = user_response.json()
             user_id = user_data.get('UserID')
 
-            print(user_id)
-
             # 使用从 user 项目获取的用户 ID 查找问卷
             qs_query = Survey.objects.filter(OwnerID=user_id, Is_released=False,Is_deleted=False)
-            print(qs_query)
+
             data_list = [
                 {
                     'Title': survey.Title,
@@ -198,7 +193,7 @@ def get_drafted_qs(request, username):
                 } for survey in qs_query
             ]
             data = {'data': data_list}
-            print(data_list)
+
             return JsonResponse(data)
         except requests.RequestException as e:
             return JsonResponse({'error': str(e)}, status=500)
@@ -252,7 +247,7 @@ def get_filled_qs(request,username):
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
             user_data = user_response.json()
             user_id = user_data.get('UserID')
-            print(user_id)
+            # print(user_id)
 
             submission_query=Submission.objects.filter(RespondentID=user_id)
             data_list=[]
@@ -342,7 +337,7 @@ def check_qs(request,username,questionnaireId,type):
     
     #报名问卷：超过人数，不可以再报名
     elif qs.Category==2:
-        print("TieZhu")
+        # print("TieZhu")
         #检查是否超人数(检查每个必填选择题的所有选项，是否都超人数)
         submission_query=Submission.objects.filter(RespondentID=user_id,SurveyID=qs.SurveyID)
 
@@ -462,7 +457,7 @@ def UpdateSurvey(request):
             IsOrder=body['IsOrder']
 
             if(SurveyID==-1):
-                print('erer')
+                # print('erer')
                 
                 survey=Survey.objects.create(OwnerID=OwnerID,Title=Title,
                                              Description=Description,Is_released=Is_released,
@@ -470,7 +465,7 @@ def UpdateSurvey(request):
                                              TotalScore=TotalScore,TimeLimit=TimeLimit,IsOrder=IsOrder,
                                              PublishDate=timezone.now()
                                             )
-                print('hert')
+                # print('hert')
                 return JsonResponse({'SurveyID':survey.SurveyID})
             else:
                 survey=Survey.objects.get(SurveyID=SurveyID)
@@ -491,28 +486,28 @@ def save_submission(request):
         try:
             body=json.loads(request.body)
             if body['submissionID']==-1:
-                print('aaa')
+                # print('aaa')
                 submission=Submission.objects.create(SurveyID=body['SurveyID'],RespondentID=body['RespondentID'],Status="Unsubmitted",
                                                     Interval=0,SubmissionTime=timezone.now())
                 submission.save()
             
             else:
-                print('bbb')
-                print(body['submissionID'])
+                # print('bbb')
+                # print(body['submissionID'])
                 submission=Submission.objects.get(SubmissionID=body['submissionID'])
                 if submission is None:
                     return HttpResponse(content='Submission not found.',status=404)
-                print(body['Status'])
-                print(body['Interval'])
-                print(body['Score'])
-                print(timezone.now())
+                # print(body['Status'])
+                # print(body['Interval'])
+                # print(body['Score'])
+                # print(timezone.now())
                 submission.Status=body['Status']
                 submission.Interval=body['Interval']
                 submission.Score=body['Score']
                 submission.SubmissionTime=timezone.now()
 
                 submission.save()
-                print('ccc')
+                # print('ccc')
 
             data={'message':'True'}
             return JsonResponse(data)

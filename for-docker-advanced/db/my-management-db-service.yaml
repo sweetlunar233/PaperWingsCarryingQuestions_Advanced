@@ -4,7 +4,6 @@ metadata:
   name: my-management-db-service
   namespace: zhiyi
 spec:
-  type: NodePort
   selector:
     app: my-management-db
   ports:

@@ -118,7 +118,7 @@ const goToQuestionnaireFill = (questionnaireId, submissionId, Status, type, scor
     }
     else if(type == 1){
         r.push({
-            name: "dataPre",
+            name: "dataPreFlag",
             params: {
                 questionnaireId: questionnaireId,
                 flag: true
@@ -382,37 +382,37 @@ const showModeDialog = () => {
                 <div class="dialogfather">
                     <div class="dialogfont">请选择模板</div>
                     <div class="dialog">
-                        <div class="book1" @click="goToQuestionnaireDesignCopy(8, 0, 1)">
+                        <div class="book1" @click="goToQuestionnaireDesignCopy(1, 0, 1)">
                             <img src="../../assets/mod/0.png">
                             <div class="cover1">
                                 <span>MBTI测试</span>
                             </div>
                         </div>
-                        <div class="book1" @click="goToQuestionnaireDesignCopy(9, 0, 1)">
+                        <div class="book1" @click="goToQuestionnaireDesignCopy(2, 0, 1)">
                             <img src="../../assets/mod/1.png">
                             <div class="cover1">
                                 <span>动物领养调查问卷</span>
                             </div>
                         </div>
-                        <div class="book1" @click="goToQuestionnaireDesignCopy(10, 0, 1)">
+                        <div class="book1" @click="goToQuestionnaireDesignCopy(3, 0, 1)">
                             <img src="../../assets/mod/2.png">
                             <div class="cover1">
                                 <span>市场情况调研问卷</span>
                             </div>
                         </div>
-                        <div class="book1" @click="goToQuestionnaireDesignCopy(11, 2, 1)">
+                        <div class="book1" @click="goToQuestionnaireDesignCopy(4, 2, 1)">
                             <img src="../../assets/mod/3.png">
                             <div class="cover1">
                                 <span>暑期课程学生报名表</span>
                             </div>
                         </div>
-                        <div class="book1" @click="goToQuestionnaireDesignCopy(12, 1, 1)">
+                        <div class="book1" @click="goToQuestionnaireDesignCopy(5, 1, 1)">
                             <img src="../../assets/mod/4.png">
                             <div class="cover1">
                                 <span>年度社区活动提案投票</span>
                             </div>
                         </div>
-                        <div class="book1" @click="goToQuestionnaireDesignCopy(13, 3, 1)">
+                        <div class="book1" @click="goToQuestionnaireDesignCopy(6, 3, 1)">
                             <img src="../../assets/mod/5.png">
                             <div class="cover1">
                                 <span>2024年综合知识测试</span>

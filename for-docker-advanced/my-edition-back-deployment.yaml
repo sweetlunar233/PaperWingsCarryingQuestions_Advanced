@@ -20,6 +20,13 @@ spec:
         ports:
         - containerPort: 8000
         command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+        resources:
+          requests:
+            cpu: "150m"    # CPU 请求量
+            memory: "256Mi"  # 内存请求量
+          limits:
+            cpu: "300m"    # CPU 限制量
+            memory: "512Mi"  # 内存限制量
         # livenessProbe:
         #   httpGet:
         #     path: /health

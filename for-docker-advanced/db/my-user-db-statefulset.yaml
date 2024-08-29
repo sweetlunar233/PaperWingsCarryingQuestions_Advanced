@@ -4,7 +4,7 @@ metadata:
   name: my-user-db
   namespace: zhiyi
 spec:
-  serviceName: "my-user-db"
+  serviceName: my-user-db-service
   replicas: 1
   selector:
     matchLabels:

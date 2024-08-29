@@ -111,26 +111,26 @@ WSGI_APPLICATION = "edition.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    # "default": {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
-    #     'PORT': 23531,  # 数据库端口
-    #     'USER': 'buaa21374125',  # 数据库用户名
-    #     'PASSWORD': 'BUaa21374125',  # 数据库用户密码
-    #     'NAME': 'edition_db'  # 数据库名
-    # },
-
-    #容器跑
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'my-edition-db-service',  # 数据库主机
-        'PORT': 3306,  # 数据库端口
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
+        'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
+        'PORT': 23531,  # 数据库端口
+        'USER': 'buaa21374125',  # 数据库用户名
+        'PASSWORD': 'BUaa21374125',  # 数据库用户密码
         'NAME': 'edition_db'  # 数据库名
     },
 
-    # #本地跑
+    #容器跑
+    # "default": {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'HOST': 'my-edition-db-service',  # 数据库主机
+    #     'PORT': 3306,  # 数据库端口
+    #     'USER': 'root',  # 数据库用户名
+    #     'PASSWORD': '123456',  # 数据库用户密码
+    #     'NAME': 'edition_db'  # 数据库名
+    # },
+
+    #本地跑
     # "default": {
     #     'ENGINE': 'django.db.backends.mysql',
     #     'HOST': '127.0.0.1',  # 数据库主机
@@ -142,20 +142,20 @@ DATABASES = {
 
     # 测试使用数据库
     'test': {
-        # 'ENGINE': 'django.db.backends.mysql',
-        # 'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
-        # 'PORT': 23531,  # 数据库端口
-        # 'USER': 'buaa21374125',  # 数据库用户名
-        # 'PASSWORD': 'BUaa21374125',  # 数据库用户密码
-        # 'NAME': 'edition_db',  # 数据库名
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
+        'PORT': 23531,  # 数据库端口
+        'USER': 'buaa21374125',  # 数据库用户名
+        'PASSWORD': 'BUaa21374125',  # 数据库用户密码
+        'NAME': 'edition_db',  # 数据库名
 
         #容器跑
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'my-edition-db-service',  # 数据库主机
-        'PORT': 3306,  # 数据库端口
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'edition_db',  # 数据库名
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'HOST': 'my-edition-db-service.zhiyi.svc.cluster.local',  # 数据库主机
+        # 'PORT': 3306,  # 数据库端口
+        # 'USER': 'root',  # 数据库用户名
+        # 'PASSWORD': '123456',  # 数据库用户密码
+        # 'NAME': 'edition_db',  # 数据库名
 
         'TEST': {
             'NAME': 'edition_db',
@@ -205,3 +205,8 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# my_project/settings.py
+CIRCUIT_BREAKER_FAILURE_THRESHOLD = 5
+CIRCUIT_BREAKER_RECOVERY_TIMEOUT = 30
+CIRCUIT_BREAKER_RESET_TIMEOUT = 60
