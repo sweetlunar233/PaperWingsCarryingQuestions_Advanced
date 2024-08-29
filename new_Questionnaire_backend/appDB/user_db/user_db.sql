@@ -11,7 +11,7 @@
  Target Server Version : 50718 (5.7.18-cynos-2.1.12-log)
  File Encoding         : 65001
 
- Date: 24/08/2024 15:35:23
+ Date: 28/08/2024 23:37:51
 */
 
 SET NAMES utf8mb4;
@@ -21,7 +21,7 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- Table structure for auth_group
 -- ----------------------------
 
-drop database if exists user_db;
+drop database if user_db;
 create database user_db;
 use user_db;
 
@@ -278,11 +278,14 @@ CREATE TABLE `user_project_user`  (
   PRIMARY KEY (`UserID`) USING BTREE,
   UNIQUE INDEX `username`(`username`) USING BTREE,
   UNIQUE INDEX `email`(`email`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of user_project_user
 -- ----------------------------
-INSERT INTO `user_project_user` VALUES (1, 'lorian', 'lorian', '1969024607@qq.com', '2024-06-10 13:15:41.024982', 0, 2300, '[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]');
+INSERT INTO `user_project_user` VALUES (1, 'lorian', 'lorian', '1969024607@qq.com', '2024-06-10 13:15:41.024982', 0, 3900, '[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]');
+INSERT INTO `user_project_user` VALUES (2, 'TieZhu', 'TieZhu', 'dcx1378832571@163.com', '2024-08-28 14:33:17.189572', 0, 0, '[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]');
+INSERT INTO `user_project_user` VALUES (3, 'huyanzhe', 'huyanzhe', '2061217163@qq.com', '2024-08-28 14:39:18.265666', 0, 0, '[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]');
+INSERT INTO `user_project_user` VALUES (4, 'wly', 'wen03liuyi', '21351002@buaa.edu.cn', '2024-08-28 14:41:16.319104', 0, 150, '[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]');
 
 SET FOREIGN_KEY_CHECKS = 1;

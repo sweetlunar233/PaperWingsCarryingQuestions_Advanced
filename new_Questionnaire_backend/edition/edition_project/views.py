@@ -41,9 +41,9 @@ from io import BytesIO
 import json
   
   
-userServeAddress='http://my-user-back-service:31000'
-managementServeAddress='http://my-management-back-service:31001'
-editionServeAddress='http://my-edition-back-service:31002'
+userServeAddress='http://my-user-back-service:7000'
+managementServeAddress='http://my-management-back-service:7001'
+editionServeAddress='http://my-edition-back-service:7002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  

@@ -388,7 +388,7 @@ export default {
       
       axios({
         method: 'get',
-        url: `http://82.156.88.4:7002/dataPre/download/${surveyID}`,  // 确保URL正确指向你的后端方法
+        url: `http://82.156.88.4:31002/dataPre/download/${surveyID}`,  // 确保URL正确指向你的后端方法
         responseType: 'blob',  // 重要：设置响应类型为 blob，以便处理二进制文件
       })
       .then(response => {

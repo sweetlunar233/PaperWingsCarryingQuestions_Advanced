@@ -111,24 +111,24 @@ WSGI_APPLICATION = "edition.wsgi.application"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
-        'PORT': 23531,  # 数据库端口
-        'USER': 'buaa21374125',  # 数据库用户名
-        'PASSWORD': 'BUaa21374125',  # 数据库用户密码
-        'NAME': 'edition_db'  # 数据库名
-    }
-
-    # #容器跑
     # "default": {
     #     'ENGINE': 'django.db.backends.mysql',
-    #     'HOST': 'edition_db',  # 数据库主机
-    #     'PORT': 3306,  # 数据库端口
-    #     'USER': 'root',  # 数据库用户名
-    #     'PASSWORD': '123456',  # 数据库用户密码
+    #     'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
+    #     'PORT': 23531,  # 数据库端口
+    #     'USER': 'buaa21374125',  # 数据库用户名
+    #     'PASSWORD': 'BUaa21374125',  # 数据库用户密码
     #     'NAME': 'edition_db'  # 数据库名
-    # }
+    # },
+
+    #容器跑
+    "default": {
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'my-edition-db-service',  # 数据库主机
+        'PORT': 3306,  # 数据库端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '123456',  # 数据库用户密码
+        'NAME': 'edition_db'  # 数据库名
+    },
 
     # #本地跑
     # "default": {
@@ -139,6 +139,29 @@ DATABASES = {
     #     'PASSWORD': '123456',  # 数据库用户密码
     #     'NAME': 'edition_db'  # 数据库名
     # }
+
+    # 测试使用数据库
+    'test': {
+        # 'ENGINE': 'django.db.backends.mysql',
+        # 'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
+        # 'PORT': 23531,  # 数据库端口
+        # 'USER': 'buaa21374125',  # 数据库用户名
+        # 'PASSWORD': 'BUaa21374125',  # 数据库用户密码
+        # 'NAME': 'edition_db',  # 数据库名
+
+        #容器跑
+        'ENGINE': 'django.db.backends.mysql',
+        'HOST': 'my-edition-db-service',  # 数据库主机
+        'PORT': 3306,  # 数据库端口
+        'USER': 'root',  # 数据库用户名
+        'PASSWORD': '123456',  # 数据库用户密码
+        'NAME': 'edition_db',  # 数据库名
+
+        'TEST': {
+            'NAME': 'edition_db',
+            'MIRROR': 'default',  # 设置为'default'来避免Django试图创建或销毁数据库
+        }
+    }
 }
 
 

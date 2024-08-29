@@ -71,22 +71,21 @@ class GetAllReleasedQsTest(TestCase):
         self.assertEqual(response.status_code, 405)
         self.assertEqual(response.json()['error'], 'Invalid request method')
 
-# class CheckQsTest(TestCase):
-#     def setUp(self):
-#         id = 1
-#         self.url = reverse('check-qs-url', kwargs={'username': 'lorian', 'questionnaireId': 1,'type':1})
+class CheckQsTest(TestCase):
+    def setUp(self):
 
-#     def test_check_qs(self):
-#         response = self.client.get(self.url)
-#         self.assertEqual(response.status_code, 200)
-#         response_data = response.json()  # 获取完整的响应数据
-#         self.assertIn('message', response_data)  # 检查'message'字段是否存在
-#         self.assertIn('content', response_data)
+        self.url = reverse('check-qs-url', kwargs={'username': 'lorian', 'questionnaireId': 16,'type':1})
 
-#     def test_invalid_request_method(self):
-#         response = self.client.post(self.url, {})
-#         self.assertEqual(response.status_code, 405)
-#         self.assertEqual(response.json()['error'], 'Invalid request method')
+    def test_check_qs(self):
+        response = self.client.get(self.url)
+        self.assertEqual(response.status_code, 200)
+        response_data = response.json()  # 获取完整的响应数据
+        self.assertIn('message', response_data)  # 检查'message'字段是否存在
+        self.assertIn('content', response_data)
+
+    def test_invalid_request_method(self):
+        response = self.client.post(self.url)
+        self.assertEqual(response.status_code, 500)
 
 # ---- 删除 ---- #
 
@@ -140,12 +139,12 @@ class delete_filled_qs_test(TestCase):
 
 # ---- 获取surveyID ---- #
 
-# class SurveyTests(TestCase):
-#     def setUp(self):
-#         self.survey_url = reverse('get_survey', kwargs={'survey_id': 1})
+class SurveyTests(TestCase):
+    def setUp(self):
+        self.survey_url = reverse('get_survey', kwargs={'survey_id': 16})
 
-#     def test_get_survey(self):
-#         # 测试获取survey的API
-#         response = self.client.get(self.survey_url)
-#         self.assertEqual(response.status_code,200)
+    def test_get_survey(self):
+        # 测试获取survey的API
+        response = self.client.get(self.survey_url)
+        self.assertEqual(response.status_code,200)
 

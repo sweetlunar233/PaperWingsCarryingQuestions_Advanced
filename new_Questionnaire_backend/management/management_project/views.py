@@ -35,9 +35,9 @@ from django.views.decorators.http import require_http_methods
 import json
 import datetime
 
-userServeAddress='http://my-user-back-service:31000'
-managementServeAddress='http://my-management-back-service:31001'
-editionServeAddress='http://my-edition-back-service:31002'
+userServeAddress='http://my-user-back-service:7000'
+managementServeAddress='http://my-management-back-service:7001'
+editionServeAddress='http://my-edition-back-service:7002'
 
 @require_http_methods(["GET"])  
 def health_check(request):  
@@ -172,9 +172,12 @@ def delete_unreleased_qs(request):
 #         return JsonResponse(data)
 #     return JsonResponse({'error': 'Invalid request method'}, status=405)
 def get_drafted_qs(request, username):
+    print("lorian hyz")
     if request.method == 'GET':
         # 调用 user 项目的 API 获取用户信息
+        print("lorian hyz")
         user_api_url = f'{userServeAddress}/user/username/{username}/'
+        print("lorian hyz")
         try:
             user_response = requests.get(user_api_url)
             user_response.raise_for_status()  # 如果请求失败，将引发 HTTPError
@@ -184,7 +187,7 @@ def get_drafted_qs(request, username):
             print(user_id)
 
             # 使用从 user 项目获取的用户 ID 查找问卷
-            qs_query = Survey.objects.filter(OwnerID=user_id, Is_released=False)
+            qs_query = Survey.objects.filter(OwnerID=user_id, Is_released=False,Is_deleted=False)
             print(qs_query)
             data_list = [
                 {
@@ -303,8 +306,8 @@ def check_qs(request,username,questionnaireId,type):
         return JsonResponse({'error': str(e)}, status=500)
     if user_data is None:
         return HttpResponse(content="User not found",status=404)
-    qs=Survey.objects.filter(SurveyID=questionnaireId).first()
-    if not qs.exists():
+    qs=Survey.objects.get(SurveyID=questionnaireId)
+    if qs is None:
         return HttpResponse(content="Questionnaire not found",status=404)
     
     #投票问卷:每个用户只可提交一次
@@ -490,7 +493,7 @@ def save_submission(request):
             if body['submissionID']==-1:
                 print('aaa')
                 submission=Submission.objects.create(SurveyID=body['SurveyID'],RespondentID=body['RespondentID'],Status="Unsubmitted",
-                                                    Interval=0)
+                                                    Interval=0,SubmissionTime=timezone.now())
                 submission.save()
             
             else:

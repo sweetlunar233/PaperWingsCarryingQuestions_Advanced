@@ -11,7 +11,7 @@
  Target Server Version : 50718 (5.7.18-cynos-2.1.12-log)
  File Encoding         : 65001
 
- Date: 24/08/2024 15:34:56
+ Date: 28/08/2024 23:37:24
 */
 
 SET NAMES utf8mb4;
@@ -93,42 +93,42 @@ INSERT INTO `auth_permission` VALUES (17, 'Can add session', 5, 'add_session');
 INSERT INTO `auth_permission` VALUES (18, 'Can change session', 5, 'change_session');
 INSERT INTO `auth_permission` VALUES (19, 'Can delete session', 5, 'delete_session');
 INSERT INTO `auth_permission` VALUES (20, 'Can view session', 5, 'view_session');
-INSERT INTO `auth_permission` VALUES (21, 'Can add other option', 6, 'add_otheroption');
-INSERT INTO `auth_permission` VALUES (22, 'Can change other option', 6, 'change_otheroption');
-INSERT INTO `auth_permission` VALUES (23, 'Can delete other option', 6, 'delete_otheroption');
-INSERT INTO `auth_permission` VALUES (24, 'Can view other option', 6, 'view_otheroption');
-INSERT INTO `auth_permission` VALUES (25, 'Can add submission', 7, 'add_submission');
-INSERT INTO `auth_permission` VALUES (26, 'Can change submission', 7, 'change_submission');
-INSERT INTO `auth_permission` VALUES (27, 'Can delete submission', 7, 'delete_submission');
-INSERT INTO `auth_permission` VALUES (28, 'Can view submission', 7, 'view_submission');
-INSERT INTO `auth_permission` VALUES (29, 'Can add rating question', 8, 'add_ratingquestion');
-INSERT INTO `auth_permission` VALUES (30, 'Can change rating question', 8, 'change_ratingquestion');
-INSERT INTO `auth_permission` VALUES (31, 'Can delete rating question', 8, 'delete_ratingquestion');
-INSERT INTO `auth_permission` VALUES (32, 'Can view rating question', 8, 'view_ratingquestion');
-INSERT INTO `auth_permission` VALUES (33, 'Can add choice option', 9, 'add_choiceoption');
-INSERT INTO `auth_permission` VALUES (34, 'Can change choice option', 9, 'change_choiceoption');
-INSERT INTO `auth_permission` VALUES (35, 'Can delete choice option', 9, 'delete_choiceoption');
-INSERT INTO `auth_permission` VALUES (36, 'Can view choice option', 9, 'view_choiceoption');
-INSERT INTO `auth_permission` VALUES (37, 'Can add blank answer', 10, 'add_blankanswer');
-INSERT INTO `auth_permission` VALUES (38, 'Can change blank answer', 10, 'change_blankanswer');
-INSERT INTO `auth_permission` VALUES (39, 'Can delete blank answer', 10, 'delete_blankanswer');
-INSERT INTO `auth_permission` VALUES (40, 'Can view blank answer', 10, 'view_blankanswer');
+INSERT INTO `auth_permission` VALUES (21, 'Can add blank question', 6, 'add_blankquestion');
+INSERT INTO `auth_permission` VALUES (22, 'Can change blank question', 6, 'change_blankquestion');
+INSERT INTO `auth_permission` VALUES (23, 'Can delete blank question', 6, 'delete_blankquestion');
+INSERT INTO `auth_permission` VALUES (24, 'Can view blank question', 6, 'view_blankquestion');
+INSERT INTO `auth_permission` VALUES (25, 'Can add choice question', 7, 'add_choicequestion');
+INSERT INTO `auth_permission` VALUES (26, 'Can change choice question', 7, 'change_choicequestion');
+INSERT INTO `auth_permission` VALUES (27, 'Can delete choice question', 7, 'delete_choicequestion');
+INSERT INTO `auth_permission` VALUES (28, 'Can view choice question', 7, 'view_choicequestion');
+INSERT INTO `auth_permission` VALUES (29, 'Can add other option', 8, 'add_otheroption');
+INSERT INTO `auth_permission` VALUES (30, 'Can change other option', 8, 'change_otheroption');
+INSERT INTO `auth_permission` VALUES (31, 'Can delete other option', 8, 'delete_otheroption');
+INSERT INTO `auth_permission` VALUES (32, 'Can view other option', 8, 'view_otheroption');
+INSERT INTO `auth_permission` VALUES (33, 'Can add rating question', 9, 'add_ratingquestion');
+INSERT INTO `auth_permission` VALUES (34, 'Can change rating question', 9, 'change_ratingquestion');
+INSERT INTO `auth_permission` VALUES (35, 'Can delete rating question', 9, 'delete_ratingquestion');
+INSERT INTO `auth_permission` VALUES (36, 'Can view rating question', 9, 'view_ratingquestion');
+INSERT INTO `auth_permission` VALUES (37, 'Can add submission', 10, 'add_submission');
+INSERT INTO `auth_permission` VALUES (38, 'Can change submission', 10, 'change_submission');
+INSERT INTO `auth_permission` VALUES (39, 'Can delete submission', 10, 'delete_submission');
+INSERT INTO `auth_permission` VALUES (40, 'Can view submission', 10, 'view_submission');
 INSERT INTO `auth_permission` VALUES (41, 'Can add rating answer', 11, 'add_ratinganswer');
 INSERT INTO `auth_permission` VALUES (42, 'Can change rating answer', 11, 'change_ratinganswer');
 INSERT INTO `auth_permission` VALUES (43, 'Can delete rating answer', 11, 'delete_ratinganswer');
 INSERT INTO `auth_permission` VALUES (44, 'Can view rating answer', 11, 'view_ratinganswer');
-INSERT INTO `auth_permission` VALUES (45, 'Can add choice question', 12, 'add_choicequestion');
-INSERT INTO `auth_permission` VALUES (46, 'Can change choice question', 12, 'change_choicequestion');
-INSERT INTO `auth_permission` VALUES (47, 'Can delete choice question', 12, 'delete_choicequestion');
-INSERT INTO `auth_permission` VALUES (48, 'Can view choice question', 12, 'view_choicequestion');
+INSERT INTO `auth_permission` VALUES (45, 'Can add choice option', 12, 'add_choiceoption');
+INSERT INTO `auth_permission` VALUES (46, 'Can change choice option', 12, 'change_choiceoption');
+INSERT INTO `auth_permission` VALUES (47, 'Can delete choice option', 12, 'delete_choiceoption');
+INSERT INTO `auth_permission` VALUES (48, 'Can view choice option', 12, 'view_choiceoption');
 INSERT INTO `auth_permission` VALUES (49, 'Can add choice answer', 13, 'add_choiceanswer');
 INSERT INTO `auth_permission` VALUES (50, 'Can change choice answer', 13, 'change_choiceanswer');
 INSERT INTO `auth_permission` VALUES (51, 'Can delete choice answer', 13, 'delete_choiceanswer');
 INSERT INTO `auth_permission` VALUES (52, 'Can view choice answer', 13, 'view_choiceanswer');
-INSERT INTO `auth_permission` VALUES (53, 'Can add blank question', 14, 'add_blankquestion');
-INSERT INTO `auth_permission` VALUES (54, 'Can change blank question', 14, 'change_blankquestion');
-INSERT INTO `auth_permission` VALUES (55, 'Can delete blank question', 14, 'delete_blankquestion');
-INSERT INTO `auth_permission` VALUES (56, 'Can view blank question', 14, 'view_blankquestion');
+INSERT INTO `auth_permission` VALUES (53, 'Can add blank answer', 14, 'add_blankanswer');
+INSERT INTO `auth_permission` VALUES (54, 'Can change blank answer', 14, 'change_blankanswer');
+INSERT INTO `auth_permission` VALUES (55, 'Can delete blank answer', 14, 'delete_blankanswer');
+INSERT INTO `auth_permission` VALUES (56, 'Can view blank answer', 14, 'view_blankanswer');
 
 -- ----------------------------
 -- Table structure for auth_user
@@ -211,15 +211,15 @@ INSERT INTO `django_content_type` VALUES (2, 'auth', 'group');
 INSERT INTO `django_content_type` VALUES (1, 'auth', 'permission');
 INSERT INTO `django_content_type` VALUES (3, 'auth', 'user');
 INSERT INTO `django_content_type` VALUES (4, 'contenttypes', 'contenttype');
-INSERT INTO `django_content_type` VALUES (10, 'edition_project', 'blankanswer');
-INSERT INTO `django_content_type` VALUES (14, 'edition_project', 'blankquestion');
+INSERT INTO `django_content_type` VALUES (14, 'edition_project', 'blankanswer');
+INSERT INTO `django_content_type` VALUES (6, 'edition_project', 'blankquestion');
 INSERT INTO `django_content_type` VALUES (13, 'edition_project', 'choiceanswer');
-INSERT INTO `django_content_type` VALUES (9, 'edition_project', 'choiceoption');
-INSERT INTO `django_content_type` VALUES (12, 'edition_project', 'choicequestion');
-INSERT INTO `django_content_type` VALUES (6, 'edition_project', 'otheroption');
+INSERT INTO `django_content_type` VALUES (12, 'edition_project', 'choiceoption');
+INSERT INTO `django_content_type` VALUES (7, 'edition_project', 'choicequestion');
+INSERT INTO `django_content_type` VALUES (8, 'edition_project', 'otheroption');
 INSERT INTO `django_content_type` VALUES (11, 'edition_project', 'ratinganswer');
-INSERT INTO `django_content_type` VALUES (8, 'edition_project', 'ratingquestion');
-INSERT INTO `django_content_type` VALUES (7, 'edition_project', 'submission');
+INSERT INTO `django_content_type` VALUES (9, 'edition_project', 'ratingquestion');
+INSERT INTO `django_content_type` VALUES (10, 'edition_project', 'submission');
 INSERT INTO `django_content_type` VALUES (5, 'sessions', 'session');
 
 -- ----------------------------
@@ -232,27 +232,29 @@ CREATE TABLE `django_migrations`  (
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `applied` datetime(6) NOT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 17 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of django_migrations
 -- ----------------------------
-INSERT INTO `django_migrations` VALUES (1, 'contenttypes', '0001_initial', '2024-08-20 11:18:31.118677');
-INSERT INTO `django_migrations` VALUES (2, 'contenttypes', '0002_remove_content_type_name', '2024-08-20 11:18:31.243284');
-INSERT INTO `django_migrations` VALUES (3, 'auth', '0001_initial', '2024-08-20 11:18:32.039870');
-INSERT INTO `django_migrations` VALUES (4, 'auth', '0002_alter_permission_name_max_length', '2024-08-20 11:18:32.103716');
-INSERT INTO `django_migrations` VALUES (5, 'auth', '0003_alter_user_email_max_length', '2024-08-20 11:18:32.167456');
-INSERT INTO `django_migrations` VALUES (6, 'auth', '0004_alter_user_username_opts', '2024-08-20 11:18:32.205399');
-INSERT INTO `django_migrations` VALUES (7, 'auth', '0005_alter_user_last_login_null', '2024-08-20 11:18:32.259406');
-INSERT INTO `django_migrations` VALUES (8, 'auth', '0006_require_contenttypes_0002', '2024-08-20 11:18:32.289242');
-INSERT INTO `django_migrations` VALUES (9, 'auth', '0007_alter_validators_add_error_messages', '2024-08-20 11:18:32.325371');
-INSERT INTO `django_migrations` VALUES (10, 'auth', '0008_alter_user_username_max_length', '2024-08-20 11:18:32.384568');
-INSERT INTO `django_migrations` VALUES (11, 'auth', '0009_alter_user_last_name_max_length', '2024-08-20 11:18:32.442366');
-INSERT INTO `django_migrations` VALUES (12, 'auth', '0010_alter_group_name_max_length', '2024-08-20 11:18:32.502392');
-INSERT INTO `django_migrations` VALUES (13, 'auth', '0011_update_proxy_permissions', '2024-08-20 11:18:32.586761');
-INSERT INTO `django_migrations` VALUES (14, 'auth', '0012_alter_user_first_name_max_length', '2024-08-20 11:18:32.648366');
-INSERT INTO `django_migrations` VALUES (15, 'sessions', '0001_initial', '2024-08-20 11:18:32.772872');
-INSERT INTO `django_migrations` VALUES (16, 'edition_project', '0001_initial', '2024-08-21 04:10:07.924274');
+INSERT INTO `django_migrations` VALUES (1, 'contenttypes', '0001_initial', '2024-08-28 14:20:21.736003');
+INSERT INTO `django_migrations` VALUES (2, 'contenttypes', '0002_remove_content_type_name', '2024-08-28 14:20:21.799590');
+INSERT INTO `django_migrations` VALUES (3, 'auth', '0001_initial', '2024-08-28 14:20:22.197630');
+INSERT INTO `django_migrations` VALUES (4, 'auth', '0002_alter_permission_name_max_length', '2024-08-28 14:20:22.229627');
+INSERT INTO `django_migrations` VALUES (5, 'auth', '0003_alter_user_email_max_length', '2024-08-28 14:20:22.260395');
+INSERT INTO `django_migrations` VALUES (6, 'auth', '0004_alter_user_username_opts', '2024-08-28 14:20:22.277749');
+INSERT INTO `django_migrations` VALUES (7, 'auth', '0005_alter_user_last_login_null', '2024-08-28 14:20:22.307696');
+INSERT INTO `django_migrations` VALUES (8, 'auth', '0006_require_contenttypes_0002', '2024-08-28 14:20:22.322169');
+INSERT INTO `django_migrations` VALUES (9, 'auth', '0007_alter_validators_add_error_messages', '2024-08-28 14:20:22.339765');
+INSERT INTO `django_migrations` VALUES (10, 'auth', '0008_alter_user_username_max_length', '2024-08-28 14:20:22.370416');
+INSERT INTO `django_migrations` VALUES (11, 'auth', '0009_alter_user_last_name_max_length', '2024-08-28 14:20:22.401487');
+INSERT INTO `django_migrations` VALUES (12, 'auth', '0010_alter_group_name_max_length', '2024-08-28 14:20:22.433672');
+INSERT INTO `django_migrations` VALUES (13, 'auth', '0011_update_proxy_permissions', '2024-08-28 14:20:22.470880');
+INSERT INTO `django_migrations` VALUES (14, 'auth', '0012_alter_user_first_name_max_length', '2024-08-28 14:20:22.502047');
+INSERT INTO `django_migrations` VALUES (15, 'edition_project', '0001_initial', '2024-08-28 14:20:23.110783');
+INSERT INTO `django_migrations` VALUES (16, 'edition_project', '0002_auto_20240826_0356', '2024-08-28 14:20:23.300536');
+INSERT INTO `django_migrations` VALUES (17, 'edition_project', '0003_alter_submission_submissiontime', '2024-08-28 14:20:23.329474');
+INSERT INTO `django_migrations` VALUES (18, 'sessions', '0001_initial', '2024-08-28 14:20:23.384955');
 
 -- ----------------------------
 -- Table structure for django_session
@@ -284,11 +286,17 @@ CREATE TABLE `edition_project_blankanswer`  (
   INDEX `edition_project_blan_Submission_id_1fce22a1_fk_edition_p`(`Submission_id`) USING BTREE,
   CONSTRAINT `edition_project_blan_Question_id_951d3c6b_fk_edition_p` FOREIGN KEY (`Question_id`) REFERENCES `edition_project_blankquestion` (`QuestionID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `edition_project_blan_Submission_id_1fce22a1_fk_edition_p` FOREIGN KEY (`Submission_id`) REFERENCES `edition_project_submission` (`SubmissionID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 10 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_blankanswer
 -- ----------------------------
+INSERT INTO `edition_project_blankanswer` VALUES (2, '111', 1, 1);
+INSERT INTO `edition_project_blankanswer` VALUES (4, '1', 2, 2);
+INSERT INTO `edition_project_blankanswer` VALUES (6, '1111', 3, 3);
+INSERT INTO `edition_project_blankanswer` VALUES (7, '2', 4, 4);
+INSERT INTO `edition_project_blankanswer` VALUES (8, '1', 5, 5);
+INSERT INTO `edition_project_blankanswer` VALUES (9, '文柳懿', 6, 11);
 
 -- ----------------------------
 -- Table structure for edition_project_blankquestion
@@ -303,13 +311,18 @@ CREATE TABLE `edition_project_blankquestion`  (
   `Score` int(11) NULL DEFAULT NULL,
   `Category` int(11) NOT NULL,
   `CorrectAnswer` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  PRIMARY KEY (`QuestionID`) USING BTREE,
-  UNIQUE INDEX `SurveyID`(`SurveyID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`QuestionID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_blankquestion
 -- ----------------------------
+INSERT INTO `edition_project_blankquestion` VALUES (1, 1, '请填空', 1, 4, 0, 3, '');
+INSERT INTO `edition_project_blankquestion` VALUES (2, 2, '请填空', 1, 4, 0, 3, '');
+INSERT INTO `edition_project_blankquestion` VALUES (3, 3, '请填空', 1, 4, 0, 3, '');
+INSERT INTO `edition_project_blankquestion` VALUES (4, 4, '请填空', 1, 3, 4, 3, '1');
+INSERT INTO `edition_project_blankquestion` VALUES (5, 5, '请填空', 1, 3, 4, 3, '1');
+INSERT INTO `edition_project_blankquestion` VALUES (6, 14, '名字', 1, 1, 0, 3, '');
 
 -- ----------------------------
 -- Table structure for edition_project_choiceanswer
@@ -327,11 +340,50 @@ CREATE TABLE `edition_project_choiceanswer`  (
   CONSTRAINT `edition_project_choi_ChoiceOptions_id_1d520b29_fk_edition_p` FOREIGN KEY (`ChoiceOptions_id`) REFERENCES `edition_project_choiceoption` (`OptionID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `edition_project_choi_Question_id_9d612cc0_fk_edition_p` FOREIGN KEY (`Question_id`) REFERENCES `edition_project_choicequestion` (`QuestionID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `edition_project_choi_Submission_id_77129ffa_fk_edition_p` FOREIGN KEY (`Submission_id`) REFERENCES `edition_project_submission` (`SubmissionID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_choiceanswer
 -- ----------------------------
+INSERT INTO `edition_project_choiceanswer` VALUES (3, 1, 1, 1);
+INSERT INTO `edition_project_choiceanswer` VALUES (4, 2, 2, 1);
+INSERT INTO `edition_project_choiceanswer` VALUES (7, 3, 3, 2);
+INSERT INTO `edition_project_choiceanswer` VALUES (8, 4, 4, 2);
+INSERT INTO `edition_project_choiceanswer` VALUES (11, 5, 5, 3);
+INSERT INTO `edition_project_choiceanswer` VALUES (12, 6, 6, 3);
+INSERT INTO `edition_project_choiceanswer` VALUES (13, 8, 7, 4);
+INSERT INTO `edition_project_choiceanswer` VALUES (14, 12, 8, 4);
+INSERT INTO `edition_project_choiceanswer` VALUES (15, 16, 10, 5);
+INSERT INTO `edition_project_choiceanswer` VALUES (16, 17, 10, 5);
+INSERT INTO `edition_project_choiceanswer` VALUES (17, 13, 9, 5);
+INSERT INTO `edition_project_choiceanswer` VALUES (20, 20, 11, 6);
+INSERT INTO `edition_project_choiceanswer` VALUES (21, 21, 12, 6);
+INSERT INTO `edition_project_choiceanswer` VALUES (22, 23, 14, 7);
+INSERT INTO `edition_project_choiceanswer` VALUES (23, 90, 35, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (24, 86, 34, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (25, 102, 38, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (26, 109, 40, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (27, 81, 33, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (28, 94, 36, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (29, 95, 37, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (30, 75, 32, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (31, 106, 39, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (32, 113, 41, 9);
+INSERT INTO `edition_project_choiceanswer` VALUES (33, 31, 21, 11);
+INSERT INTO `edition_project_choiceanswer` VALUES (34, 33, 21, 11);
+INSERT INTO `edition_project_choiceanswer` VALUES (35, 32, 21, 11);
+INSERT INTO `edition_project_choiceanswer` VALUES (36, 110, 40, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (37, 96, 37, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (38, 86, 34, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (39, 94, 36, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (40, 90, 35, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (41, 113, 41, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (42, 102, 38, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (43, 105, 39, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (44, 81, 33, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (45, 75, 32, 10);
+INSERT INTO `edition_project_choiceanswer` VALUES (46, 116, 42, 12);
+INSERT INTO `edition_project_choiceanswer` VALUES (47, 116, 42, 13);
 
 -- ----------------------------
 -- Table structure for edition_project_choiceoption
@@ -347,11 +399,86 @@ CREATE TABLE `edition_project_choiceoption`  (
   PRIMARY KEY (`OptionID`) USING BTREE,
   INDEX `edition_project_choi_Question_id_c3613666_fk_edition_p`(`Question_id`) USING BTREE,
   CONSTRAINT `edition_project_choi_Question_id_c3613666_fk_edition_p` FOREIGN KEY (`Question_id`) REFERENCES `edition_project_choicequestion` (`QuestionID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 118 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_choiceoption
 -- ----------------------------
+INSERT INTO `edition_project_choiceoption` VALUES (1, '选项', 0, 1, -1, 1);
+INSERT INTO `edition_project_choiceoption` VALUES (2, '选项', 0, 1, -1, 2);
+INSERT INTO `edition_project_choiceoption` VALUES (3, '选项', 0, 1, -1, 3);
+INSERT INTO `edition_project_choiceoption` VALUES (4, '选项', 0, 1, -1, 4);
+INSERT INTO `edition_project_choiceoption` VALUES (5, '选项', 0, 1, 0, 5);
+INSERT INTO `edition_project_choiceoption` VALUES (6, '选项', 0, 1, 0, 6);
+INSERT INTO `edition_project_choiceoption` VALUES (7, '选项', 1, 1, -1, 7);
+INSERT INTO `edition_project_choiceoption` VALUES (8, '选项', 0, 2, -1, 7);
+INSERT INTO `edition_project_choiceoption` VALUES (9, '选项', 0, 3, -1, 7);
+INSERT INTO `edition_project_choiceoption` VALUES (10, '选项', 1, 1, -1, 8);
+INSERT INTO `edition_project_choiceoption` VALUES (11, '选项', 0, 2, -1, 8);
+INSERT INTO `edition_project_choiceoption` VALUES (12, '选项', 0, 3, -1, 8);
+INSERT INTO `edition_project_choiceoption` VALUES (13, '1', 1, 1, -1, 9);
+INSERT INTO `edition_project_choiceoption` VALUES (14, '2', 0, 2, -1, 9);
+INSERT INTO `edition_project_choiceoption` VALUES (15, '3', 0, 3, -1, 9);
+INSERT INTO `edition_project_choiceoption` VALUES (16, '1', 1, 1, -1, 10);
+INSERT INTO `edition_project_choiceoption` VALUES (17, '2', 1, 2, -1, 10);
+INSERT INTO `edition_project_choiceoption` VALUES (18, '3', 0, 3, -1, 10);
+INSERT INTO `edition_project_choiceoption` VALUES (19, '4', 0, 4, -1, 10);
+INSERT INTO `edition_project_choiceoption` VALUES (20, '选项', 0, 1, -1, 11);
+INSERT INTO `edition_project_choiceoption` VALUES (21, '选项', 0, 1, -1, 12);
+INSERT INTO `edition_project_choiceoption` VALUES (23, '选项', 0, 1, -1, 14);
+INSERT INTO `edition_project_choiceoption` VALUES (24, 'yes', 0, 1, -1, 15);
+INSERT INTO `edition_project_choiceoption` VALUES (25, 'yes', 0, 1, -1, 16);
+INSERT INTO `edition_project_choiceoption` VALUES (26, 'yes', 0, 1, -1, 17);
+INSERT INTO `edition_project_choiceoption` VALUES (27, 'yes', 0, 1, 1, 18);
+INSERT INTO `edition_project_choiceoption` VALUES (28, 'yes', 0, 1, -1, 19);
+INSERT INTO `edition_project_choiceoption` VALUES (29, 'yes', 0, 1, -1, 20);
+INSERT INTO `edition_project_choiceoption` VALUES (30, '山杖', 0, 1, 1, 21);
+INSERT INTO `edition_project_choiceoption` VALUES (31, '头灯', 0, 2, 0, 21);
+INSERT INTO `edition_project_choiceoption` VALUES (32, '帐篷', 0, 3, 0, 21);
+INSERT INTO `edition_project_choiceoption` VALUES (33, '大包', 0, 4, 0, 21);
+INSERT INTO `edition_project_choiceoption` VALUES (75, '三片叶子', 1, 1, -1, 32);
+INSERT INTO `edition_project_choiceoption` VALUES (76, '四片叶子', 0, 2, -1, 32);
+INSERT INTO `edition_project_choiceoption` VALUES (77, '五片叶子', 0, 3, -1, 32);
+INSERT INTO `edition_project_choiceoption` VALUES (78, '七片叶子', 0, 4, -1, 32);
+INSERT INTO `edition_project_choiceoption` VALUES (79, '拨打110', 0, 1, -1, 33);
+INSERT INTO `edition_project_choiceoption` VALUES (80, '寻找庇护所', 0, 2, -1, 33);
+INSERT INTO `edition_project_choiceoption` VALUES (81, '立即停止移动', 1, 3, -1, 33);
+INSERT INTO `edition_project_choiceoption` VALUES (82, '启动信号火', 0, 4, -1, 33);
+INSERT INTO `edition_project_choiceoption` VALUES (83, '3周', 0, 1, -1, 34);
+INSERT INTO `edition_project_choiceoption` VALUES (84, '3小时', 0, 2, -1, 34);
+INSERT INTO `edition_project_choiceoption` VALUES (85, '3分钟', 0, 3, -1, 34);
+INSERT INTO `edition_project_choiceoption` VALUES (86, '3天', 1, 4, -1, 34);
+INSERT INTO `edition_project_choiceoption` VALUES (87, '上午', 0, 1, -1, 35);
+INSERT INTO `edition_project_choiceoption` VALUES (88, '中午', 0, 2, -1, 35);
+INSERT INTO `edition_project_choiceoption` VALUES (89, '下午', 0, 3, -1, 35);
+INSERT INTO `edition_project_choiceoption` VALUES (90, '晚上', 1, 4, -1, 35);
+INSERT INTO `edition_project_choiceoption` VALUES (91, '反击', 0, 1, -1, 36);
+INSERT INTO `edition_project_choiceoption` VALUES (92, '对着熊吼叫', 0, 2, -1, 36);
+INSERT INTO `edition_project_choiceoption` VALUES (93, '给它食物', 0, 3, -1, 36);
+INSERT INTO `edition_project_choiceoption` VALUES (94, '装死', 1, 4, -1, 36);
+INSERT INTO `edition_project_choiceoption` VALUES (95, '保暖', 1, 1, -1, 37);
+INSERT INTO `edition_project_choiceoption` VALUES (96, '防晒', 1, 2, -1, 37);
+INSERT INTO `edition_project_choiceoption` VALUES (97, '防风沙', 1, 3, -1, 37);
+INSERT INTO `edition_project_choiceoption` VALUES (98, '防水', 0, 4, -1, 37);
+INSERT INTO `edition_project_choiceoption` VALUES (99, '防冷', 0, 5, -1, 37);
+INSERT INTO `edition_project_choiceoption` VALUES (100, '来自瀑布的水', 0, 1, -1, 38);
+INSERT INTO `edition_project_choiceoption` VALUES (101, '水坑里的水', 0, 2, -1, 38);
+INSERT INTO `edition_project_choiceoption` VALUES (102, '雨水', 1, 3, -1, 38);
+INSERT INTO `edition_project_choiceoption` VALUES (103, '来自池塘的水', 0, 4, -1, 38);
+INSERT INTO `edition_project_choiceoption` VALUES (104, '背包过重', 0, 1, -1, 39);
+INSERT INTO `edition_project_choiceoption` VALUES (105, '冷水泡脚', 0, 2, -1, 39);
+INSERT INTO `edition_project_choiceoption` VALUES (106, '穿棉袜', 1, 3, -1, 39);
+INSERT INTO `edition_project_choiceoption` VALUES (107, '买大一码鞋', 0, 4, -1, 39);
+INSERT INTO `edition_project_choiceoption` VALUES (108, '肥皂水', 0, 1, -1, 40);
+INSERT INTO `edition_project_choiceoption` VALUES (109, '酒精', 0, 2, -1, 40);
+INSERT INTO `edition_project_choiceoption` VALUES (110, '清水', 0, 3, -1, 40);
+INSERT INTO `edition_project_choiceoption` VALUES (111, '盐水', 1, 4, -1, 40);
+INSERT INTO `edition_project_choiceoption` VALUES (112, '正方形', 0, 1, -1, 41);
+INSERT INTO `edition_project_choiceoption` VALUES (113, '三角形', 0, 2, -1, 41);
+INSERT INTO `edition_project_choiceoption` VALUES (114, '圆形', 0, 3, -1, 41);
+INSERT INTO `edition_project_choiceoption` VALUES (115, 'X形', 1, 4, -1, 41);
+INSERT INTO `edition_project_choiceoption` VALUES (116, '是', 0, 1, -1, 42);
+INSERT INTO `edition_project_choiceoption` VALUES (117, '不是', 0, 2, -1, 42);
 
 -- ----------------------------
 -- Table structure for edition_project_choicequestion
@@ -367,13 +494,43 @@ CREATE TABLE `edition_project_choicequestion`  (
   `Category` int(11) NOT NULL,
   `MaxSelectable` int(11) NULL DEFAULT NULL,
   `OptionCnt` int(11) NOT NULL,
-  PRIMARY KEY (`QuestionID`) USING BTREE,
-  UNIQUE INDEX `SurveyID`(`SurveyID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`QuestionID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 43 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_choicequestion
 -- ----------------------------
+INSERT INTO `edition_project_choicequestion` VALUES (1, 1, '请选择一个选项', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (2, 1, '请选择以下选项（多选）', 1, 2, 0, 2, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (3, 2, '请选择一个选项', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (4, 2, '请选择以下选项（多选）', 1, 2, 0, 2, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (5, 3, '请选择一个选项', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (6, 3, '请选择以下选项（多选）', 1, 2, 0, 2, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (7, 4, '请选择一个选项', 1, 1, 1, 1, 1, 3);
+INSERT INTO `edition_project_choicequestion` VALUES (8, 4, '请选择以下选项（多选）', 1, 2, 2, 2, 1, 3);
+INSERT INTO `edition_project_choicequestion` VALUES (9, 5, '请选择一个选项', 1, 1, 1, 1, 1, 3);
+INSERT INTO `edition_project_choicequestion` VALUES (10, 5, '请选择以下选项（多选）', 1, 2, 2, 2, 2, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (11, 6, '请选择一个选项', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (12, 6, '请选择一个选项', 1, 2, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (14, 7, '请选择一个选项', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (15, 8, '这是MBTI测试模板', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (16, 9, '这是动物领养调查问卷模板', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (17, 10, '这是市场情况调研问卷', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (18, 11, '这是暑期课程学生报名表', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (19, 12, '这是年度社区活动提案投票', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (20, 13, '这是2024年综合知识测试模板', 1, 1, 0, 1, 1, 1);
+INSERT INTO `edition_project_choicequestion` VALUES (21, 14, '需要租什么装备', 1, 2, 0, 2, 4, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (32, 16, '为了避免接触到独藤，在荒野中你需要远离它，一般毒藤有几片叶子？', 1, 1, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (33, 16, '你独自徒步旅行，突然意识到自己迷路了，你应该做的第一件事是什么？', 1, 2, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (34, 16, '根据生存三法则，没有水你能活多久？', 1, 3, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (35, 16, '当你试图逃离沙漠生存环境时，你应该选择在一天中的什么时间？', 1, 4, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (36, 16, '当你正在露营时，一只灰熊决定攻击你，这时你应该怎么做？', 1, 5, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (37, 16, '头巾的作用（多选）', 1, 6, 2, 2, 1, 5);
+INSERT INTO `edition_project_choicequestion` VALUES (38, 16, '在寻找水的时候，什么水不需要烧开就可以直接饮用？', 1, 7, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (39, 16, '哪一件事最容易引起水泡？', 1, 8, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (40, 16, '在野外活动被蜈蚣等蠹虫咬伤，应该立即用什么冲洗伤口？', 1, 9, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (41, 16, '为了向空中的救援人员发出信号，你应该用岩石、树枝或其他可用材料制作哪个图案？', 1, 10, 1, 1, 1, 4);
+INSERT INTO `edition_project_choicequestion` VALUES (42, 17, '请选择', 1, 1, 0, 1, 1, 2);
 
 -- ----------------------------
 -- Table structure for edition_project_otheroption
@@ -404,11 +561,15 @@ CREATE TABLE `edition_project_ratinganswer`  (
   INDEX `edition_project_rati_Submission_id_2e594e09_fk_edition_p`(`Submission_id`) USING BTREE,
   CONSTRAINT `edition_project_rati_Question_id_69552d93_fk_edition_p` FOREIGN KEY (`Question_id`) REFERENCES `edition_project_ratingquestion` (`QuestionID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `edition_project_rati_Submission_id_2e594e09_fk_edition_p` FOREIGN KEY (`Submission_id`) REFERENCES `edition_project_submission` (`SubmissionID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_ratinganswer
 -- ----------------------------
+INSERT INTO `edition_project_ratinganswer` VALUES (2, 2, 1, 1);
+INSERT INTO `edition_project_ratinganswer` VALUES (4, 3, 2, 2);
+INSERT INTO `edition_project_ratinganswer` VALUES (6, 3, 3, 3);
+INSERT INTO `edition_project_ratinganswer` VALUES (7, 5, 4, 11);
 
 -- ----------------------------
 -- Table structure for edition_project_ratingquestion
@@ -426,13 +587,16 @@ CREATE TABLE `edition_project_ratingquestion`  (
   `MinText` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `MaxRating` int(11) NULL DEFAULT NULL,
   `MaxText` longtext CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
-  PRIMARY KEY (`QuestionID`) USING BTREE,
-  UNIQUE INDEX `SurveyID`(`SurveyID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`QuestionID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_ratingquestion
 -- ----------------------------
+INSERT INTO `edition_project_ratingquestion` VALUES (1, 1, '请评分', 1, 3, 0, 4, 1, NULL, 5, NULL);
+INSERT INTO `edition_project_ratingquestion` VALUES (2, 2, '请评分', 1, 3, 0, 4, 1, NULL, 5, NULL);
+INSERT INTO `edition_project_ratingquestion` VALUES (3, 3, '请评分', 1, 3, 0, 4, 1, NULL, 5, NULL);
+INSERT INTO `edition_project_ratingquestion` VALUES (4, 14, '你喜欢凌峰吗', 1, 3, 0, 4, 1, NULL, 5, NULL);
 
 -- ----------------------------
 -- Table structure for edition_project_submission
@@ -442,17 +606,28 @@ CREATE TABLE `edition_project_submission`  (
   `SubmissionID` int(11) NOT NULL AUTO_INCREMENT,
   `SurveyID` int(11) NOT NULL,
   `RespondentID` int(11) NOT NULL,
-  `SubmissionTime` datetime(6) NOT NULL,
+  `SubmissionTime` datetime(6) NULL DEFAULT NULL,
   `Status` varchar(20) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
   `Score` int(11) NULL DEFAULT NULL,
   `Interval` int(11) NULL DEFAULT NULL,
-  PRIMARY KEY (`SubmissionID`) USING BTREE,
-  UNIQUE INDEX `SurveyID`(`SurveyID`) USING BTREE,
-  UNIQUE INDEX `RespondentID`(`RespondentID`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+  PRIMARY KEY (`SubmissionID`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 14 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of edition_project_submission
 -- ----------------------------
+INSERT INTO `edition_project_submission` VALUES (1, 1, 1, '2024-08-28 14:23:24.452199', 'Submitted', 0, 0);
+INSERT INTO `edition_project_submission` VALUES (2, 2, 1, '2024-08-28 14:26:42.452995', 'Submitted', 0, 0);
+INSERT INTO `edition_project_submission` VALUES (3, 3, 1, '2024-08-28 14:27:20.570674', 'Submitted', 0, 0);
+INSERT INTO `edition_project_submission` VALUES (4, 4, 1, '2024-08-28 14:28:44.883843', 'Graded', 0, 21);
+INSERT INTO `edition_project_submission` VALUES (5, 5, 1, '2024-08-28 14:30:59.468173', 'Graded', 7, 26);
+INSERT INTO `edition_project_submission` VALUES (6, 6, 1, '2024-08-28 14:31:41.227350', 'Unsubmitted', 0, 15);
+INSERT INTO `edition_project_submission` VALUES (7, 7, 1, '2024-08-28 14:34:26.968468', 'Submitted', 0, 0);
+INSERT INTO `edition_project_submission` VALUES (8, 14, 1, NULL, 'Unsubmitted', NULL, 0);
+INSERT INTO `edition_project_submission` VALUES (9, 16, 4, '2024-08-28 15:13:41.835717', 'Graded', 7, 39);
+INSERT INTO `edition_project_submission` VALUES (10, 16, 4, '2024-08-28 15:16:44.125881', 'Graded', 6, 46);
+INSERT INTO `edition_project_submission` VALUES (11, 14, 4, '2024-08-28 15:15:24.279818', 'Submitted', 0, 0);
+INSERT INTO `edition_project_submission` VALUES (12, 17, 1, '2024-08-28 15:23:05.021085', 'Submitted', 0, 0);
+INSERT INTO `edition_project_submission` VALUES (13, 17, 1, '2024-08-28 15:25:53.353933', 'Unsubmitted', 0, 0);
 
 SET FOREIGN_KEY_CHECKS = 1;
