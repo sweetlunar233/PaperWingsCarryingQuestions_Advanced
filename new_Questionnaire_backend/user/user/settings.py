@@ -112,24 +112,24 @@ WSGI_APPLICATION = "user.wsgi.application"
 
 
 DATABASES = {
-    # "default": {
-    #     'ENGINE': 'django.db.backends.mysql',
-    #     'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
-    #     'PORT': 23531,  # 数据库端口
-    #     'USER': 'buaa21374125',  # 数据库用户名
-    #     'PASSWORD': 'BUaa21374125',  # 数据库用户密码
-    #     'NAME': 'user_db'  # 数据库名
-    # }
-
-    #容器跑
     "default": {
         'ENGINE': 'django.db.backends.mysql',
-        'HOST': 'my-user-db-service',  # 数据库主机
-        'PORT': 3306,  # 数据库端口
-        'USER': 'root',  # 数据库用户名
-        'PASSWORD': '123456',  # 数据库用户密码
+        'HOST': 'bj-cynosdbmysql-grp-g9kxigho.sql.tencentcdb.com',  # 数据库主机
+        'PORT': 23531,  # 数据库端口
+        'USER': 'buaa21374125',  # 数据库用户名
+        'PASSWORD': 'BUaa21374125',  # 数据库用户密码
         'NAME': 'user_db'  # 数据库名
     }
+
+    #容器跑
+    # "default": {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'HOST': 'my-user-db-service.zhiyi.svc.cluster.local',  # 数据库主机
+    #     'PORT': 3306,  # 数据库端口
+    #     'USER': 'root',  # 数据库用户名
+    #     'PASSWORD': '123456',  # 数据库用户密码
+    #     'NAME': 'user_db'  # 数据库名
+    # }
 
     #本地跑
     # "default": {

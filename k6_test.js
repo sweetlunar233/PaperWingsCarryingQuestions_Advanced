@@ -6,20 +6,36 @@ import { check,sleep } from 'k6';
 //     duration: '1m', // 持续运行1分钟
 // };
 
+import http from 'k6/http';
+import { sleep } from 'k6';
+
 export let options = {
     stages: [
-        { duration: '10s', target: 20 }, // 10秒内增加到10个并发用户
-        { duration: '20s', target: 30 }, // 持续20秒保持20个并发用户
-        { duration: '20s', target: 40 }, // 20秒内增加到30个并发用户
-        { duration: '10s', target: 0 },  // 10秒内将并发用户数降为0
+        { duration: '2m', target: 100 }, // 逐渐增加至100个用户
+        { duration: '5m', target: 100 }, // 保持100个用户5分钟
+        { duration: '2m', target: 0 },   // 逐渐减少至0个用户
     ],
 };
 
-
 export default function () {
-    let res = http.get('http://127.0.0.1:8000/questionnaireDesign/1/'); // 替换为你的API地址
-    check(res, {
-        'status is 200': (r) => r.status === 200,
+    const url = 'http://82.156.88.4/personal/login/';
+    const payload = JSON.stringify({
+        username: 'lorian',
+        email: false,
+        password: 'lorian'
     });
-    // sleep(1); // 每个用户请求之间等待1秒
+
+    const params = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    const response = http.post(url, payload, params);
+
+    check(response, {
+        'is status 200': (r) => r.status === 200,
+    });
+
+    sleep(1);
 }

@@ -59,8 +59,8 @@ class ConsulServiceRegistry(ServiceRegistry):
 
 
 if __name__=='__main__':
-    print('***')
+    # print('***')
     instance = ServiceInstance('management','127.0.0.1',8001,instance_id=f'user_{int(random.random() * 1000000)}')
     registry = ConsulServiceRegistry("127.0.0.1", 8500)
     registry.register(instance)
-    print('***')
+    # print('***')

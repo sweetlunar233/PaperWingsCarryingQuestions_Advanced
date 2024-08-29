@@ -131,6 +131,11 @@ jobs:
             sudo kubectl exec $(sudo kubectl get pods -n zhiyi -l app=my-edition-back -o jsonpath='{.items[0].metadata.name}') -n zhiyi -- python3 manage.py test
 
 
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/HPA-VPA/questionnaire-app_hpa.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/HPA-VPA/my_user_back_hpa.yaml 
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/HPA-VPA/my_management_back_hpa.yaml
+            sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/HPA-VPA/my_edition_back_hpa.yaml
+
           # # 部署到 Kubernetes
           # - name: Deploy to Kubernetes
           #   run: |

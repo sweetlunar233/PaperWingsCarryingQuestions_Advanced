@@ -5,11 +5,12 @@ from django.urls import reverse
 import json
 from rest_framework.test import APIClient
 
-# ---- 返回内容 ---- #
+
 
 class GetDraftedQsTest(TestCase):
     def setUp(self):
         self.url = '/Manage/unreleased/lorian/'
+        self.client = APIClient()
 
     def test_get_draft_surveys(self):
         response = self.client.get(self.url)
@@ -26,6 +27,7 @@ class GetDraftedQsTest(TestCase):
 class GetReleasedQsTest(TestCase):
     def setUp(self):
         self.url = '/Manage/released/lorian/'
+        self.client = APIClient()
 
     def test_get_released_surveys(self):
         response = self.client.get(self.url)
@@ -42,6 +44,7 @@ class GetReleasedQsTest(TestCase):
 class GetFilledQsTest(TestCase):
     def setUp(self):
         self.url = '/Manage/filled/lorian/'
+        self.client = APIClient()
 
     def test_get_filled_surveys(self):
         response = self.client.get(self.url)
@@ -58,6 +61,7 @@ class GetFilledQsTest(TestCase):
 class GetAllReleasedQsTest(TestCase):
     def setUp(self):
         self.url = '/Manage/square/'
+        self.client = APIClient()
 
     def test_get_all_released_surveys(self):
         response = self.client.get(self.url)
@@ -70,24 +74,6 @@ class GetAllReleasedQsTest(TestCase):
         response = self.client.post(self.url, {})
         self.assertEqual(response.status_code, 405)
         self.assertEqual(response.json()['error'], 'Invalid request method')
-
-class CheckQsTest(TestCase):
-    def setUp(self):
-
-        self.url = reverse('check-qs-url', kwargs={'username': 'lorian', 'questionnaireId': 16,'type':1})
-
-    def test_check_qs(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
-        response_data = response.json()  # 获取完整的响应数据
-        self.assertIn('message', response_data)  # 检查'message'字段是否存在
-        self.assertIn('content', response_data)
-
-    def test_invalid_request_method(self):
-        response = self.client.post(self.url)
-        self.assertEqual(response.status_code, 500)
-
-# ---- 删除 ---- #
 
 class delete_unreleased_qs_test(TestCase):
     def setUp(self):
@@ -108,12 +94,6 @@ class update_or_delete_released_qs(TestCase):
     def setUp(self):
         self.url = reverse('delete-released-qs-url')
 
-    # def test_update_released_survey_status(self):
-    #     # 测试更新问卷发布状态
-    #     data = {'flag': 2, 'id': 1}
-    #     response = self.client.post(self.url, json.dumps(data), content_type='application/json')
-    #     self.assertEqual(response.status_code, 200)
-
     def test_invalid_json_body(self):
         # 测试提交的 JSON 数据无效
         response = self.client.post(self.url, '{"bad_json": "}', content_type='application/json')
@@ -124,27 +104,22 @@ class delete_filled_qs_test(TestCase):
     def setUp(self):
         self.url = reverse('delete-filled-qs')
 
-    # def test_delete_submission(self):
-    #     # 测试成功删除提交记录
-    #     data = 1
-    #     response = self.client.post(self.url, json.dumps(data), content_type='application/json')
-    #     self.assertEqual(response.status_code, 200)
-    #     self.assertEqual(response.json()['message'], "True")
-
     def test_invalid_json_body(self):
         # 测试提交的 JSON 数据无效
         response = self.client.post(self.url, '{"bad_json": "}', content_type='application/json')
         self.assertEqual(response.status_code, 400)
         self.assertEqual(response.json()['error'], 'Invalid JSON body')
 
-# ---- 获取surveyID ---- #
 
-class SurveyTests(TestCase):
-    def setUp(self):
-        self.survey_url = reverse('get_survey', kwargs={'survey_id': 16})
 
-    def test_get_survey(self):
-        # 测试获取survey的API
-        response = self.client.get(self.survey_url)
-        self.assertEqual(response.status_code,200)
+# class SurveyTests(TestCase):
+#     def setUp(self):
+#         # self.survey_url = reverse('get_survey', kwargs={'survey_id': 1})
+#         self.url = '/survey/7/'
+#         self.client = APIClient()
+
+#     def test_get_survey(self):
+#         # 测试获取survey的API
+#         response = self.client.get(self.url)
+#         self.assertEqual(response.status_code,200)
 

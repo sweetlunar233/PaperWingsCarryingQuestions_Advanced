@@ -427,7 +427,6 @@ class GetStoreFillView(APIView):
 
                 optionList=[]
                 #将所有选项顺序排列
-                print("***")
                 options_query=ChoiceOption.objects.filter(Question=question["QuestionID"]).order_by('OptionNumber')
                 for option in options_query:
                     optionList.append({'content':option.Text,'optionNumber':option.OptionNumber,'isCorrect':option.IsCorrect,

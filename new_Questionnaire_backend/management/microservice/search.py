@@ -41,8 +41,8 @@ class ConsulServiceDiscovery(DiscoveryClient):
         return result
 
 if __name__=='__main__':
-    print('---')
+    # print('---')
     discovery = ConsulServiceDiscovery("127.0.0.1", 8500)
-    print(discovery.get_services())
-    print(discovery.get_instances("user"))
-    print('---')
+    # print(discovery.get_services())
+    # print(discovery.get_instances("user"))
+    # print('---')
