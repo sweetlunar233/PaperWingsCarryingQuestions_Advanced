@@ -20,7 +20,7 @@ export default function () {
     const response = http.get(url);
 
     check(response, {
-        'status is 200 or 503': (r) => r.status === 200 || r.status === 503,
+        'status is 200': (r) => r.status === 200,
     });
 
     sleep(1);

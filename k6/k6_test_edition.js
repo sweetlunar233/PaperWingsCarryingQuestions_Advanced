@@ -15,7 +15,7 @@ export let options = {
 };
 
 export default function () {
-    const url = 'http://82.156.88.4:31001/Manage/filled/lorian/';
+    const url = 'http://82.156.88.4:31002/questionnaireFill/lorian/13/-1/';
 
     const response = http.get(url);
 

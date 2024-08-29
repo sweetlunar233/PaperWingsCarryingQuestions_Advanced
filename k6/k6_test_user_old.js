@@ -15,9 +15,20 @@ export let options = {
 };
 
 export default function () {
-    const url = 'http://82.156.88.4:31001/Manage/filled/lorian/';
+    const url = 'http://127.0.0.1:8000/personal/login/';
+    const payload = JSON.stringify({
+        username: 'lorian',
+        email: false,
+        password: 'lorian'
+    });
 
-    const response = http.get(url);
+    const params = {
+        headers: {
+            'Content-Type': 'application/json',
+        },
+    };
+
+    const response = http.post(url, payload, params);
 
     check(response, {
         'is status 200': (r) => r.status === 200,
