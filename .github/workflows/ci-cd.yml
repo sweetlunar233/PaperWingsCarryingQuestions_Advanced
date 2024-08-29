@@ -132,7 +132,6 @@ jobs:
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/HPA-VPA/my_user_back_hpa.yaml
             sudo kubectl apply -f ~/PaperWingsCarryingQuestions_Advanced/HPA-VPA/questionnaire-app_hpa.yaml
 
-
             echo "\n\n\n --------------test----------------- \n\n\n"
 
             sudo kubectl exec $(sudo kubectl get pods -n zhiyi -l app=my-user-back -o jsonpath='{.items[0].metadata.name}') -n zhiyi -- python3 manage.py test
