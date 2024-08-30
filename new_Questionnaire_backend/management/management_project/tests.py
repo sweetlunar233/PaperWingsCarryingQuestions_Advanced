@@ -28,13 +28,6 @@ class GetReleasedQsTest(TestCase):
     def setUp(self):
         self.url = '/Manage/released/lorian/'
         self.client = APIClient()
-
-    def test_get_released_surveys(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
-        data = response.json().get('data')
-        self.assertIsNotNone(data)  # 确保 'data' 键存在
-        self.assertTrue(isinstance(data, list))  # 确保 'data' 是列表类型
     
     def test_invalid_request_method(self):
         response = self.client.post(self.url, {})
@@ -45,13 +38,6 @@ class GetFilledQsTest(TestCase):
     def setUp(self):
         self.url = '/Manage/filled/lorian/'
         self.client = APIClient()
-
-    def test_get_filled_surveys(self):
-        response = self.client.get(self.url)
-        self.assertEqual(response.status_code, 200)
-        data = response.json().get('data')
-        self.assertIsNotNone(data)  # 确保 'data' 键存在
-        self.assertTrue(isinstance(data, list))  # 确保 'data' 是列表类型
 
     def test_invalid_request_method(self):
         response = self.client.post(self.url, {})

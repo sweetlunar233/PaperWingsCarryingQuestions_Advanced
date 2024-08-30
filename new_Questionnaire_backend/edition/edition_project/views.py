@@ -1081,8 +1081,9 @@ def download_submissions(request, surveyID):
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 
 from django.db.models import Count, Sum, Q
-
+from pycircuitbreaker import circuit
 #数据分析：向前端传输该问卷的所有题目及填写内容的统计数据
+@circuit
 def survey_statistics(request, surveyID):
     if (request.method=='GET'):
         #问卷
